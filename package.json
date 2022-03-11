@@ -1,0 +1,20 @@
+{
+  "name": "qup",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "start": "pnpm --filter ./apps --parallel run start",
+    "dev": "pnpm --filter ./apps --parallel run dev",
+    "build": "pnpm --filter ./apps run build"
+  },
+  "dependencies": {
+    "@qup/client": "workspace:*",
+    "@qup/server": "workspace:*"
+  },
+  "author": "rtabulov",
+  "license": "ISC",
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  }
+}
