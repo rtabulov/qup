@@ -1,9 +1,16 @@
-<script setup lang="ts">
-fetch('/api/departments')
-  .then((r) => r.json())
-  .then((r) => console.log('success', r));
+<script lang="ts" setup>
+import TheNavigation from './components/TheNavigation.vue';
+import TheFooter from './components/TheFooter.vue';
 </script>
 
 <template>
-  <img class="bg-primary-500" alt="Vue logo" src="./assets/logo.png" />
+  <TheNavigation />
+
+  <main class="font-body">
+    <div class="container">
+      <RouterView />
+    </div>
+  </main>
+
+  <TheFooter />
 </template>
