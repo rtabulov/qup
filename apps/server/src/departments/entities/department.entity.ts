@@ -5,6 +5,6 @@ export class Department {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ length: 256 })
+  @Column({ length: 256, unique: true })
   name: string;
 }
