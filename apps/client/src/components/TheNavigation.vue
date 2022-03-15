@@ -3,7 +3,7 @@ import TheNavigationLink from './TheNavigationLink.vue';
 </script>
 
 <template>
-  <nav class="bg-secondary-800 text-neutral-200 font-display">
+  <nav class="bg-dark font-display">
     <div class="container px-0">
       <div class="flex">
         <TheNavigationLink to="/">Home</TheNavigationLink>

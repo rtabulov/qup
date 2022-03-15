@@ -3,7 +3,9 @@ import { getRandomEmoji } from '../utils/getRandomEmoji';
 </script>
 
 <template>
-  <footer class="bg-primary-700 text-neutral-100 py-4 space-y-4 font-display">
+  <footer
+    class="bg-black text-white text-opacity-75 py-4 space-y-4 font-display"
+  >
     <nav class="grid grid-cols-5 container">
       <div class="flex flex-col">
         <a role="link" aria-disabled="true">Lorem</a>

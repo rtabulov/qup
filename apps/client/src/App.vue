@@ -7,7 +7,7 @@ import TheFooter from './components/TheFooter.vue';
   <div class="flex flex-col min-h-screen">
     <TheNavigation class="shrink-0" />
 
-    <main class="font-body bg-primary-900 text-neutral-50 grow flex">
+    <main class="font-body bg-dark text-white grow flex">
       <div class="container">
         <RouterView />
       </div>

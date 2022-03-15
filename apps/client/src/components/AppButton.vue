@@ -10,7 +10,7 @@ withDefaults(defineProps<Props>(), {
 <template>
   <component
     :is="as"
-    class="bg-secondary-500 shadow-md text-center justify-center inline-flex py-2 px-5 hover:bg-secondary-600 focus:outline-none focus:ring focus:ring-neutral-200"
+    class="bg-red text-white shadow-md text-center justify-center inline-flex py-2 px-5 hover:brightness-90 focus:outline-none focus:ring focus:ring-muted transition-all"
   >
     <slot></slot>
   </component>

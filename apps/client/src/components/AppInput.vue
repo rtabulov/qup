@@ -31,7 +31,7 @@ const finalPlaceholder = computed(() =>
 <template>
   <input
     v-model="proxyValue"
-    class="relative w-full py-2 pl-3 pr-10 text-left bg-neutral-100 text-neutral-900 shadow-md cursor-default focus:outline-none focus-visible:ring focus-visible:ring-opacity-75 focus-visible:ring-secondary-500 sm:text-sm placeholder:text-neutral-600"
+    class="relative w-full py-2 pl-3 pr-10 text-left bg-gray text-white shadow-md cursor-default focus:outline-none focus-visible:ring focus-visible:ring-muted sm:text-sm placeholder:text-white placeholder:text-opacity-75"
     :required="required"
     :placeholder="finalPlaceholder"
   />

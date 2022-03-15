@@ -34,7 +34,7 @@ const proxyValue = computed<string>({
   <Listbox v-model="proxyValue">
     <div class="relative mt-1">
       <ListboxButton
-        class="relative w-full py-2 pl-3 pr-10 text-left bg-neutral-100 text-neutral-900 shadow-md cursor-default focus:outline-none focus-visible:ring focus-visible:ring-opacity-75 focus-visible:ring-secondary-500 sm:text-sm"
+        class="relative w-full py-2 pl-3 pr-10 text-left bg-gray text-white shadow-md cursor-default focus:outline-none focus-visible:ring focus-visible:ring-opacity-75 focus-visible:ring-muted sm:text-sm"
       >
         <span class="block truncate">{{ getLabel(proxyValue) }}</span>
         <span
@@ -50,7 +50,7 @@ const proxyValue = computed<string>({
         leave-to-class="opacity-0"
       >
         <ListboxOptions
-          class="z-10 text-left absolute w-full py-1 mt-1 overflow-auto text-base bg-white text-neutral-900 shadow-lg max-h-60 ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
+          class="z-10 text-left absolute w-full py-1 mt-1 overflow-auto text-base bg-dark shadow-lg max-h-60 ring ring-black ring-opacity-5 focus:outline-none sm:text-sm"
         >
           <ListboxOption
             v-slot="{ active, selected }"
@@ -61,10 +61,8 @@ const proxyValue = computed<string>({
           >
             <li
               :class="[
-                active
-                  ? 'text-secondary-900 bg-secondary-100'
-                  : 'text-gray-900',
-                'cursor-default select-none relative py-2 pl-10 pr-4',
+                active ? 'bg-black bg-opacity-75' : '',
+                'cursor-default select-none relative py-2 pl-10 pr-4 text-white',
               ]"
             >
               <span
@@ -76,7 +74,7 @@ const proxyValue = computed<string>({
               >
               <span
                 v-if="selected"
-                class="absolute inset-y-0 left-0 flex items-center pl-3 text-secondary-600"
+                class="absolute inset-y-0 left-0 flex items-center pl-3 text-red"
               >
                 <CheckIcon class="w-5 h-5" aria-hidden="true" />
               </span>

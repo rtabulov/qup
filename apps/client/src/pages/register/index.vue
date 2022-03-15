@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { reactive, ref, watchEffect } from 'vue';
 import AppInput from '../../components/AppInput.vue';
 import AppSelect from '../../components/AppSelect.vue';
 import AppButton from '../../components/AppButton.vue';
@@ -20,6 +20,8 @@ fetch('/api/departments')
     form.department = dpts[0].id;
   });
 
+watchEffect(() => console.log(departments.value));
+
 async function onSubmit() {
   const res = await fetch('/api/teachers', {
     method: 'POST',
@@ -36,7 +38,7 @@ async function onSubmit() {
 <template>
   <div class="py-6 text-center">
     <h1 class="text-3xl">Регистрация</h1>
-    <hr class="max-w-xs my-6 mx-auto border-secondary-300 border-b-[3px]" />
+    <hr class="max-w-xs my-6 mx-auto border-red border-b-[3px]" />
     <form
       v-if="departments.length"
       class="max-w-xl mx-auto space-y-4"
