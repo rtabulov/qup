@@ -6,7 +6,9 @@
     "preinstall": "npx only-allow pnpm",
     "start": "pnpm --filter ./apps --parallel run start",
     "dev": "pnpm --filter ./apps --parallel run dev",
-    "build": "pnpm --filter ./apps run build"
+    "build": "pnpm --filter ./apps run build",
+    "format": "prettier --write \"apps/**/*.ts\"",
+    "lint": "eslint \"{src,apps,libs}/**/*.ts\" --fix"
   },
   "dependencies": {
     "@nestjs/mapped-types": "*",
