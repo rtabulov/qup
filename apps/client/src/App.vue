@@ -3,7 +3,7 @@
 // Check out https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup
 import HelloWorld from './components/HelloWorld.vue';
 
-fetch('/api/teachers')
+fetch('/api/departments')
   .then((r) => r.json())
   .then((r) => console.log('success', r));
 </script>

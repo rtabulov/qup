@@ -1,26 +1,35 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { Department } from './entities/department.entity';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
 
 @Injectable()
 export class DepartmentsService {
+  constructor(
+    @InjectRepository(Department)
+    private departmentsRepository: Repository<Department>,
+  ) {}
+
   create(createDepartmentDto: CreateDepartmentDto) {
-    return 'This action adds a new department';
+    return this.departmentsRepository.save(createDepartmentDto);
   }
 
   findAll() {
-    return `This action returns all departments`;
+    return this.departmentsRepository.find();
   }
 
   findOne(id: string) {
-    return `This action returns a #${id} department`;
+    return this.departmentsRepository.findOne(id);
   }
 
   update(id: string, updateDepartmentDto: UpdateDepartmentDto) {
-    return `This action updates a #${id} department`;
+    return this.departmentsRepository.update(id, updateDepartmentDto);
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} department`;
+  async remove(id: string) {
+    const photoToRemove = await this.departmentsRepository.findOne(id);
+    return this.departmentsRepository.remove(photoToRemove);
   }
 }

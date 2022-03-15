@@ -1,3 +1,4 @@
 # Tests
 coverage
 .nyc_output
+./src/app.controller.ts
