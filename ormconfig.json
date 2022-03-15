@@ -5,6 +5,8 @@
   "username": "root",
   "password": "example",
   "database": "test",
-  "entities": ["apps/server/dist/**/*.entity{.ts,.js}"],
-  "synchronize": true
+  "entities": ["dist/**/*.entity{.ts,.js}"],
+  "synchronize": true,
+  "seeds": ["dist/seeds/**/*{.ts,.js}"],
+  "factories": ["dist/factories/**/*{.ts,.js}"]
 }
