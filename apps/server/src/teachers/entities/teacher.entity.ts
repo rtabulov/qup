@@ -7,7 +7,7 @@ export class Teacher {
   id: string;
 
   @Column()
-  fistName: string;
+  firstName: string;
 
   @Column()
   lastName: string;

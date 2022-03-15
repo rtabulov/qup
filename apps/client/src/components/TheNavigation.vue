@@ -4,7 +4,7 @@ import TheNavigationLink from './TheNavigationLink.vue';
 
 <template>
   <nav class="bg-secondary-800 text-neutral-200 font-display">
-    <div class="container">
+    <div class="container px-0">
       <div class="flex">
         <TheNavigationLink to="/">Home</TheNavigationLink>
         <TheNavigationLink to="/register">Register</TheNavigationLink>
