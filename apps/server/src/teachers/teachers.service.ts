@@ -21,8 +21,8 @@ export class TeachersService {
     return this.teachersRepository.find({ relations: ['department'] });
   }
 
-  findOne(id: string) {
-    return this.teachersRepository.findOne(id);
+  findOne(email: string) {
+    return this.teachersRepository.findOne({ email });
   }
 
   update(id: string, updateTeacherDto: UpdateTeacherDto) {
