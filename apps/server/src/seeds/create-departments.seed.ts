@@ -14,6 +14,9 @@ const DEPARTMENTS_SEED = [
 
 export default class CreateDepartments {
   async run(factory, connection: Connection) {
+    const all = await connection.getRepository(Department).find();
+    await connection.getRepository(Department).remove(all);
+
     await connection
       .createQueryBuilder()
       .insert()
