@@ -3,8 +3,9 @@ import { reactive, ref, watchEffect } from 'vue';
 import AppInput from '../../components/AppInput.vue';
 import AppSelect from '../../components/AppSelect.vue';
 import AppButton from '../../components/AppButton.vue';
+import { CreateTeacherDto, Department } from '../../types';
 
-const form = reactive({
+const form = reactive<CreateTeacherDto>({
   firstName: '',
   lastName: '',
   middleName: '',
@@ -12,15 +13,13 @@ const form = reactive({
   position: '',
 });
 
-const departments = ref([]);
+const departments = ref<Department[]>([]);
 fetch('/api/departments')
   .then((res) => res.json())
-  .then((dpts) => {
+  .then((dpts: Department[]) => {
     departments.value = dpts;
     form.department = dpts[0].id;
   });
-
-watchEffect(() => console.log(departments.value));
 
 async function onSubmit() {
   const res = await fetch('/api/teachers', {
