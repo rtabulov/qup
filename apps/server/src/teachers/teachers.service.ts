@@ -13,11 +13,12 @@ export class TeachersService {
   ) {}
 
   create(createTeacherDto: CreateTeacherDto) {
-    return this.teachersRepository.save(createTeacherDto);
+    const teacher = this.teachersRepository.create(createTeacherDto);
+    return this.teachersRepository.save(teacher);
   }
 
   findAll() {
-    return this.teachersRepository.find();
+    return this.teachersRepository.find({ relations: ['department'] });
   }
 
   findOne(id: string) {

@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Department } from '../../departments/entities/department.entity';
 
 @Entity()
@@ -15,7 +15,7 @@ export class Teacher {
   @Column()
   middleName: string;
 
-  @OneToOne((type) => Department)
+  @ManyToOne((type) => Department, (d) => d.teachers)
   department: string;
 
   @Column()
