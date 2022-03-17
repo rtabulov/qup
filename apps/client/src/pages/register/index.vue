@@ -4,6 +4,7 @@ import AppInput from '../../components/AppInput.vue';
 import AppSelect from '../../components/AppSelect.vue';
 import AppButton from '../../components/AppButton.vue';
 import { CreateTeacherDto, Department } from '../../types';
+import { useRouter } from 'vue-router';
 
 const form = reactive<CreateTeacherDto>({
   firstName: '',
@@ -13,6 +14,7 @@ const form = reactive<CreateTeacherDto>({
   position: '',
   email: '',
   password: '',
+  confirmationPassword: '',
 });
 
 const departments = ref<Department[]>([]);
@@ -23,8 +25,10 @@ fetch('/api/departments')
     form.department = dpts[0].id;
   });
 
+const router = useRouter();
+
 async function onSubmit() {
-  const res = await fetch('/api/teachers', {
+  const res = await fetch('/api/auth/register', {
     method: 'POST',
     body: JSON.stringify({ ...form }),
     headers: {
@@ -32,7 +36,7 @@ async function onSubmit() {
     },
   }).then((res) => res.json());
 
-  console.log(res);
+  router.push('/login');
 }
 </script>
 
@@ -88,6 +92,12 @@ async function onSubmit() {
         type="password"
         required
         placeholder="Пароль"
+      />
+      <AppInput
+        v-model="form.confirmationPassword"
+        type="password"
+        required
+        placeholder="Подтвердите пароль"
       />
 
       <AppButton type="submit" class="w-full">Зарегистрироваться</AppButton>

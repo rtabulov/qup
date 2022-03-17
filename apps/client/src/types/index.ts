@@ -20,6 +20,7 @@ export interface CreateTeacherDto {
   position: string;
   email: string;
   password: string;
+  confirmationPassword: string;
 }
 
 export type UpdateTeacherDto = Partial<CreateTeacherDto>;
