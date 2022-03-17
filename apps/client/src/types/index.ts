@@ -3,16 +3,17 @@ export interface Department {
   name: string;
 }
 
-export interface Teacher {
+export interface User {
   id: string;
+  role: 'teacher' | 'admin';
   firstName: string;
   lastName: string;
   middleName: string;
-  department: Department;
-  position: string;
+  position: string | null;
+  email: string;
 }
 
-export interface CreateTeacherDto {
+export interface RegisterUserDto {
   firstName: string;
   lastName: string;
   middleName: string;
@@ -23,4 +24,7 @@ export interface CreateTeacherDto {
   confirmationPassword: string;
 }
 
-export type UpdateTeacherDto = Partial<CreateTeacherDto>;
+export interface LoginUserDto {
+  email: string;
+  password: string;
+}

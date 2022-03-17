@@ -1,5 +1,6 @@
 import { createApp } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
+import { createPinia } from 'pinia';
 
 import App from './App.vue';
 import './index.css';
@@ -11,4 +12,6 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
 });
 
-createApp(App).use(router).mount('#app');
+const pinia = createPinia();
+
+createApp(App).use(router).use(pinia).mount('#app');

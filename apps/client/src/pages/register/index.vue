@@ -3,10 +3,10 @@ import { reactive, ref, watchEffect } from 'vue';
 import AppInput from '../../components/AppInput.vue';
 import AppSelect from '../../components/AppSelect.vue';
 import AppButton from '../../components/AppButton.vue';
-import { CreateTeacherDto, Department } from '../../types';
+import { RegisterUserDto, Department } from '../../types';
 import { useRouter } from 'vue-router';
 
-const form = reactive<CreateTeacherDto>({
+const form = reactive<RegisterUserDto>({
   firstName: '',
   lastName: '',
   middleName: '',
