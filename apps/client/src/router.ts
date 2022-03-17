@@ -11,14 +11,14 @@ router.beforeEach(async (to, from) => {
   const store = useUserStore();
 
   if (to.meta.requiresAuth && store.initialLoadFinished && !store.user) {
-    return from.name ? from.fullPath : '/';
+    return `/login?backurl=${to.path}`;
   }
 
   if (to.meta.requiresAuth && !store.initialLoadFinished) {
     await store.tryLoggingIn();
 
     if (!store.user) {
-      return `/login?backurl=${from.path}`;
+      return `/login?backurl=${to.path}`;
     }
   }
 });

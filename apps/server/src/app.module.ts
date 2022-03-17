@@ -5,20 +5,26 @@ import {
   Module,
   NestModule,
 } from '@nestjs/common';
-import { AppController } from './app.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DepartmentsModule } from './departments/departments.module';
-import { AuthModule } from './auth/auth.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as RedisStore from 'connect-redis';
 import * as session from 'express-session';
 import * as passport from 'passport';
 import { RedisClient } from 'redis';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
+import { AppController } from './app.controller';
+import { DepartmentsModule } from './departments/departments.module';
+import { AuthModule } from './auth/auth.module';
 import { REDIS } from './redis/redis.constants';
 import { RedisModule } from './redis/redis.module';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'public'),
+    }),
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'mysql',

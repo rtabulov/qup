@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "start": "pnpm --filter ./apps --parallel run start",
+    "start": "pnpm --filter ./apps/server run start",
     "dev": "pnpm --filter ./apps --parallel run dev",
     "build": "pnpm --filter ./apps run build",
     "format": "prettier --write \"apps/**/*.ts\"",
