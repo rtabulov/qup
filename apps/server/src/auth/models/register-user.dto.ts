@@ -1,4 +1,7 @@
-export class CreateTeacherDto {
+export class RegisterUserDto {
+  confirmationPassword: string;
+  role = 'user';
+
   fistName: string;
   lastName: string;
   middleName: string;

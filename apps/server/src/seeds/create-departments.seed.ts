@@ -1,6 +1,6 @@
 import { Connection } from 'typeorm';
 import { Department } from '../departments/entities/department.entity';
-import { Teacher } from '../teachers/entities/teacher.entity';
+import { User } from '../auth/models/user.entity';
 
 const DEPARTMENTS_SEED = [
   { name: 'Кафедра "Бизнес и управление"' },
@@ -32,9 +32,20 @@ const TEACHERS_SEED = [
   },
 ];
 
+const SUPERUSER = [
+  {
+    firstName: 'Админ',
+    lastName: 'Админов',
+    middleName: 'Админович',
+    email: 'admin@gmail.com',
+    password: 'wordpass',
+    role: 'admin',
+  },
+];
+
 export default class CreateDepartments {
   async run(factory, connection: Connection) {
-    await connection.createQueryBuilder().delete().from(Teacher).execute();
+    await connection.createQueryBuilder().delete().from(User).execute();
     await connection.createQueryBuilder().delete().from(Department).execute();
 
     await connection
@@ -53,10 +64,13 @@ export default class CreateDepartments {
     });
 
     await Promise.all(
-      seed.map((teacher) => {
-        const t = connection.getRepository(Teacher).create(teacher);
-        return connection.getRepository(Teacher).save(t);
+      seed.map((user) => {
+        const t = connection.getRepository(User).create(user);
+        return connection.getRepository(User).save(t);
       }),
     );
+
+    const t = connection.getRepository(User).create(SUPERUSER);
+    return connection.getRepository(User).save(t);
   }
 }

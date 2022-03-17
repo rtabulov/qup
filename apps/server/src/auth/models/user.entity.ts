@@ -12,9 +12,12 @@ import * as credential from 'credential';
 import { Department } from '../../departments/entities/department.entity';
 
 @Entity()
-export class Teacher {
+export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ default: 'teacher' })
+  role: string;
 
   @Column()
   firstName: string;
@@ -28,8 +31,8 @@ export class Teacher {
   @ManyToOne((type) => Department)
   department: string;
 
-  @Column()
-  position: string;
+  @Column({ nullable: true })
+  position?: string;
 
   @Column({ unique: true })
   email: string;
@@ -55,3 +58,5 @@ export class Teacher {
     );
   }
 }
+
+export type SafeUser = Omit<User, 'password' | 'hashPassword' | 'toJSON'>;

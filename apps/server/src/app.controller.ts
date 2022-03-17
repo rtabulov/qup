@@ -1,21 +1,26 @@
-import { Controller, Request, Post, UseGuards, Get } from '@nestjs/common';
-import { AuthService } from './auth/auth.service';
-import { LocalAuthGuard } from './auth/local-auth.guard';
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
+import { Controller, Get, UseGuards } from '@nestjs/common';
+import { AdminGuard } from './admin.guard';
+
+import { LoggedInGuard } from './logged-in.guard';
 
 @Controller()
 export class AppController {
-  constructor(private authService: AuthService) {}
+  constructor() {}
 
-  @UseGuards(LocalAuthGuard)
-  @Post('auth/login')
-  async login(@Request() req) {
-    return this.authService.login(req.user);
+  @Get()
+  publicRoute() {
+    return 'This message is public to all!';
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user;
+  @UseGuards(LoggedInGuard)
+  @Get('protected')
+  guardedRoute() {
+    return 'You can only see this if you are authenticated';
+  }
+
+  @UseGuards(AdminGuard)
+  @Get('admin')
+  getAdminMessage() {
+    return 'You can only see this if you are an admin';
   }
 }

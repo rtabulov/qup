@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-// import { Teacher } from '../../teachers/entities/teacher.entity';
 
 @Entity()
 export class Department {
@@ -8,7 +7,4 @@ export class Department {
 
   @Column({ length: 256, unique: true })
   name: string;
-
-  // @OneToMany((type) => Teacher, (t) => t.department, { cascade: true })
-  // teachers: string;
 }
