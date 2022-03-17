@@ -11,6 +11,8 @@ const form = reactive<CreateTeacherDto>({
   middleName: '',
   department: '',
   position: '',
+  email: '',
+  password: '',
 });
 
 const departments = ref<Department[]>([]);
@@ -75,6 +77,19 @@ async function onSubmit() {
         required
         placeholder="Должность"
       />
+      <AppInput
+        v-model="form.email"
+        type="email"
+        required
+        placeholder="E-mail"
+      />
+      <AppInput
+        v-model="form.password"
+        type="password"
+        required
+        placeholder="Пароль"
+      />
+
       <AppButton type="submit" class="w-full">Зарегистрироваться</AppButton>
     </form>
   </div>
