@@ -41,7 +41,7 @@ async function onSubmit() {
 </script>
 
 <template>
-  <div class="py-6 text-center">
+  <div class="text-center">
     <h1 class="text-3xl">Регистрация</h1>
     <hr class="max-w-xs my-6 mx-auto border-red border-b-[3px]" />
     <form
@@ -104,3 +104,11 @@ async function onSubmit() {
     </form>
   </div>
 </template>
+
+<route lang="json">
+{
+  "meta": {
+    "requiresGuest": true
+  }
+}
+</route>

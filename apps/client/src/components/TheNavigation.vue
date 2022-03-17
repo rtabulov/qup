@@ -9,6 +9,7 @@ import TheNavigationLink from './TheNavigationLink.vue';
         <TheNavigationLink to="/">Home</TheNavigationLink>
         <TheNavigationLink to="/register">Register</TheNavigationLink>
         <TheNavigationLink to="/login">Login</TheNavigationLink>
+        <TheNavigationLink to="/profile">Profile</TheNavigationLink>
       </div>
     </div>
   </nav>

@@ -3,7 +3,7 @@ import { reactive } from 'vue';
 import AppInput from '../../components/AppInput.vue';
 import AppButton from '../../components/AppButton.vue';
 import { LoginUserDto } from '../../types';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '../../store';
 
 const form = reactive<LoginUserDto>({
@@ -12,6 +12,7 @@ const form = reactive<LoginUserDto>({
 });
 
 const router = useRouter();
+const route = useRoute();
 const userStore = useUserStore();
 
 async function onSubmit() {
@@ -23,10 +24,9 @@ async function onSubmit() {
     },
   }).then((res) => res.json());
 
-  const userData = await fetch('/api/auth/self').then((res) => res.json());
-  userStore.setUser(userData);
+  await userStore.tryLoggingIn();
 
-  router.push('/');
+  router.push((route.query.backurl as string) || '/');
 }
 </script>
 
@@ -52,3 +52,11 @@ async function onSubmit() {
     </form>
   </div>
 </template>
+
+<route lang="json">
+{
+  "meta": {
+    "requiresGuest": true
+  }
+}
+</route>
