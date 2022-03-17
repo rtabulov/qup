@@ -33,10 +33,9 @@ import { RedisModule } from './redis/redis.module';
     DepartmentsModule,
     AuthModule,
     RedisModule,
-    Logger,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [Logger],
 })
 export class AppModule implements NestModule {
   constructor(
