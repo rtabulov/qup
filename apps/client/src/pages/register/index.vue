@@ -5,6 +5,8 @@ import AppSelect from '../../components/AppSelect.vue';
 import AppButton from '../../components/AppButton.vue';
 import { RegisterUserDto, Department } from '../../types';
 import { useRouter } from 'vue-router';
+import { getDepartments } from '../../api';
+import { register } from '../../api';
 
 const form = reactive<RegisterUserDto>({
   firstName: '',
@@ -18,24 +20,15 @@ const form = reactive<RegisterUserDto>({
 });
 
 const departments = ref<Department[]>([]);
-fetch('/api/departments')
-  .then((res) => res.json())
-  .then((dpts: Department[]) => {
-    departments.value = dpts;
-    form.department = dpts[0].id;
-  });
+getDepartments().then((dpts) => {
+  departments.value = dpts;
+  form.department = dpts[0].id;
+});
 
 const router = useRouter();
 
 async function onSubmit() {
-  const res = await fetch('/api/auth/register', {
-    method: 'POST',
-    body: JSON.stringify({ ...form }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then((res) => res.json());
-
+  await register({ ...form });
   router.push('/login');
 }
 </script>

@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { User } from '../types/index';
+import { getSelf } from '../api';
 
 export const useUserStore = defineStore('todos', {
   state: () => ({
@@ -18,7 +19,7 @@ export const useUserStore = defineStore('todos', {
 
     async tryLoggingIn() {
       try {
-        this.user = await fetch('/api/auth/self').then((res) => res.json());
+        this.user = await getSelf();
       } catch {
         this.user = null;
       } finally {

@@ -5,6 +5,7 @@ import AppButton from '../../components/AppButton.vue';
 import { LoginUserDto } from '../../types';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '../../store';
+import { login } from '../../api';
 
 const form = reactive<LoginUserDto>({
   email: '',
@@ -16,14 +17,7 @@ const route = useRoute();
 const userStore = useUserStore();
 
 async function onSubmit() {
-  const res = await fetch('/api/auth/login', {
-    method: 'POST',
-    body: JSON.stringify({ ...form }),
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  }).then((res) => res.json());
-
+  await login({ ...form });
   await userStore.tryLoggingIn();
 
   router.push((route.query.backurl as string) || '/');

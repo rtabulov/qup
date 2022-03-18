@@ -10,6 +10,9 @@ import TheNavigationLink from './TheNavigationLink.vue';
         <TheNavigationLink to="/register">Register</TheNavigationLink>
         <TheNavigationLink to="/login">Login</TheNavigationLink>
         <TheNavigationLink to="/profile">Profile</TheNavigationLink>
+        <TheNavigationLink to="/certificates/create"
+          >Add new certificate</TheNavigationLink
+        >
       </div>
     </div>
   </nav>
