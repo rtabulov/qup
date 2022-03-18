@@ -3,8 +3,13 @@ import AppInput from '../../components/AppInput.vue';
 import AppButton from '../../components/AppButton.vue';
 import { ref } from 'vue';
 import { createCertificate } from '../../api';
+import { useRouter } from 'vue-router';
+import { useUserStore } from '../../store';
 
 const previewSrcs = ref<string[]>([]);
+
+const router = useRouter();
+const store = useUserStore();
 
 async function onSubmit(e: Event) {
   const formData = new FormData(e.target as HTMLFormElement);
@@ -12,7 +17,8 @@ async function onSubmit(e: Event) {
   console.log(Object.fromEntries(formData));
 
   const res = await createCertificate(formData);
-  console.log(res);
+  await store.tryLoggingIn();
+  router.push('/profile');
 }
 </script>
 
@@ -25,8 +31,15 @@ async function onSubmit(e: Event) {
       required
       placeholder="Название курса повышения квалификации"
       name="name"
+      initialValue="asd"
     />
-    <AppInput type="text" required placeholder="Кем выдан" name="issuedBy" />
+    <AppInput
+      type="text"
+      required
+      placeholder="Кем выдан"
+      name="issuedBy"
+      initialValue="zxc"
+    />
     <AppInput
       type="date"
       required

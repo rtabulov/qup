@@ -26,9 +26,10 @@ export class AuthController {
     return this.authService.findTeachers();
   }
 
+  @UseGuards(LoggedInGuard)
   @Get('self')
   getProfile(@Req() req) {
-    return req.user;
+    return this.authService.findById(req.user.id, { expand: true });
   }
 
   @Post('register')

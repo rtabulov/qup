@@ -11,6 +11,25 @@ export interface User {
   middleName: string;
   position: string | null;
   email: string;
+
+  certificates: Certificate[];
+}
+
+export interface Certificate {
+  id: string;
+  name: string;
+  issuedBy: string;
+  issuedDate: Date;
+  createdAt: Date;
+  startDate: Date;
+  endDate: Date;
+  files: FileMeta[];
+}
+
+export interface FileMeta {
+  id: string;
+  name: string;
+  createdAt: Date;
 }
 
 export interface RegisterUserDto {

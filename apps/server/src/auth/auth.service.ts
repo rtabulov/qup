@@ -55,8 +55,13 @@ export class AuthService {
     });
   }
 
-  async findById(id: string): Promise<SafeUser> {
-    const user = await this.usersRepository.findOne({ id });
+  async findById(id: string, { expand = false } = {}): Promise<SafeUser> {
+    const relations = ['certificates', 'certificates.files'];
+
+    const user = await this.usersRepository.findOne({
+      where: { id },
+      relations: expand ? relations : undefined,
+    });
     if (!user) {
       throw new BadRequestException(`No user found with id ${id}`);
     }
