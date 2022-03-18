@@ -7,35 +7,27 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
 });
 
-router.beforeEach(async (to, from) => {
+router.beforeEach(async () => {
   const store = useUserStore();
 
-  if (to.meta.requiresAuth && store.initialLoadFinished && !store.user) {
-    return `/login?backurl=${to.path}`;
-  }
-
-  if (to.meta.requiresAuth && !store.initialLoadFinished) {
+  if (!store.initialLoadFinished) {
     await store.tryLoggingIn();
-
-    if (!store.user) {
-      return `/login?backurl=${to.path}`;
-    }
   }
 });
 
 router.beforeEach(async (to, from) => {
   const store = useUserStore();
 
-  if (to.meta.requiresGuest && store.initialLoadFinished && store.user) {
-    return from.name ? from.fullPath : '/';
+  if (to.meta.requiresAuth && !store.user) {
+    return `/login?backurl=${to.path}`;
   }
+});
 
-  if (to.meta.requiresGuest && !store.initialLoadFinished) {
-    await store.tryLoggingIn();
+router.beforeEach(async (to, from) => {
+  const store = useUserStore();
 
-    if (store.user) {
-      return from.name ? from.fullPath : '/';
-    }
+  if (to.meta.requiresGuest && store.user) {
+    return from.name ? from.fullPath : '/';
   }
 });
 

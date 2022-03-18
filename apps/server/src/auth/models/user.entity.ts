@@ -5,11 +5,13 @@ import {
   ManyToOne,
   BeforeInsert,
   BeforeUpdate,
+  OneToMany,
 } from 'typeorm';
 import { Exclude, instanceToPlain } from 'class-transformer';
 // @ts-ignore
 import * as credential from 'credential';
 import { Department } from '../../departments/entities/department.entity';
+import { Certificate } from '../../certificates/entities/certificate.entity';
 
 @Entity()
 export class User {
@@ -30,6 +32,9 @@ export class User {
 
   @ManyToOne((type) => Department)
   department: string;
+
+  @OneToMany((type) => Certificate, (c) => c.teacher)
+  certificates: Certificate[];
 
   @Column({ nullable: true })
   position?: string;

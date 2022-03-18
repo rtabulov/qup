@@ -1,24 +1,33 @@
 <script lang="ts" setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 
 interface Props {
   placeholder?: string;
   required?: boolean;
-  modelValue: string;
+  modelValue?: string;
+  initialValue?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   placeholder: '',
   required: false,
+  modelValue: '__defaultModelValue__',
+  initialValue: '',
 });
+
+const innerValue = ref(props.initialValue);
 
 const emit = defineEmits<{ (e: 'update:modelValue', value: string): void }>();
 
 const proxyValue = computed<string>({
   get() {
-    return props.modelValue;
+    if (props.modelValue === '__defaultModelValue__') {
+      return innerValue.value;
+    }
+    return props.modelValue as string;
   },
   set(val) {
+    innerValue.value = val;
     emit('update:modelValue', val);
   },
 });

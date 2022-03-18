@@ -12,6 +12,7 @@ import { LocalGuard } from '../local.guard';
 import { AuthService } from './auth.service';
 import { LoginUserDto } from './models/login-user.dto';
 import { RegisterUserDto } from './models/register-user.dto';
+import { LoggedInGuard } from '../logged-in.guard';
 
 @Controller('auth')
 export class AuthController {
@@ -39,5 +40,11 @@ export class AuthController {
   @Post('login')
   loginUser(@Req() req, @Body() user: LoginUserDto) {
     return req.session;
+  }
+
+  @UseGuards(LoggedInGuard)
+  @Post('logout')
+  logoutUser(@Req() req) {
+    return req.logout();
   }
 }

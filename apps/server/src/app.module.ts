@@ -19,6 +19,8 @@ import { DepartmentsModule } from './departments/departments.module';
 import { AuthModule } from './auth/auth.module';
 import { REDIS } from './redis/redis.constants';
 import { RedisModule } from './redis/redis.module';
+import { CertificatesModule } from './certificates/certificates.module';
+import { FileMetaModule } from './file-meta/file-meta.module';
 
 @Module({
   imports: [
@@ -39,6 +41,8 @@ import { RedisModule } from './redis/redis.module';
     DepartmentsModule,
     AuthModule,
     RedisModule,
+    CertificatesModule,
+    FileMetaModule,
   ],
   controllers: [AppController],
   providers: [Logger],

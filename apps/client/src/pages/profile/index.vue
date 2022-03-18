@@ -21,27 +21,27 @@ const roleNames: Record<User['role'], string> = {
       <table v-if="user">
         <tbody>
           <tr>
-            <td class="min-w-[300px] py-2 text-pink">Фамилия</td>
+            <td class="min-w-[50%] py-2 text-pink">Фамилия</td>
             <td>{{ user.lastName }}</td>
           </tr>
           <tr>
-            <td class="min-w-[300px] py-2 text-pink">Имя</td>
+            <td class="min-w-[50%] py-2 text-pink">Имя</td>
             <td>{{ user.firstName }}</td>
           </tr>
           <tr>
-            <td class="min-w-[300px] py-2 text-pink">Отчество</td>
+            <td class="min-w-[50%] py-2 text-pink">Отчество</td>
             <td>{{ user.middleName }}</td>
           </tr>
           <tr>
-            <td class="min-w-[300px] py-2 text-pink">Должность</td>
+            <td class="min-w-[50%] py-2 text-pink">Должность</td>
             <td>{{ user.position }}</td>
           </tr>
           <tr>
-            <td class="min-w-[300px] py-2 text-pink">Роль</td>
+            <td class="min-w-[50%] py-2 text-pink">Роль</td>
             <td>{{ roleNames[user.role] }}</td>
           </tr>
           <tr>
-            <td class="min-w-[300px] py-2 text-pink">E-mail</td>
+            <td class="min-w-[50%] py-2 text-pink">E-mail</td>
             <td>{{ user.email }}</td>
           </tr>
         </tbody>

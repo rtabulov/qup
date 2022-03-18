@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { User } from '../types/index';
-import { getSelf } from '../api';
+import { getSelf, logout } from '../api';
 
 export const useUserStore = defineStore('todos', {
   state: () => ({
@@ -9,8 +9,9 @@ export const useUserStore = defineStore('todos', {
   }),
 
   actions: {
-    logout() {
+    async logout() {
       // you can directly mutate the state
+      await logout();
       this.user = null;
     },
     setUser(user: User) {

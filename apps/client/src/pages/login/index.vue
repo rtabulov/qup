@@ -25,7 +25,7 @@ async function onSubmit() {
 </script>
 
 <template>
-  <div class="py-6 text-center">
+  <div class="text-center">
     <h1 class="text-3xl">Вход</h1>
     <hr class="max-w-xs my-6 mx-auto border-red border-b-[3px]" />
     <form class="max-w-xl mx-auto space-y-4" @submit.prevent="onSubmit">
