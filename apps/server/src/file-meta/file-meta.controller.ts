@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { FileMetaService } from './file-meta.service';
 import { CreateFileMetaDto } from './dto/create-file-meta.dto';
 import { UpdateFileMetaDto } from './dto/update-file-meta.dto';
@@ -19,16 +27,19 @@ export class FileMetaController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.fileMetaService.findOne(+id);
+    return this.fileMetaService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFileMetaDto: UpdateFileMetaDto) {
-    return this.fileMetaService.update(+id, updateFileMetaDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateFileMetaDto: UpdateFileMetaDto,
+  ) {
+    return this.fileMetaService.update(id, updateFileMetaDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.fileMetaService.remove(+id);
+    return this.fileMetaService.remove(id);
   }
 }

@@ -15,7 +15,7 @@ export class FileMeta {
   @Column()
   name: string;
 
-  @ManyToOne((type) => Certificate, (c) => c.files)
+  @ManyToOne((type) => Certificate, (c) => c.files, { onDelete: 'CASCADE' })
   certificate: Certificate;
 
   @CreateDateColumn()

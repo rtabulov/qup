@@ -23,15 +23,15 @@ export class FileMetaService {
     return `This action returns all fileMeta`;
   }
 
-  findOne(id: number) {
+  findOne(id: string) {
     return `This action returns a #${id} fileMeta`;
   }
 
-  update(id: number, updateFileMetaDto: UpdateFileMetaDto) {
+  update(id: string, updateFileMetaDto: UpdateFileMetaDto) {
     return `This action updates a #${id} fileMeta`;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} fileMeta`;
   }
 }

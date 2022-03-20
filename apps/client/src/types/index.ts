@@ -26,6 +26,15 @@ export interface Certificate {
   files: FileMeta[];
 }
 
+export interface CreateCertificateDto {
+  name: string;
+  issuedBy: string;
+  issuedDate: string;
+  startDate: string;
+  endDate: string;
+  files: any;
+}
+
 export interface FileMeta {
   id: string;
   name: string;

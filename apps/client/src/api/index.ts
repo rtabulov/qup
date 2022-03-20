@@ -36,3 +36,8 @@ export const createCertificate = async (formData: FormData) => {
   });
   return res.data;
 };
+
+export const removeCertificate = async (id: string) => {
+  const res = await api.delete(`/certificates/${id}`);
+  return res.data;
+};

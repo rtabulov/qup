@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import AppInput from '../../components/AppInput.vue';
 import AppButton from '../../components/AppButton.vue';
 import { LoginUserDto } from '../../types';
@@ -12,15 +12,25 @@ const form = reactive<LoginUserDto>({
   password: '',
 });
 
+const errors = ref<Partial<Record<keyof LoginUserDto, string>>>({});
+
 const router = useRouter();
 const route = useRoute();
 const userStore = useUserStore();
 
+const isLoading = ref(false);
 async function onSubmit() {
-  await login({ ...form });
-  await userStore.tryLoggingIn();
-
-  router.push((route.query.backurl as string) || '/');
+  isLoading.value = true;
+  try {
+    await login({ ...form });
+    await userStore.tryLoggingIn();
+    router.push((route.query.backurl as string) || '/profile');
+  } catch (e: any) {
+    isLoading.value = false;
+    if (e.response) {
+      errors.value = e.response.data;
+    }
+  }
 }
 </script>
 
@@ -31,18 +41,22 @@ async function onSubmit() {
     <form class="max-w-xl mx-auto space-y-4" @submit.prevent="onSubmit">
       <AppInput
         v-model="form.email"
+        v-model:error="errors.email"
         type="email"
         required
-        placeholder="E-mail"
+        label="E-mail"
       />
       <AppInput
         v-model="form.password"
+        v-model:error="errors.password"
         type="password"
         required
-        placeholder="Пароль"
+        label="Пароль"
       />
 
-      <AppButton type="submit" class="w-full">Войти</AppButton>
+      <AppButton :disabled="isLoading" type="submit" class="w-full"
+        >Войти</AppButton
+      >
     </form>
   </div>
 </template>

@@ -2,7 +2,6 @@ import {
   Injectable,
   UnauthorizedException,
   BadRequestException,
-  Logger,
 } from '@nestjs/common';
 // @ts-ignore
 import * as credential from 'credential';
@@ -18,14 +17,15 @@ export class AuthService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
-    private logger: Logger,
   ) {}
 
   async validateUser(user: LoginUserDto) {
     const foundUser = await this.usersRepository.findOne({ email: user.email });
 
     if (!user || !(await await verify(foundUser.password, user.password))) {
-      throw new UnauthorizedException('Incorrect username or password');
+      throw new UnauthorizedException({
+        password: 'Неверный пароль',
+      });
     }
     const { password: _password, ...retUser } = foundUser;
     return retUser;
@@ -37,12 +37,14 @@ export class AuthService {
     });
 
     if (existingUser) {
-      throw new BadRequestException('User email must be unique');
+      throw new BadRequestException({
+        email: "Пользователь с таким e-mail'ом уже зарегистрирован",
+      });
     }
     if (user.password !== user.confirmationPassword) {
-      throw new BadRequestException(
-        'Password and Confirmation Password must match',
-      );
+      throw new BadRequestException({
+        confirmationPassword: 'Password and Confirmation Password must match',
+      });
     }
     const created = this.usersRepository.create(user);
     return await this.usersRepository.save(created);

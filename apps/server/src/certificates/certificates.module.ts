@@ -10,11 +10,9 @@ import { CertificatesService } from './certificates.service';
 import { CertificatesController } from './certificates.controller';
 import { Certificate } from './entities/certificate.entity';
 import { FileMetaModule } from '../file-meta/file-meta.module';
-import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
-    AuthModule,
     FileMetaModule,
     TypeOrmModule.forFeature([Certificate]),
     MulterModule.registerAsync({

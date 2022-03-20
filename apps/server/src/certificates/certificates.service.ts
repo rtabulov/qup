@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -31,15 +31,22 @@ export class CertificatesService {
     return `This action returns all certificates`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} certificate`;
+  findOne(id: string, { expand = false } = {}) {
+    const relations = expand ? ['teacher'] : undefined;
+    return this.certificateRepository.findOne(id, { relations });
   }
 
-  update(id: number, updateCertificateDto: UpdateCertificateDto) {
+  update(id: string, updateCertificateDto: UpdateCertificateDto) {
     return `This action updates a #${id} certificate`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} certificate`;
+  async remove(id: string, requestUser: Certificate['teacher']) {
+    const cert = await this.findOne(id, { expand: true });
+
+    if (requestUser.id !== cert.teacher.id) {
+      throw new UnauthorizedException();
+    }
+
+    return this.certificateRepository.remove(cert);
   }
 }

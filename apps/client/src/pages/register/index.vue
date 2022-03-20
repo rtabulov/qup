@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-import { reactive, ref, watchEffect } from 'vue';
+import { reactive, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import AppInput from '../../components/AppInput.vue';
 import AppSelect from '../../components/AppSelect.vue';
 import AppButton from '../../components/AppButton.vue';
 import { RegisterUserDto, Department } from '../../types';
-import { useRouter } from 'vue-router';
 import { getDepartments } from '../../api';
 import { register } from '../../api';
 
@@ -26,10 +26,20 @@ getDepartments().then((dpts) => {
 });
 
 const router = useRouter();
+const errors = ref<Partial<Record<keyof RegisterUserDto, string>>>({});
 
+const isLoading = ref(false);
 async function onSubmit() {
-  await register({ ...form });
-  router.push('/login');
+  isLoading.value = true;
+  try {
+    await register({ ...form });
+    router.push('/login');
+  } catch (e: any) {
+    isLoading.value = false;
+    if (e.response) {
+      errors.value = e.response.data;
+    }
+  }
 }
 </script>
 
@@ -44,6 +54,7 @@ async function onSubmit() {
     >
       <AppSelect
         v-model="form.department"
+        v-model:error="errors.department"
         type="text"
         :options="departments"
         :get-label="(dpt) => dpt.name"
@@ -52,48 +63,57 @@ async function onSubmit() {
 
       <AppInput
         v-model="form.lastName"
+        v-model:error="errors.lastName"
         type="text"
         required
-        placeholder="Фамилия"
+        label="Фамилия"
       />
       <AppInput
         v-model="form.firstName"
+        v-model:error="errors.firstName"
         type="text"
         required
-        placeholder="Имя"
+        label="Имя"
       />
       <AppInput
         v-model="form.middleName"
+        v-model:error="errors.middleName"
         type="text"
         required
-        placeholder="Отчество"
+        label="Отчество"
       />
       <AppInput
         v-model="form.position"
+        v-model:error="errors.position"
         type="text"
         required
-        placeholder="Должность"
+        label="Должность"
       />
       <AppInput
         v-model="form.email"
+        v-model:error="errors.email"
         type="email"
         required
-        placeholder="E-mail"
+        label="E-mail"
       />
       <AppInput
         v-model="form.password"
+        v-model:error="errors.password"
         type="password"
         required
-        placeholder="Пароль"
+        label="Пароль"
       />
       <AppInput
         v-model="form.confirmationPassword"
+        v-model:error="errors.confirmationPassword"
         type="password"
         required
-        placeholder="Подтвердите пароль"
+        label="Подтвердите пароль"
       />
 
-      <AppButton type="submit" class="w-full">Зарегистрироваться</AppButton>
+      <AppButton :disabled="isLoading" type="submit" class="w-full"
+        >Зарегистрироваться</AppButton
+      >
     </form>
   </div>
 </template>

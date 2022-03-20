@@ -1,37 +1,49 @@
 <script lang="ts" setup>
 import { useUserStore } from '../store';
 import TheNavigationLink from './TheNavigationLink.vue';
+import {
+  LogoutIcon,
+  PlusIcon,
+  UserIcon,
+  LoginIcon,
+  UserAddIcon,
+} from '@heroicons/vue/solid';
 
 const store = useUserStore();
-
-const { log } = console;
 </script>
 
 <template>
   <nav class="bg-dark font-display">
     <div class="container px-0 flex">
       <div class="flex">
-        <TheNavigationLink to="/">Home</TheNavigationLink>
+        <!-- <TheNavigationLink to="/">Home</TheNavigationLink> -->
       </div>
       <div class="flex ml-auto">
         <template v-if="store.user">
           <TheNavigationLink to="/certificates/create"
-            >Add new certificate</TheNavigationLink
-          >
+            >Добавить сертификат
+            <PlusIcon class="inline-block h-5 w-5 -translate-y-px" />
+          </TheNavigationLink>
           <TheNavigationLink to="/profile">
             {{ store.user?.lastName }}
             {{ store.user?.firstName }}
+
+            <UserIcon class="inline-block h-5 w-5 -translate-y-px" />
           </TheNavigationLink>
-          <TheNavigationLink
-            as="button"
-            @click="async () => log(await store.logout())"
-          >
-            Logout</TheNavigationLink
-          >
+          <TheNavigationLink as="button" @click="() => store.logout()">
+            Выйти
+            <LogoutIcon class="inline-block w-5 h-5" />
+          </TheNavigationLink>
         </template>
         <template v-else>
-          <TheNavigationLink to="/register">Register</TheNavigationLink>
-          <TheNavigationLink to="/login">Login</TheNavigationLink>
+          <TheNavigationLink to="/register">
+            Зарегистрироваться
+            <UserAddIcon class="inline-block w-5 h-5" />
+          </TheNavigationLink>
+          <TheNavigationLink to="/login">
+            Войти
+            <LoginIcon class="inline-block w-5 h-5" />
+          </TheNavigationLink>
         </template>
       </div>
     </div>

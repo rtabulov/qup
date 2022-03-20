@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { User } from '../types/index';
 import { getSelf, logout } from '../api';
 
-export const useUserStore = defineStore('todos', {
+export const useUserStore = defineStore('user', {
   state: () => ({
     user: null as User | null,
     initialLoadFinished: false,
