@@ -56,3 +56,9 @@ export interface LoginUserDto {
   email: string;
   password: string;
 }
+
+export interface AppNotification {
+  id: string;
+  text: string;
+  type: 'default' | 'danger' | 'warning' | 'success';
+}

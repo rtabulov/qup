@@ -6,6 +6,7 @@ import { useUserStore } from '../../store';
 import { User } from '../../types';
 import { removeCertificate } from '../../api';
 import AppButton from '../../components/AppButton.vue';
+import { useNotificationsStore } from '../../store/notifications-store';
 
 const store = useUserStore();
 const user = computed(() => store.user);
@@ -15,10 +16,14 @@ const roleNames: Record<User['role'], string> = {
   teacher: 'преподаватель',
 };
 
+const notifications = useNotificationsStore();
+
 async function onCertificateRemove(id: string) {
   await removeCertificate(id);
   await store.tryLoggingIn();
-  alert('removed successfully');
+  notifications.create({
+    text: 'Сертификат успешно удалён',
+  });
 }
 
 function limitLength(str: string, len = 20) {

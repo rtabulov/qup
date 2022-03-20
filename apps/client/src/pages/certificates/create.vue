@@ -42,12 +42,14 @@ async function onSubmit(e: Event) {
       required
       label="Название курса повышения квалификации"
       name="name"
+      initial-value="asd"
       :error="errors.name"
     />
     <AppInput
       type="text"
       required
       label="Кем выдан"
+      initial-value="asd"
       name="issuedBy"
       :error="errors.issuedBy"
     />
@@ -55,12 +57,14 @@ async function onSubmit(e: Event) {
       type="date"
       required
       label="Дата выдачи"
+      initial-value="2022-03-20"
       name="issuedDate"
       :error="errors.issuedDate"
     />
     <AppInput
       type="date"
       required
+      initial-value="2022-01-11"
       label="Дата начала прохождения обучения"
       name="startDate"
       :error="errors.startDate"
@@ -68,12 +72,15 @@ async function onSubmit(e: Event) {
     <AppInput
       type="date"
       required
+      initial-value="2022-02-11"
       label="Дата окончания прохождения обучения"
       name="endDate"
       :error="errors.endDate"
     />
 
-    <AppButton type="submit" class="w-full">Добавить сертификат</AppButton>
+    <AppButton :disabled="isLoading" type="submit" class="w-full"
+      >Добавить сертификат</AppButton
+    >
   </form>
 </template>
 <route lang="json">

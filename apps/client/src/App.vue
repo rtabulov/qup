@@ -1,8 +1,9 @@
 <script lang="ts" setup>
+import { watchEffect } from 'vue';
+import { useUserStore } from './store';
 import TheNavigation from './components/TheNavigation.vue';
 import TheFooter from './components/TheFooter.vue';
-import { useUserStore } from './store';
-import { watchEffect } from 'vue';
+import AppNotifications from './components/AppNotifications.vue';
 
 const store = useUserStore();
 
@@ -10,6 +11,7 @@ watchEffect(() => console.log(store.user));
 </script>
 
 <template>
+  <AppNotifications />
   <div class="flex flex-col min-h-screen">
     <TheNavigation class="shrink-0" />
 
