@@ -52,6 +52,10 @@ export interface RegisterUserDto {
   confirmationPassword: string;
 }
 
+export interface UpdateUserDto {
+  role?: User['role'];
+}
+
 export interface LoginUserDto {
   email: string;
   password: string;

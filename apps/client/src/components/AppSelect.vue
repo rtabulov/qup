@@ -31,10 +31,11 @@ const proxyValue = computed<string>({
 </script>
 
 <template>
-  <Listbox v-model="proxyValue">
+  <Listbox v-model="proxyValue" v-slot="{ disabled }">
     <div class="relative mt-1">
       <ListboxButton
         class="relative w-full py-2 pl-3 pr-10 text-left bg-gray text-white shadow-md cursor-default focus:outline-none focus-visible:ring focus-visible:ring-opacity-75 focus-visible:ring-muted sm:text-sm"
+        :class="{ 'bg-muted bg-opacity-50': disabled }"
       >
         <span class="block truncate">{{ getLabel(proxyValue) }}</span>
         <span
@@ -54,9 +55,9 @@ const proxyValue = computed<string>({
         >
           <ListboxOption
             v-slot="{ active, selected }"
-            v-for="person in options"
-            :key="person.name"
-            :value="person"
+            v-for="option in options"
+            :key="getValue(option)"
+            :value="getValue(option)"
             as="template"
           >
             <li
@@ -70,7 +71,7 @@ const proxyValue = computed<string>({
                   selected ? 'font-medium' : 'font-normal',
                   'block truncate',
                 ]"
-                >{{ person.name }}</span
+                >{{ getLabel(option) }}</span
               >
               <span
                 v-if="selected"

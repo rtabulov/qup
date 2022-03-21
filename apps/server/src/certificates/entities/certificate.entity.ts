@@ -34,6 +34,6 @@ export class Certificate {
   @OneToMany((type) => FileMeta, (file) => file.certificate)
   files: FileMeta[];
 
-  @ManyToOne((type) => User, (u) => u.certificates)
+  @ManyToOne((type) => User, (u) => u.certificates, { onDelete: 'CASCADE' })
   teacher: User;
 }

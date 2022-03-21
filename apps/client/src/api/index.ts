@@ -1,5 +1,11 @@
 import axios from 'axios';
-import { LoginUserDto, Department, RegisterUserDto, User } from '../types';
+import {
+  LoginUserDto,
+  Department,
+  RegisterUserDto,
+  User,
+  UpdateUserDto,
+} from '../types';
 
 const api = axios.create({ baseURL: '/api', timeout: 10_000 });
 
@@ -49,5 +55,10 @@ export const getAllUsers = async () => {
 
 export const removeUser = async (id: string) => {
   const res = await api.delete(`/auth/users/${id}`);
+  return res.data;
+};
+
+export const updateUser = async (id: string, updateUserDto: UpdateUserDto) => {
+  const res = await api.patch(`/auth/users/${id}`, updateUserDto);
   return res.data;
 };

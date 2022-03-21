@@ -2,12 +2,13 @@ import {
   Controller,
   Post,
   UseGuards,
-  Body,
   Req,
   Logger,
   Delete,
   Get,
   Param,
+  Patch,
+  Body,
 } from '@nestjs/common';
 
 import { LocalGuard } from '../local.guard';
@@ -16,7 +17,7 @@ import { LoginUserDto } from './models/login-user.dto';
 import { RegisterUserDto } from './models/register-user.dto';
 import { LoggedInGuard } from '../logged-in.guard';
 import { AdminGuard } from '../admin.guard';
-
+import { UpdateUserDto } from './models/update-user.dto';
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -34,6 +35,12 @@ export class AuthController {
   @Delete('users/:id')
   removeUser(@Param('id') id: string) {
     return this.authService.removeUser(id);
+  }
+
+  @UseGuards(AdminGuard)
+  @Patch('users/:id')
+  updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.authService.updateUser(id, updateUserDto);
   }
 
   @Get('teachers')

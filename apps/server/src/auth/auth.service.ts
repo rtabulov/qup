@@ -11,6 +11,7 @@ import { Repository } from 'typeorm';
 import { User, SafeUser } from './models/user.entity';
 import { LoginUserDto } from './models/login-user.dto';
 import { RegisterUserDto } from './models/register-user.dto';
+import { UpdateUserDto } from './models/update-user.dto';
 
 @Injectable()
 export class AuthService {
@@ -55,6 +56,14 @@ export class AuthService {
       where: { role: 'teacher' },
       relations: ['department'],
     });
+  }
+
+  async updateUser(
+    id: string,
+    updateUserDto: UpdateUserDto,
+  ): Promise<SafeUser> {
+    await this.usersRepository.update({ id }, updateUserDto);
+    return this.usersRepository.findOne(id);
   }
 
   async findUsers(): Promise<SafeUser[]> {
