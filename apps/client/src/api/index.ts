@@ -41,3 +41,13 @@ export const removeCertificate = async (id: string) => {
   const res = await api.delete(`/certificates/${id}`);
   return res.data;
 };
+
+export const getAllUsers = async () => {
+  const res = await api.get<User[]>('/auth/users');
+  return res.data;
+};
+
+export const removeUser = async (id: string) => {
+  const res = await api.delete(`/auth/users/${id}`);
+  return res.data;
+};

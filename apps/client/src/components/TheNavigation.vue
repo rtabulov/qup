@@ -7,6 +7,7 @@ import {
   UserIcon,
   LoginIcon,
   UserAddIcon,
+  UsersIcon,
 } from '@heroicons/vue/solid';
 
 const store = useUserStore();
@@ -19,6 +20,12 @@ const store = useUserStore();
         <!-- <TheNavigationLink to="/">Home</TheNavigationLink> -->
       </div>
       <div class="flex ml-auto">
+        <template v-if="store.user?.role === 'admin'">
+          <TheNavigationLink to="/users">
+            Все пользователи
+            <UsersIcon class="inline-block h-5 w-5 -translate-y-px" />
+          </TheNavigationLink>
+        </template>
         <template v-if="store.user">
           <TheNavigationLink to="/certificates/create"
             >Добавить сертификат

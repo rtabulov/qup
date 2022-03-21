@@ -57,6 +57,15 @@ export class AuthService {
     });
   }
 
+  async findUsers(): Promise<SafeUser[]> {
+    return this.usersRepository.find();
+  }
+
+  async removeUser(id: string): Promise<SafeUser> {
+    const found = await this.usersRepository.findOne(id);
+    return this.usersRepository.remove(found);
+  }
+
   async findById(id: string, { expand = false } = {}): Promise<SafeUser> {
     const relations = ['certificates', 'certificates.files'];
 
