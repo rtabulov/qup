@@ -58,3 +58,11 @@ watchEffect(() => console.log(certificates.value.slice()));
     </table>
   </div>
 </template>
+
+<route lang="json">
+{
+  "meta": {
+    "requiresAuth": "hr"
+  }
+}
+</route>

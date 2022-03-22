@@ -33,7 +33,7 @@ async function onSubmit(e: Event) {
 
 <template>
   <h1 class="text-3xl text-center">Добавить сертификат</h1>
-  <hr class="max-w-xs my-6 mx-auto border-red border-b-[3px]" />
+  <AppRuler center />
   <form class="max-w-xl mx-auto space-y-4" @submit.prevent="onSubmit">
     <FileInput multiple name="files" />
 

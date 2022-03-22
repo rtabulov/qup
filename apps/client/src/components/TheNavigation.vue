@@ -10,6 +10,7 @@ import {
   UsersIcon,
   DocumentReportIcon,
 } from '@heroicons/vue/solid';
+import { resolveAuthLevel } from '../utils';
 
 const store = useUserStore();
 </script>
@@ -21,20 +22,23 @@ const store = useUserStore();
         <!-- <TheNavigationLink to="/">Home</TheNavigationLink> -->
       </div>
       <div class="flex ml-auto">
-        <template v-if="store.user?.role === 'admin'">
+        <template v-if="resolveAuthLevel(store.user?.role, 'admin')">
           <TheNavigationLink to="/users">
             Все пользователи
             <UsersIcon class="inline-block h-5 w-5 -translate-y-px" />
           </TheNavigationLink>
+        </template>
 
+        <template v-if="resolveAuthLevel(store.user?.role, 'hr')">
           <TheNavigationLink to="/certificates">
             Все сертификаты
             <DocumentReportIcon class="inline-block h-5 w-5 -translate-y-px" />
           </TheNavigationLink>
         </template>
+
         <template v-if="store.user">
-          <TheNavigationLink to="/certificates/create"
-            >Добавить сертификат
+          <TheNavigationLink to="/certificates/create">
+            Добавить сертификат
             <PlusIcon class="inline-block h-5 w-5 -translate-y-px" />
           </TheNavigationLink>
           <TheNavigationLink to="/profile">

@@ -3,19 +3,14 @@ import { computed } from 'vue';
 import { format } from 'date-fns';
 import { TrashIcon, PlusIcon } from '@heroicons/vue/outline';
 import { useUserStore } from '../../store';
-import { User } from '../../types';
 import { removeCertificate } from '../../api';
 import AppButton from '../../components/AppButton.vue';
 import { useNotificationsStore } from '../../store/notifications-store';
-import { limitLength } from '../../utils';
+import { limitLength, roleNames } from '../../utils';
+import AppRuler from '../../components/AppRuler.vue';
 
 const store = useUserStore();
 const user = computed(() => store.user);
-
-const roleNames: Record<User['role'], string> = {
-  admin: 'администратор',
-  teacher: 'преподаватель',
-};
 
 const notifications = useNotificationsStore();
 
@@ -30,7 +25,7 @@ async function onCertificateRemove(id: string) {
 
 <template>
   <h1 class="text-3xl">Профиль пользователя</h1>
-  <hr class="max-w-xs my-6 border-red border-b-[3px]" />
+  <AppRuler />
   <div class="my-6">
     <h2 class="text-2xl mb-4">Ваши сертификаты</h2>
     <div class="overflow-x-auto">

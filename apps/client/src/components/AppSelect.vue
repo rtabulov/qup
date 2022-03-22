@@ -9,7 +9,7 @@ import {
 import { CheckIcon, SelectorIcon } from '@heroicons/vue/solid';
 
 interface Props {
-  options: any[];
+  options: any[] | readonly any[];
   modelValue: any;
   getLabel?: (option: any) => string;
   getValue?: (option: any) => string;

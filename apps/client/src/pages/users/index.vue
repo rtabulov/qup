@@ -2,10 +2,12 @@
 import { ref, watchEffect } from 'vue';
 import { TrashIcon } from '@heroicons/vue/outline';
 import { getAllUsers, removeUser, updateUser } from '../../api';
-import type { User, ROLES_ARRAY } from '../../types';
+import type { User } from '../../types';
+import { ROLES_ARRAY } from '../../types';
 import { useNotificationsStore } from '../../store/notifications-store';
 import AppSelect from '../../components/AppSelect.vue';
 import { useUserStore } from '../../store';
+import { roleNames } from '../../utils';
 
 const users = ref<User[]>([]);
 const notifications = useNotificationsStore();
@@ -28,6 +30,10 @@ async function onUpdateUserRole(userId: string, newRole: string) {
 
   notifications.create({ text: `Роль изменена` });
 }
+
+function getRoleName(role: string) {
+  return roleNames[role as User['role']];
+}
 </script>
 
 <template>
@@ -45,10 +51,12 @@ async function onUpdateUserRole(userId: string, newRole: string) {
           {{ user.lastName }} {{ user.firstName }} {{ user.middleName }}
         </td>
         <td class="px-4">
+          <!-- @ts-ignore -->
           <AppSelect
             :options="ROLES_ARRAY"
             :disabled="user.id === store.user?.id"
             :model-value="user.role"
+            :get-label="getRoleName"
             @update:model-value="
               (newRole) => onUpdateUserRole(user.id, newRole)
             "
@@ -66,3 +74,11 @@ async function onUpdateUserRole(userId: string, newRole: string) {
     </tbody>
   </table>
 </template>
+
+<route lang="json">
+{
+  "meta": {
+    "requiresAuth": "admin"
+  }
+}
+</route>

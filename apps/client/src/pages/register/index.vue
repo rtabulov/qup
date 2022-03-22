@@ -46,7 +46,7 @@ async function onSubmit() {
 <template>
   <div class="text-center">
     <h1 class="text-3xl">Регистрация</h1>
-    <hr class="max-w-xs my-6 mx-auto border-red border-b-[3px]" />
+    <AppRuler center />
     <form
       v-if="departments.length"
       class="max-w-xl mx-auto space-y-4"

@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import { useUserStore } from './store';
 import routes from '~pages';
+import { useUserStore } from './store';
+import { resolveAuthLevel } from './utils';
+import { User } from './types';
 
 const router = createRouter({
   routes,
@@ -15,15 +17,21 @@ router.beforeEach(async () => {
   }
 });
 
-router.beforeEach(async (to, from) => {
+router.beforeEach((to) => {
   const store = useUserStore();
 
-  if (to.meta.requiresAuth && !store.user) {
+  if (
+    to.meta.requiresAuth &&
+    !resolveAuthLevel(
+      store.user?.role,
+      to.meta.requiresAuth as true | User['role'],
+    )
+  ) {
     return `/login?backurl=${to.path}`;
   }
 });
 
-router.beforeEach(async (to, from) => {
+router.beforeEach((to, from) => {
   const store = useUserStore();
 
   if (to.meta.requiresGuest && store.user) {

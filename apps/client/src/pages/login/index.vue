@@ -6,6 +6,7 @@ import { LoginUserDto } from '../../types';
 import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '../../store';
 import { login } from '../../api';
+import AppRuler from '../../components/AppRuler.vue';
 
 const form = reactive<LoginUserDto>({
   email: '',
@@ -37,7 +38,7 @@ async function onSubmit() {
 <template>
   <div class="text-center">
     <h1 class="text-3xl">Вход</h1>
-    <hr class="max-w-xs my-6 mx-auto border-red border-b-[3px]" />
+    <AppRuler center />
     <form class="max-w-xl mx-auto space-y-4" @submit.prevent="onSubmit">
       <AppInput
         v-model="form.email"
