@@ -10,9 +10,9 @@
     "build": "nest build",
     "start": "pnpm run start:prod",
     "dev": "pnpm run start:dev",
-    "start:dev": "nest start --watch",
+    "start:dev": "NODE_ENV=development nest start --watch",
     "start:debug": "nest start --debug --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "NODE_ENV=production node dist/main",
     "seed:run": "pnpm run build && node ./node_modules/typeorm-seeding/dist/cli.js -r ../../ seed"
   },
   "dependencies": {
