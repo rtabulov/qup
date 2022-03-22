@@ -5,6 +5,7 @@ import {
   RegisterUserDto,
   User,
   UpdateUserDto,
+  Certificate,
 } from '../types';
 
 const api = axios.create({ baseURL: '/api', timeout: 10_000 });
@@ -60,5 +61,10 @@ export const removeUser = async (id: string) => {
 
 export const updateUser = async (id: string, updateUserDto: UpdateUserDto) => {
   const res = await api.patch(`/auth/users/${id}`, updateUserDto);
+  return res.data;
+};
+
+export const getAllCertificates = async () => {
+  const res = await api.get<Certificate[]>(`/certificates`);
   return res.data;
 };

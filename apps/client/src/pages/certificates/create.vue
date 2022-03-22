@@ -42,14 +42,12 @@ async function onSubmit(e: Event) {
       required
       label="Название курса повышения квалификации"
       name="name"
-      initial-value="asd"
       :error="errors.name"
     />
     <AppInput
       type="text"
       required
       label="Кем выдан"
-      initial-value="asd"
       name="issuedBy"
       :error="errors.issuedBy"
     />

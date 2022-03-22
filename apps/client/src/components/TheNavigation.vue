@@ -8,6 +8,7 @@ import {
   LoginIcon,
   UserAddIcon,
   UsersIcon,
+  DocumentReportIcon,
 } from '@heroicons/vue/solid';
 
 const store = useUserStore();
@@ -24,6 +25,11 @@ const store = useUserStore();
           <TheNavigationLink to="/users">
             Все пользователи
             <UsersIcon class="inline-block h-5 w-5 -translate-y-px" />
+          </TheNavigationLink>
+
+          <TheNavigationLink to="/certificates">
+            Все сертификаты
+            <DocumentReportIcon class="inline-block h-5 w-5 -translate-y-px" />
           </TheNavigationLink>
         </template>
         <template v-if="store.user">

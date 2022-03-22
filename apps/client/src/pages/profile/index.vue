@@ -7,6 +7,7 @@ import { User } from '../../types';
 import { removeCertificate } from '../../api';
 import AppButton from '../../components/AppButton.vue';
 import { useNotificationsStore } from '../../store/notifications-store';
+import { limitLength } from '../../utils';
 
 const store = useUserStore();
 const user = computed(() => store.user);
@@ -24,22 +25,6 @@ async function onCertificateRemove(id: string) {
   notifications.create({
     text: 'Сертификат успешно удалён',
   });
-}
-
-function limitLength(str: string, len = 20) {
-  const END_PART_SIZE = 4;
-  if (str.length < len) return str;
-
-  const ext = str.split('.').at(-1);
-  const name = str.split('.').slice(0, -1).join('.');
-
-  return (
-    name.slice(0, len - END_PART_SIZE) +
-    '...' +
-    name.slice(-END_PART_SIZE) +
-    '.' +
-    ext
-  );
 }
 </script>
 
