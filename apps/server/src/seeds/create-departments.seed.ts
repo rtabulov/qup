@@ -2,18 +2,17 @@ import { Connection } from 'typeorm';
 import { Department } from '../departments/entities/department.entity';
 import { User } from '../auth/models/user.entity';
 
-const DEPARTMENTS_SEED = [
-  { name: 'Кафедра "Бизнес и управление"' },
-  { name: 'Кафедра "Информационные системы"' },
-  { name: 'Кафедра "Социально-гуманитарные дисциплины"' },
-  { name: 'Кафедра "Технология и стандартизация"' },
-  { name: 'Кафедра "Технология легкой промышленности и дизайна"' },
-  { name: 'Кафедра "Туризм и сервис"' },
-  { name: 'Кафедра "Химия, химическая технология и экология"' },
-  { name: 'Факультет экономики и сервиса' },
+const DEPARTMENTS_SEED: Partial<Department>[] = [
+  { name: 'Бизнес и управление' },
+  { name: 'Информационные системы' },
+  { name: 'Социально-гуманитарные дисциплины' },
+  { name: 'Технология и стандартизация' },
+  { name: 'Технология легкой промышленности и дизайна' },
+  { name: 'Туризм и сервис' },
+  { name: 'Химия, химическая технология и экология' },
 ];
 
-const TEACHERS_SEED = [
+const TEACHERS_SEED: Partial<User>[] = [
   {
     firstName: 'Пётр',
     lastName: 'Петров',
@@ -32,7 +31,7 @@ const TEACHERS_SEED = [
   },
 ];
 
-const SUPERUSER = [
+const SUPERUSER: Partial<User>[] = [
   {
     firstName: 'Админ',
     lastName: 'Админов',

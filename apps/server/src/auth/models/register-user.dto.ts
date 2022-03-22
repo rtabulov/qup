@@ -1,8 +1,10 @@
+import { User } from './user.entity';
+
 export class RegisterUserDto {
   confirmationPassword: string;
-  role = 'user';
+  role?: User['role'];
 
-  fistName: string;
+  firstName: string;
   lastName: string;
   middleName: string;
   department: string;

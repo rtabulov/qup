@@ -19,7 +19,7 @@ export class User {
   id: string;
 
   @Column({ default: 'teacher' })
-  role: string;
+  role: 'teacher' | 'hr' | 'departmentHead' | 'admin';
 
   @Column()
   firstName: string;

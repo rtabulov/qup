@@ -3,9 +3,18 @@ export interface Department {
   name: string;
 }
 
+export const ROLES_ARRAY = [
+  'teacher',
+  'hr',
+  'departmentHead',
+  'admin',
+] as const;
+
+type Role = typeof ROLES_ARRAY[number];
+
 export interface User {
   id: string;
-  role: 'teacher' | 'admin';
+  role: Role;
   firstName: string;
   lastName: string;
   middleName: string;

@@ -19,6 +19,8 @@ import { CreateFileMetaDto } from '../file-meta/dto/create-file-meta.dto';
 import { FileMetaService } from '../file-meta/file-meta.service';
 import { LoggedInGuard } from '../logged-in.guard';
 import { AdminGuard } from '../admin.guard';
+import { DepartmentHeadGuard } from '../department-head.guard';
+import { HrGuard } from '../hr.guard';
 
 @Controller('certificates')
 export class CertificatesController {
@@ -47,25 +49,22 @@ export class CertificatesController {
     });
   }
 
-  @UseGuards(AdminGuard)
+  @UseGuards(HrGuard)
   @Get()
   findAll() {
     return this.certificatesService.findAll();
   }
 
-  @UseGuards(AdminGuard)
+  @UseGuards(HrGuard)
   @Get('report')
   async exportAll(@Res() res) {
     const workbook = await this.certificatesService.exportAll();
-
     var fileName = 'report.xlsx';
-
     res.setHeader(
       'Content-Type',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     );
     res.setHeader('Content-Disposition', 'attachment; filename=' + fileName);
-
     workbook.xlsx.write(res).then(function () {
       res.end();
     });

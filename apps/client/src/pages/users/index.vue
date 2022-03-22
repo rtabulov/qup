@@ -2,7 +2,7 @@
 import { ref, watchEffect } from 'vue';
 import { TrashIcon } from '@heroicons/vue/outline';
 import { getAllUsers, removeUser, updateUser } from '../../api';
-import type { User } from '../../types';
+import type { User, ROLES_ARRAY } from '../../types';
 import { useNotificationsStore } from '../../store/notifications-store';
 import AppSelect from '../../components/AppSelect.vue';
 import { useUserStore } from '../../store';
@@ -46,7 +46,7 @@ async function onUpdateUserRole(userId: string, newRole: string) {
         </td>
         <td class="px-4">
           <AppSelect
-            :options="['admin', 'teacher']"
+            :options="ROLES_ARRAY"
             :disabled="user.id === store.user?.id"
             :model-value="user.role"
             @update:model-value="
