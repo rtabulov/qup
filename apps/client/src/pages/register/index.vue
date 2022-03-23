@@ -7,6 +7,7 @@ import AppButton from '../../components/AppButton.vue';
 import { RegisterUserDto, Department } from '../../types';
 import { getDepartments } from '../../api';
 import { register } from '../../api';
+import AppRuler from '../../components/AppRuler.vue';
 
 const form = reactive<RegisterUserDto>({
   firstName: '',

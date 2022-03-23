@@ -14,12 +14,22 @@ const DEPARTMENTS_SEED: Partial<Department>[] = [
 
 const TEACHERS_SEED: Partial<User>[] = [
   {
+    firstName: 'John',
+    lastName: 'Doe',
+    middleName: 'M',
+    email: 'john@gmail.com',
+    password: 'wordpass',
+    position: 'Старший преподаватель',
+    role: 'departmentHead',
+  },
+  {
     firstName: 'Пётр',
     lastName: 'Петров',
     middleName: 'Петрович',
     email: 'petr@gmail.com',
     password: 'wordpass',
     position: 'Старший преподаватель',
+    role: 'hr',
   },
   {
     firstName: 'Иван',
@@ -28,6 +38,7 @@ const TEACHERS_SEED: Partial<User>[] = [
     email: 'ivan@gmail.com',
     password: 'wordpass',
     position: 'Старший преподаватель',
+    role: 'teacher',
   },
 ];
 

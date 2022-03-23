@@ -31,6 +31,15 @@ export class Certificate {
   @Column({ type: 'date' })
   endDate: Date;
 
+  @Column({ default: false })
+  approved: boolean;
+
+  @Column({ default: true })
+  awaitingApproval: boolean;
+
+  @Column({ default: '' })
+  comment: string;
+
   @OneToMany((type) => FileMeta, (file) => file.certificate)
   files: FileMeta[];
 

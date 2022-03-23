@@ -1,7 +1,13 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  Injectable,
+  UnauthorizedException,
+  NotFoundException,
+  BadRequestException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { groupBy, mapValues, omit } from 'lodash';
+import { groupBy, sortBy } from 'lodash';
 import * as ExcelJS from 'exceljs';
 import { UpdateCertificateDto } from './dto/update-certificate.dto';
 import { CreateCertificateDto } from './dto/create-certificate.dto';
@@ -9,6 +15,7 @@ import { Certificate } from './entities/certificate.entity';
 import { FileMeta } from '../file-meta/entities/file-meta.entity';
 import { SafeUser } from '../auth/models/user.entity';
 import { ConfigService } from '@nestjs/config';
+import { resolveAuthLevel } from '../utils';
 
 @Injectable()
 export class CertificatesService {
@@ -34,12 +41,22 @@ export class CertificatesService {
     return this.certificateRepository.find({ relations: ['teacher', 'files'] });
   }
 
+  findApproved() {
+    return this.certificateRepository.find({
+      where: { approved: true },
+      relations: ['teacher', 'files', 'teacher.department'],
+    });
+  }
+
+  findAwaitingApproval() {
+    return this.certificateRepository.find({
+      where: { approved: false, awaitingApproval: true },
+      relations: ['teacher', 'files'],
+    });
+  }
+
   async exportAll() {
-    const certificates = (
-      await this.certificateRepository.find({
-        relations: ['teacher', 'files', 'teacher.department'],
-      })
-    ).map((c) => ({
+    const certificates = (await this.findApproved()).map((c) => ({
       ...c,
       teacher: {
         ...c.teacher,
@@ -69,7 +86,7 @@ export class CertificatesService {
           { header: 'Прикрепленные файлы', key: 'files' },
         ];
         ws.addRows(
-          certificates.map((cert) => ({
+          sortBy(certificates, 'teacher.fullName').map((cert) => ({
             // id: cert.id,
             fullName: cert.teacher.fullName,
             name: cert.name,
@@ -92,12 +109,32 @@ export class CertificatesService {
   }
 
   findOne(id: string, { expand = false } = {}) {
-    const relations = expand ? ['teacher'] : undefined;
+    const relations = expand ? ['teacher', 'files'] : undefined;
     return this.certificateRepository.findOne(id, { relations });
   }
 
-  update(id: string, updateCertificateDto: UpdateCertificateDto) {
-    return `This action updates a #${id} certificate`;
+  async update(
+    id: string,
+    user: Certificate['teacher'],
+    updateCertificateDto: UpdateCertificateDto,
+  ) {
+    const found = await this.findOne(id, { expand: true });
+    if (!found) {
+      throw new NotFoundException();
+    }
+
+    if (found.approved) {
+      throw new BadRequestException();
+    }
+
+    if (found.teacher.id !== user.id && !resolveAuthLevel(user.role, 'hr')) {
+      throw new ForbiddenException();
+    }
+
+    return this.certificateRepository.update(id, {
+      ...updateCertificateDto,
+      awaitingApproval: updateCertificateDto.awaitingApproval ?? true,
+    });
   }
 
   async remove(id: string, requestUser: Certificate['teacher']) {
@@ -126,18 +163,5 @@ const autoWidth = (worksheet: ExcelJS.Worksheet, minimalWidth = 10) => {
       );
     });
     column.width = maxColumnLength + 2;
-  });
-};
-
-const autoHeight = (worksheet: ExcelJS.Worksheet) => {
-  const lineHeight = 12; // height per line is roughly 12
-  worksheet.eachRow((row) => {
-    let maxLine = 1;
-    row.eachCell((cell) => {
-      if (typeof cell.value === 'string') {
-        maxLine = Math.max(cell.value.split('\n').length - 1, maxLine);
-      }
-    });
-    row.height = lineHeight * maxLine;
   });
 };

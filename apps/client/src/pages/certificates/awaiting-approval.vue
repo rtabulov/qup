@@ -1,27 +1,19 @@
 <script lang="ts" setup>
-import { ref, watchEffect } from 'vue';
 import { format } from 'date-fns';
-import { DocumentReportIcon } from '@heroicons/vue/outline';
+import { ref } from 'vue';
+import { getCertificatesAwaitingApproval } from '../../api';
 import { Certificate } from '../../types';
-import { getAllCertificates } from '../../api';
 import { limitLength } from '../../utils';
-import AppButton from '../../components/AppButton.vue';
 import AppRuler from '../../components/AppRuler.vue';
 
 const certificates = ref<Certificate[]>([]);
-getAllCertificates().then((v) => (certificates.value = v));
+getCertificatesAwaitingApproval().then((c) => (certificates.value = c));
 </script>
 
 <template>
-  <div class="flex items-center justify-between mb-4">
-    <h1 class="text-2xl">Подтвержденные сертификаты</h1>
-    <AppRuler />
+  <h1 class="text-2xl mb-4">Сертификаты ожидающие подтверждения</h1>
+  <AppRuler />
 
-    <AppButton as="a" target="_blank" href="/api/certificates/report">
-      Скачать в Excel
-      <DocumentReportIcon class="w-6 h-6 inline ml-2" />
-    </AppButton>
-  </div>
   <div class="overflow-x-auto">
     <table class="w-full">
       <thead class="text-lg whitespace-nowrap bg-black">
@@ -37,7 +29,11 @@ getAllCertificates().then((v) => (certificates.value = v));
           v-for="cert in certificates"
           class="odd:bg-gray odd:bg-opacity-40 text-opacity-75 text-white hover:text-opacity-100 transition-colors"
         >
-          <td class="px-3 py-4">{{ cert.name }}</td>
+          <td class="px-3 py-4">
+            <RouterLink :to="`/certificates/${cert.id}`">{{
+              cert.name
+            }}</RouterLink>
+          </td>
           <td class="px-3 py-4">{{ cert.issuedBy }}</td>
           <!-- <td class="px-3 py-4 whitespace-nowrap">{{ cert.startDate }}</td> -->
           <!-- <td class="px-3 py-4 whitespace-nowrap">{{ cert.endDate }}</td> -->

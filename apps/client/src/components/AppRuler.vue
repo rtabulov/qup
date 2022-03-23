@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 interface Props {
-  center: boolean;
+  center?: boolean;
 }
 
 withDefaults(defineProps<Props>(), { center: false });

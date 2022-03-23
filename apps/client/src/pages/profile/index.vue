@@ -8,6 +8,7 @@ import AppButton from '../../components/AppButton.vue';
 import { useNotificationsStore } from '../../store/notifications-store';
 import { limitLength, roleNames } from '../../utils';
 import AppRuler from '../../components/AppRuler.vue';
+import { Certificate } from '../../types';
 
 const store = useUserStore();
 const user = computed(() => store.user);
@@ -20,6 +21,18 @@ async function onCertificateRemove(id: string) {
   notifications.create({
     text: 'Сертификат успешно удалён',
   });
+}
+
+function getStatus(certificate: Certificate) {
+  if (certificate.approved) {
+    return 'Подтверждён';
+  }
+
+  if (certificate.awaitingApproval) {
+    return 'На подтверждении';
+  }
+
+  return 'Нуждается в обновлении';
 }
 </script>
 
@@ -35,8 +48,9 @@ async function onCertificateRemove(id: string) {
           <th class="px-3 py-4 text-white">Место прохождения</th>
           <!-- <th class="px-3 py-4 text-white ">Начало обучения</th> -->
           <!-- <th class="px-3 py-4 text-white ">Конец обучения</th> -->
-          <th class="px-3 py-4 text-white">Дата выдачи</th>
-          <th class="px-3 py-4 text-white">Файлы</th>
+          <!-- <th class="px-3 py-4 text-white">Дата выдачи</th> -->
+          <!-- <th class="px-3 py-4 text-white">Файлы</th> -->
+          <th class="px-3 py-4 text-white">Статус</th>
           <th class="px-3 py-4 text-white">Удалить</th>
         </thead>
         <tbody>
@@ -53,14 +67,18 @@ async function onCertificateRemove(id: string) {
             v-for="cert in user.certificates"
             class="odd:bg-gray odd:bg-opacity-40 text-opacity-75 text-white hover:text-opacity-100 transition-colors"
           >
-            <td class="px-3 py-4">{{ cert.name }}</td>
+            <td class="px-3 py-4">
+              <RouterLink :to="`/profile/certificates/${cert.id}/edit`">{{
+                cert.name
+              }}</RouterLink>
+            </td>
             <td class="px-3 py-4">{{ cert.issuedBy }}</td>
             <!-- <td class="px-3 py-4 whitespace-nowrap">{{ cert.startDate }}</td> -->
             <!-- <td class="px-3 py-4 whitespace-nowrap">{{ cert.endDate }}</td> -->
-            <td class="px-3 py-4 whitespace-nowrap">
+            <!-- <td class="px-3 py-4 whitespace-nowrap">
               {{ format(new Date(cert.issuedDate), 'dd.MM.yyyy') }}
-            </td>
-            <td class="px-3 py-4">
+            </td> -->
+            <!-- <td class="px-3 py-4">
               <a
                 v-for="file in cert.files"
                 :key="file.id"
@@ -69,7 +87,8 @@ async function onCertificateRemove(id: string) {
                 target="_blank"
                 >{{ limitLength(file.name) }}</a
               >
-            </td>
+            </td> -->
+            <td class="text-center">{{ getStatus(cert) }}</td>
             <td class="text-center">
               <button @click="onCertificateRemove(cert.id)">
                 <TrashIcon

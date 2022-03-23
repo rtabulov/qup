@@ -4,6 +4,7 @@ import { UpdateFileMetaDto } from './dto/update-file-meta.dto';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileMeta } from './entities/file-meta.entity';
+import { Certificate } from '../certificates/entities/certificate.entity';
 
 @Injectable()
 export class FileMetaService {
@@ -33,5 +34,10 @@ export class FileMetaService {
 
   remove(id: string) {
     return `This action removes a #${id} fileMeta`;
+  }
+
+  async removeByCertificate(certificate: Certificate) {
+    const found = await this.fileMetaRepository.find({ certificate });
+    return this.fileMetaRepository.remove(found);
   }
 }

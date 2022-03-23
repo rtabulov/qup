@@ -44,6 +44,15 @@ export const createCertificate = async (formData: FormData) => {
   return res.data;
 };
 
+export const updateCertificate = async (id: string, formData: FormData) => {
+  const res = await api.patch(`/certificates/${id}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+  return res.data;
+};
+
 export const removeCertificate = async (id: string) => {
   const res = await api.delete(`/certificates/${id}`);
   return res.data;
@@ -66,5 +75,33 @@ export const updateUser = async (id: string, updateUserDto: UpdateUserDto) => {
 
 export const getAllCertificates = async () => {
   const res = await api.get<Certificate[]>(`/certificates`);
+  return res.data;
+};
+
+export const getCertificatesAwaitingApproval = async () => {
+  const res = await api.get<Certificate[]>(`/certificates/awaiting-approval`);
+  return res.data;
+};
+
+export const getCertificate = async (id: string) => {
+  const res = await api.get<Certificate>(`/certificates/${id}`);
+  return res.data;
+};
+
+export const approveCertificate = async (id: string, comment?: string) => {
+  const res = await api.patch<Certificate>(`/certificates/${id}`, {
+    approved: true,
+    awaitingApproval: false,
+    comment,
+  });
+  return res.data;
+};
+
+export const disapproveCertificate = async (id: string, comment?: string) => {
+  const res = await api.patch<Certificate>(`/certificates/${id}`, {
+    comment,
+    approved: false,
+    awaitingApproval: false,
+  });
   return res.data;
 };

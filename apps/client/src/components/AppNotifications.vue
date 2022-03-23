@@ -7,7 +7,7 @@ const notifications = useNotificationsStore();
 
 <template>
   <teleport to="body">
-    <div class="w-80 fixed left-1/2 top-4 -translate-x-1/2 space-y-2">
+    <div class="w-80 fixed right-4 bottom-4 space-y-2">
       <div
         v-for="ntfcn in notifications.notifications"
         :key="ntfcn.id"

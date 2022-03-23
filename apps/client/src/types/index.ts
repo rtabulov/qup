@@ -33,6 +33,11 @@ export interface Certificate {
   startDate: Date;
   endDate: Date;
   files: FileMeta[];
+  teacher?: User;
+
+  approved: boolean;
+  awaitingApproval: boolean;
+  comment: string;
 }
 
 export interface CreateCertificateDto {
@@ -42,6 +47,12 @@ export interface CreateCertificateDto {
   startDate: string;
   endDate: string;
   files: any;
+}
+
+export interface UpdateCertificateDto extends Partial<CreateCertificateDto> {
+  approved?: boolean;
+  awaitingApproval?: boolean;
+  comment?: string;
 }
 
 export interface FileMeta {

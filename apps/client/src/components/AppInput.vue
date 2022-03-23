@@ -58,7 +58,7 @@ export default {
     <input
       v-bind="$attrs"
       v-model="proxyValue"
-      class="relative w-full py-2 px-3 text-left bg-gray text-white shadow-md cursor-default focus:outline-none focus-visible:ring focus-visible:ring-muted sm:text-sm placeholder:text-white placeholder:text-opacity-75"
+      class="relative w-full py-2 px-3 text-left bg-gray text-white shadow-md focus:outline-none focus-visible:ring focus-visible:ring-muted sm:text-sm placeholder:text-white placeholder:text-opacity-75"
       :id="id"
       :class="{ 'text-red': error }"
       :required="required"

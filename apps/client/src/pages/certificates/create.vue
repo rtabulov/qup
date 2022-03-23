@@ -7,6 +7,7 @@ import { createCertificate } from '../../api';
 import { useUserStore } from '../../store';
 import { CreateCertificateDto } from '../../types';
 import FileInput from '../../components/FileInput.vue';
+import AppRuler from '../../components/AppRuler.vue';
 
 const router = useRouter();
 const store = useUserStore();

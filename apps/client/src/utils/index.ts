@@ -41,3 +41,8 @@ export function resolveAuthLevel(
 
   return userLevel >= targetLevel;
 }
+
+export function isPicture(filename: string) {
+  const ext = filename.split('.').at(-1);
+  return ['jpg', 'jpeg', 'png', 'webp'].includes(ext as string);
+}

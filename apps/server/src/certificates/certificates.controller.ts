@@ -18,9 +18,9 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { CreateFileMetaDto } from '../file-meta/dto/create-file-meta.dto';
 import { FileMetaService } from '../file-meta/file-meta.service';
 import { LoggedInGuard } from '../logged-in.guard';
-import { AdminGuard } from '../admin.guard';
-import { DepartmentHeadGuard } from '../department-head.guard';
+import { UpdateCertificateDto } from './dto/update-certificate.dto';
 import { HrGuard } from '../hr.guard';
+import { FileMeta } from '../file-meta/entities/file-meta.entity';
 
 @Controller('certificates')
 export class CertificatesController {
@@ -51,8 +51,14 @@ export class CertificatesController {
 
   @UseGuards(HrGuard)
   @Get()
-  findAll() {
-    return this.certificatesService.findAll();
+  findApproved() {
+    return this.certificatesService.findApproved();
+  }
+
+  @UseGuards(HrGuard)
+  @Get('awaiting-approval')
+  findAwaitingApproval() {
+    return this.certificatesService.findAwaitingApproval();
   }
 
   @UseGuards(HrGuard)
@@ -72,16 +78,34 @@ export class CertificatesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.certificatesService.findOne(id);
+    return this.certificatesService.findOne(id, { expand: true });
   }
 
-  // @Patch(':id')
-  // update(
-  //   @Param('id') id: string,
-  //   @Body() updateCertificateDto: UpdateCertificateDto,
-  // ) {
-  //   return this.certificatesService.update(id, updateCertificateDto);
-  // }
+  @UseGuards(LoggedInGuard)
+  @Patch(':id')
+  @UseInterceptors(FilesInterceptor('files'))
+  async update(
+    @Param('id') id: string,
+    @UploadedFiles() uploadedFiles: Array<Express.Multer.File>,
+    @Body() updateCertificateDto: UpdateCertificateDto,
+    @Req() req,
+  ) {
+    const certificate = await this.certificatesService.findOne(id);
+
+    if (uploadedFiles) {
+      await this.fileMetaService.removeByCertificate(certificate);
+      const newFiles = uploadedFiles.map<CreateFileMetaDto>((f) => ({
+        name: f.filename,
+        certificate,
+      }));
+      const files = await this.fileMetaService.createBatch(newFiles);
+      console.log(files);
+    }
+
+    await this.certificatesService.update(id, req.user, updateCertificateDto);
+
+    return certificate;
+  }
 
   @UseGuards(LoggedInGuard)
   @Delete(':id')

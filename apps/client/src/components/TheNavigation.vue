@@ -3,12 +3,13 @@ import { useUserStore } from '../store';
 import TheNavigationLink from './TheNavigationLink.vue';
 import {
   LogoutIcon,
-  PlusIcon,
+  DocumentAddIcon,
   UserIcon,
   LoginIcon,
   UserAddIcon,
   UsersIcon,
   DocumentReportIcon,
+  DocumentSearchIcon,
 } from '@heroicons/vue/solid';
 import { resolveAuthLevel } from '../utils';
 
@@ -31,19 +32,24 @@ const store = useUserStore();
 
         <template v-if="resolveAuthLevel(store.user?.role, 'hr')">
           <TheNavigationLink to="/certificates">
-            Все сертификаты
+            Подтвержденные
             <DocumentReportIcon class="inline-block h-5 w-5 -translate-y-px" />
+          </TheNavigationLink>
+
+          <TheNavigationLink to="/certificates/awaiting-approval">
+            На подтвеждении
+            <DocumentSearchIcon class="inline-block h-5 w-5 -translate-y-px" />
           </TheNavigationLink>
         </template>
 
         <template v-if="store.user">
           <TheNavigationLink to="/certificates/create">
-            Добавить сертификат
-            <PlusIcon class="inline-block h-5 w-5 -translate-y-px" />
+            Новый
+            <DocumentAddIcon class="inline-block h-5 w-5 -translate-y-px" />
           </TheNavigationLink>
           <TheNavigationLink to="/profile">
             {{ store.user?.lastName }}
-            {{ store.user?.firstName }}
+            {{ store.user?.firstName[0] }}.{{ store.user?.middleName[0] }}.
 
             <UserIcon class="inline-block h-5 w-5 -translate-y-px" />
           </TheNavigationLink>
