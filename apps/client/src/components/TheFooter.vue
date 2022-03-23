@@ -8,14 +8,14 @@ import InlineLink from './InlineLink.vue';
   <footer
     class="bg-black text-white text-opacity-75 py-4 space-y-4 font-display"
   >
-    <h2 class="container text-xl text-white">
-      Список использованых инструментов
+    <h2 class="container text-xl">
+      Made possible by people behind these projects
     </h2>
 
     <nav class="grid grid-cols-4 gap-6 container">
       <div class="flex flex-col">
-        <h3 class="text-white font-semibold text-lg">Common</h3>
-        <AppRuler class="w-24 !my-2" />
+        <h3 class="font-semibold text-lg">Common</h3>
+        <AppRuler :size="1" class="w-24 !my-2" />
         <div>
           <InlineLink
             class="text-opacity-90"
@@ -31,8 +31,8 @@ import InlineLink from './InlineLink.vue';
         </div>
       </div>
       <div class="flex flex-col">
-        <h3 class="text-white font-semibold text-lg">Backend</h3>
-        <AppRuler class="w-24 !my-2" />
+        <h3 class="font-semibold text-lg">Backend</h3>
+        <AppRuler :size="1" class="w-24 !my-2" />
         <div>
           <InlineLink class="text-opacity-90" to="https://nestjs.com/"
             >NestJS</InlineLink
@@ -55,8 +55,8 @@ import InlineLink from './InlineLink.vue';
         </div>
       </div>
       <div class="flex flex-col">
-        <h3 class="text-white font-semibold text-lg">Database</h3>
-        <AppRuler class="w-24 !my-2" />
+        <h3 class="font-semibold text-lg">Database</h3>
+        <AppRuler :size="1" class="w-24 !my-2" />
         <div>
           <InlineLink class="text-opacity-90" to="https://www.mysql.com/"
             >MySQL</InlineLink
@@ -77,8 +77,8 @@ import InlineLink from './InlineLink.vue';
         </div>
       </div>
       <div class="flex flex-col">
-        <h3 class="text-white font-semibold text-lg">Frontend</h3>
-        <AppRuler class="w-24 !my-2" />
+        <h3 class="font-semibold text-lg">Frontend</h3>
+        <AppRuler :size="1" class="w-24 !my-2" />
         <div>
           <InlineLink class="text-opacity-90" to="https://vuejs.org/"
             >Vue</InlineLink
@@ -101,8 +101,17 @@ import InlineLink from './InlineLink.vue';
     </nav>
 
     <p class="text-center">
-      made with nestjs, vuejs, and
-      {{ getRandomEmoji() }} {{ getRandomEmoji() }} {{ getRandomEmoji() }}
+      <span>
+        made with
+        {{ getRandomEmoji() }} {{ getRandomEmoji() }} {{ getRandomEmoji() }}
+      </span>
+      <br />
+      <span>
+        by
+        <InlineLink class="text-opacity-90" to="https://github.com/rtabulov"
+          >rtabulov</InlineLink
+        >
+      </span>
     </p>
   </footer>
 </template>

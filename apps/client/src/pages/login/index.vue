@@ -7,6 +7,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useUserStore } from '../../store';
 import { login } from '../../api';
 import AppRuler from '../../components/AppRuler.vue';
+import InlineLink from '../../components/InlineLink.vue';
 
 const form = reactive<LoginUserDto>({
   email: '',
@@ -58,6 +59,11 @@ async function onSubmit() {
       <AppButton :disabled="isLoading" type="submit" class="w-full"
         >Войти</AppButton
       >
+      <p class="mt-2">
+        Еще не зарегистрированы?
+        <InlineLink to="/register">можете сделать это здесь</InlineLink>
+      </p>
+      <p class="mt-2">Для смены роли обратитесь к администратору</p>
     </form>
   </div>
 </template>

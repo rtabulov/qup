@@ -67,11 +67,11 @@ async function onLogout() {
         </template>
         <template v-else>
           <TheNavigationLink to="/register">
-            Зарегистрироваться
+            Регистрация
             <UserAddIcon class="inline-block w-5 h-5" />
           </TheNavigationLink>
           <TheNavigationLink to="/login">
-            Войти
+            Вход
             <LoginIcon class="inline-block w-5 h-5" />
           </TheNavigationLink>
         </template>

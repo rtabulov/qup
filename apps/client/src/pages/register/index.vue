@@ -8,6 +8,7 @@ import { RegisterUserDto, Department } from '../../types';
 import { getDepartments } from '../../api';
 import { register } from '../../api';
 import AppRuler from '../../components/AppRuler.vue';
+import InlineLink from '../../components/InlineLink.vue';
 
 const form = reactive<RegisterUserDto>({
   firstName: '',
@@ -115,6 +116,11 @@ async function onSubmit() {
       <AppButton :disabled="isLoading" type="submit" class="w-full"
         >Зарегистрироваться</AppButton
       >
+
+      <p class="mt-2">
+        Уже зарегистрированы?
+        <InlineLink to="/login">Вход в систему</InlineLink>
+      </p>
     </form>
   </div>
 </template>
