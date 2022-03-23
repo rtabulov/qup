@@ -27,16 +27,24 @@ import { FileMetaModule } from './file-meta/file-meta.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
-    ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: 'example',
-      database: 'test',
-      autoLoadEntities: true,
-      synchronize: process.env.NODE_ENV !== 'production',
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ['.env', '.env.local'],
+    }),
+    TypeOrmModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory(configService: ConfigService) {
+        return {
+          type: 'mysql',
+          host: configService.get('DB_HOST'),
+          port: 3306,
+          username: 'root',
+          password: 'example',
+          database: 'test',
+          autoLoadEntities: true,
+          synchronize: process.env.NODE_ENV !== 'production',
+        };
+      },
     }),
     DepartmentsModule,
     AuthModule,
