@@ -2,6 +2,9 @@
   "name": "qup",
   "version": "0.0.1",
   "private": true,
+  "engines": {
+    "node": "16.x"
+  },
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "start": "pnpm --filter ./apps/server run start",
