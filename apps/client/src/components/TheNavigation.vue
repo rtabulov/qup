@@ -12,8 +12,15 @@ import {
   DocumentSearchIcon,
 } from '@heroicons/vue/solid';
 import { resolveAuthLevel } from '../utils';
+import { useRouter } from 'vue-router';
 
 const store = useUserStore();
+const router = useRouter();
+
+async function onLogout() {
+  await store.logout();
+  router.push('/');
+}
 </script>
 
 <template>
@@ -53,7 +60,7 @@ const store = useUserStore();
 
             <UserIcon class="inline-block h-5 w-5 -translate-y-px" />
           </TheNavigationLink>
-          <TheNavigationLink as="button" @click="() => store.logout()">
+          <TheNavigationLink as="button" @click="onLogout">
             Выйти
             <LogoutIcon class="inline-block w-5 h-5" />
           </TheNavigationLink>

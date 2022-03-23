@@ -35,7 +35,7 @@ router.beforeEach((to, from) => {
   const store = useUserStore();
 
   if (to.meta.requiresGuest && store.user) {
-    return from.name ? from.fullPath : '/';
+    return from.name ? from.fullPath : '/profile';
   }
 });
 
