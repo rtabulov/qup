@@ -36,15 +36,15 @@ import { FileMetaModule } from './file-meta/file-meta.module';
       useFactory(configService: ConfigService) {
         return {
           host: configService.get('DB_HOST'),
-          port: 3306,
-          username: 'root',
+          port: 5432,
+          username: 'postgres',
           password: 'example',
           database: 'test',
-          type: 'mysql',
+          type: 'postgres',
           autoLoadEntities: true,
           // synchronize: process.env.NODE_ENV !== 'production',
           synchronize: true,
-          url: configService.get('CLEARDB_DATABASE_URL'),
+          url: configService.get('DATABASE_URL'),
         };
       },
     }),
