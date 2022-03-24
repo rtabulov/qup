@@ -23,10 +23,7 @@ export class AuthService {
   async validateUser(user: LoginUserDto) {
     const foundUser = await this.usersRepository.findOne({ email: user.email });
 
-    if (
-      !foundUser ||
-      !(await await verify(foundUser.password, user.password))
-    ) {
+    if (!foundUser || !(await verify(foundUser.password, user.password))) {
       throw new UnauthorizedException({
         password: 'Неверный пароль',
       });

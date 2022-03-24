@@ -10,11 +10,11 @@ import { REDIS } from './redis.constants';
       inject: [ConfigService],
       provide: REDIS,
       useFactory(configService: ConfigService) {
-        return {
-          useValue: Redis.createClient({
-            url: configService.get('REDIS_URL'),
-          }),
-        };
+        return Redis.createClient({
+          url: configService.get('REDIS_URL'),
+          port: configService.get('REDIS_PORT'),
+          host: configService.get('REDIS_HOST'),
+        });
       },
     },
   ],
