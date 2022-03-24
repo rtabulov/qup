@@ -45,6 +45,9 @@ import { FileMetaModule } from './file-meta/file-meta.module';
           // synchronize: process.env.NODE_ENV !== 'production',
           synchronize: true,
           url: configService.get('DATABASE_URL'),
+          ssl: {
+            rejectUnauthorized: false,
+          },
         };
       },
     }),
