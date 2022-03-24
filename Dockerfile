@@ -15,15 +15,23 @@ WORKDIR "/app"
 # RUN curl -f https://get.pnpm.io/v6.16.js | node - add --global pnpm
 RUN npm i -g pnpm
 
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-COPY apps/server/package.json apps/server/
-COPY apps/client/package.json apps/client/
+# COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+# COPY apps/server/package.json apps/server/
+# COPY apps/client/package.json apps/client/
 
-RUN pnpm install --frozen-lockfile
+# RUN pnpm install --frozen-lockfile
 
-COPY . .
+# COPY . .
 
-RUN pnpm build
+# RUN pnpm build
+
+COPY pnpm-lock.yaml pnpm-workspace.yaml ./
+
+RUN pnpm fetch
+
+COPY . ./
+
+RUN pnpm install -r --offline
 
 EXPOSE 3000
 

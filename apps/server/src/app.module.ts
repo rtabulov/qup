@@ -35,14 +35,15 @@ import { FileMetaModule } from './file-meta/file-meta.module';
       inject: [ConfigService],
       useFactory(configService: ConfigService) {
         return {
-          type: 'mysql',
           host: configService.get('DB_HOST'),
           port: 3306,
           username: 'root',
           password: 'example',
           database: 'test',
+          type: 'mysql',
           autoLoadEntities: true,
           synchronize: process.env.NODE_ENV !== 'production',
+          url: configService.get('CLEARDB_DATABASE_URL'),
         };
       },
     }),
