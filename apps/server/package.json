@@ -13,7 +13,7 @@
     "start:dev": "NODE_ENV=development nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "NODE_ENV=production node dist/main",
-    "seed:run": "pnpm run build && node ./node_modules/typeorm-seeding/dist/cli.js -r ../../ seed"
+    "seed:run": "node ./node_modules/typeorm-seeding/dist/cli.js -r ../../ seed"
   },
   "dependencies": {
     "@nestjs/common": "^8.0.0",
