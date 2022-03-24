@@ -12,9 +12,7 @@ import { REDIS } from './redis.constants';
       useFactory(configService: ConfigService) {
         return {
           useValue: Redis.createClient({
-            url:
-              configService.get('REDIS_TLS_URL') ||
-              configService.get('REDIS_URL'),
+            url: configService.get('REDIS_URL'),
           }),
         };
       },
