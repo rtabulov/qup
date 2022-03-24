@@ -1,6 +1,13 @@
 FROM node:16.14-alpine
 
-ENV NODE_ENV=production
+# ENV NODE_ENV=production
+ENV SESSION_SECRET=asdffgmklmsdf
+ENV SESSION_SECURE='false'
+ENV SESSION_NAME=notyourbusinessfriend
+ENV CERTIFICATE_UPLOAD_DIR=public/uploads/certificates
+ENV HOST=http://localhost:3333
+ENV REDIS_HOST=redis
+ENV DB_HOST=db
 
 WORKDIR "/app"
 
@@ -12,7 +19,7 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 COPY apps/server/package.json apps/server/
 COPY apps/client/package.json apps/client/
 
-RUN pnpm install --frozen-lockfile --prod
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
