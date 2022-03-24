@@ -42,7 +42,8 @@ import { FileMetaModule } from './file-meta/file-meta.module';
           database: 'test',
           type: 'mysql',
           autoLoadEntities: true,
-          synchronize: process.env.NODE_ENV !== 'production',
+          // synchronize: process.env.NODE_ENV !== 'production',
+          synchronize: true,
           url: configService.get('CLEARDB_DATABASE_URL'),
         };
       },
