@@ -5,7 +5,6 @@ import {
   Module,
   NestModule,
 } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as RedisStore from 'connect-redis';
 import * as session from 'express-session';
@@ -30,26 +29,6 @@ import { FileMetaModule } from './file-meta/file-meta.module';
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: ['.env', '.env.local'],
-    }),
-    TypeOrmModule.forRootAsync({
-      inject: [ConfigService],
-      useFactory(configService: ConfigService) {
-        return {
-          host: configService.get('DB_HOST'),
-          port: 5432,
-          username: 'postgres',
-          password: 'example',
-          database: 'test',
-          type: 'postgres',
-          autoLoadEntities: true,
-          // synchronize: process.env.NODE_ENV !== 'production',
-          synchronize: true,
-          url: configService.get('DATABASE_URL'),
-          ssl: configService.get('DATABASE_URL')
-            ? { rejectUnauthorized: false }
-            : false,
-        };
-      },
     }),
     DepartmentsModule,
     AuthModule,

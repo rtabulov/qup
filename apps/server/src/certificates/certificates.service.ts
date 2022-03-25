@@ -6,7 +6,6 @@ import {
   ForbiddenException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { groupBy, sortBy } from 'lodash';
 import * as ExcelJS from 'exceljs';
 import { UpdateCertificateDto } from './dto/update-certificate.dto';

@@ -2,6 +2,7 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
 
+import { PrismaService } from './prisma/prisma.service';
 import { AppModule } from './app.module';
 
 const bootstrap = async () => {
@@ -11,6 +12,10 @@ const bootstrap = async () => {
   const configService = app.get(ConfigService);
   const PORT = configService.get('PORT') || 3000;
   await app.listen(PORT);
+
+  const prismaService = app.get(PrismaService);
+  await prismaService.enableShutdownHooks(app);
+
   logger.log(`Application listening at ${await app.getUrl()}`);
 };
 

@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateFileMetaDto } from './dto/create-file-meta.dto';
 import { UpdateFileMetaDto } from './dto/update-file-meta.dto';
-import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FileMeta } from './entities/file-meta.entity';
 import { Certificate } from '../certificates/entities/certificate.entity';

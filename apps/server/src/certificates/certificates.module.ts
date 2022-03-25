@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { MulterModule } from '@nestjs/platform-express';
 import * as path from 'path';
 import { diskStorage } from 'multer';
@@ -10,11 +9,12 @@ import { CertificatesService } from './certificates.service';
 import { CertificatesController } from './certificates.controller';
 import { Certificate } from './entities/certificate.entity';
 import { FileMetaModule } from '../file-meta/file-meta.module';
+import { PrismaModule } from '../prisma';
 
 @Module({
   imports: [
     FileMetaModule,
-    TypeOrmModule.forFeature([Certificate]),
+    PrismaModule,
     MulterModule.registerAsync({
       inject: [ConfigService],
       useFactory(configService: ConfigService) {

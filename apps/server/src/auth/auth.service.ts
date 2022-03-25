@@ -6,22 +6,24 @@ import {
 // @ts-ignore
 import * as credential from 'credential';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 
 import { User, SafeUser } from './models/user.entity';
 import { LoginUserDto } from './models/login-user.dto';
 import { RegisterUserDto } from './models/register-user.dto';
 import { UpdateUserDto } from './models/update-user.dto';
+import { PrismaService } from '../prisma/prisma.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User)
-    private usersRepository: Repository<User>,
+    private prismaService: PrismaService,
   ) {}
 
   async validateUser(user: LoginUserDto) {
-    const foundUser = await this.usersRepository.findOne({ email: user.email });
+    const foundUser = await this.prismaService.user.findUnique({
+      where: { email: user.email },
+    });
 
     if (!foundUser || !(await verify(foundUser.password, user.password))) {
       throw new UnauthorizedException({
@@ -32,9 +34,9 @@ export class AuthService {
     return retUser;
   }
 
-  async registerUser(user: RegisterUserDto): Promise<Omit<User, 'password'>> {
-    const existingUser = await this.usersRepository.findOne({
-      email: user.email,
+  async registerUser(user: RegisterUserDto): Promise<SafeUser> {
+    const existingUser = await this.prismaService.user.findUnique({
+      where: { email: user.email },
     });
 
     if (existingUser) {
@@ -47,12 +49,15 @@ export class AuthService {
         confirmationPassword: 'Password and Confirmation Password must match',
       });
     }
-    const created = this.usersRepository.create(user);
-    return await this.usersRepository.save(created);
+    const created = await this.prismaService.user.create({ data: user });
+    this.prismaService.user.findUnique({
+      where: { id: created.id },
+      include: { certificate: true, department: true },
+    });
   }
 
   async findTeachers(): Promise<SafeUser[]> {
-    return this.usersRepository.find({
+    return this.prismaService.user.find({
       where: { role: 'teacher' },
       relations: ['department'],
     });
@@ -62,23 +67,23 @@ export class AuthService {
     id: string,
     updateUserDto: UpdateUserDto,
   ): Promise<SafeUser> {
-    await this.usersRepository.update({ id }, updateUserDto);
-    return this.usersRepository.findOne(id);
+    await this.prismaService.user.update({ id }, updateUserDto);
+    return this.prismaService.user.findOne(id);
   }
 
   async findUsers(): Promise<SafeUser[]> {
-    return this.usersRepository.find();
+    return this.prismaService.user.find();
   }
 
   async removeUser(id: string): Promise<SafeUser> {
-    const found = await this.usersRepository.findOne(id);
-    return this.usersRepository.remove(found);
+    const found = await this.prismaService.user.findOne(id);
+    return this.prismaService.user.remove(found);
   }
 
   async findById(id: string, { expand = false } = {}): Promise<SafeUser> {
     const relations = ['certificates', 'certificates.files'];
 
-    const user = await this.usersRepository.findOne({
+    const user = await this.prismaService.user.findOne({
       where: { id },
       relations: expand ? relations : undefined,
     });
