@@ -1,35 +1,32 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Department } from './entities/department.entity';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
+import { PrismaService } from '../prisma';
 
 @Injectable()
 export class DepartmentsService {
-  constructor(
-    @InjectRepository(Department)
-    private departmentsRepository: Repository<Department>,
-  ) {}
+  constructor(private prismaService: PrismaService) {}
 
   create(createDepartmentDto: CreateDepartmentDto) {
-    return this.departmentsRepository.save(createDepartmentDto);
+    return this.prismaService.department.create({ data: createDepartmentDto });
   }
 
   findAll() {
-    return this.departmentsRepository.find({});
+    return this.prismaService.department.findMany();
   }
 
   findOne(id: string) {
-    return this.departmentsRepository.findOne(id);
+    return this.prismaService.department.findUnique({ where: { id } });
   }
 
   update(id: string, updateDepartmentDto: UpdateDepartmentDto) {
-    return this.departmentsRepository.update(id, updateDepartmentDto);
+    return this.prismaService.department.update({
+      where: { id },
+      data: updateDepartmentDto,
+    });
   }
 
   async remove(id: string) {
-    const photoToRemove = await this.departmentsRepository.findOne(id);
-    return this.departmentsRepository.remove(photoToRemove);
+    return this.prismaService.department.delete({ where: { id } });
   }
 }

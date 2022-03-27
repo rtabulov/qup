@@ -1,4 +1,3 @@
-import type { User } from '../types';
 import { ROLES_ARRAY } from '../types';
 
 export function limitLength(str: string, len = 20) {
@@ -17,7 +16,7 @@ export function limitLength(str: string, len = 20) {
   );
 }
 
-export const roleNames: Record<User['role'], string> = {
+export const roleNames: Record<string, string> = {
   admin: 'администратор',
   teacher: 'преподаватель',
   departmentHead: 'Заведующий кафедрой',
@@ -25,8 +24,8 @@ export const roleNames: Record<User['role'], string> = {
 };
 
 export function resolveAuthLevel(
-  userRole: User['role'] | null | undefined,
-  target: true | User['role'],
+  userRole: string | null | undefined,
+  target: true | string,
 ) {
   if (!userRole) {
     return false;

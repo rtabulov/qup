@@ -30,7 +30,7 @@ async function onLogout() {
         <!-- <TheNavigationLink to="/">Home</TheNavigationLink> -->
       </div>
       <div class="flex ml-auto">
-        <template v-if="resolveAuthLevel(store.user?.role, 'admin')">
+        <template v-if="resolveAuthLevel(store.user?.role?.key, 'admin')">
           <TheNavigationLink to="/users">
             Управление пользователями
             <UsersIcon class="inline-block h-5 w-5 -translate-y-px" />
@@ -39,7 +39,8 @@ async function onLogout() {
 
         <template
           v-if="
-            store.user && ['hr', 'departmentHead'].includes(store.user.role)
+            store.user &&
+            ['hr', 'departmentHead'].includes(store.user?.role?.key as string)
           "
         >
           <TheNavigationLink to="/certificates">
@@ -53,7 +54,7 @@ async function onLogout() {
           </TheNavigationLink>
         </template>
 
-        <template v-if="store.user && store.user.role === 'teacher'">
+        <template v-if="store.user && store.user.role?.key === 'teacher'">
           <TheNavigationLink to="/certificates/create">
             Новый
             <DocumentAddIcon class="inline-block h-5 w-5 -translate-y-px" />

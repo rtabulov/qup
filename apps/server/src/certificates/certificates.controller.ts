@@ -20,7 +20,6 @@ import { FileMetaService } from '../file-meta/file-meta.service';
 import { LoggedInGuard } from '../logged-in.guard';
 import { UpdateCertificateDto } from './dto/update-certificate.dto';
 import { AllowRoles } from '../roles.guard';
-import { FileMeta } from '../file-meta/entities/file-meta.entity';
 
 @Controller('certificates')
 export class CertificatesController {
@@ -37,16 +36,18 @@ export class CertificatesController {
     @UploadedFiles() uploadedFiles: Array<Express.Multer.File>,
     @Req() req,
   ) {
+    const certificate = await this.certificatesService.create({
+      ...createCertificateDto,
+      teacherId: req.user.id,
+    });
+
     const newFiles = uploadedFiles.map<CreateFileMetaDto>((f) => ({
       name: f.filename,
+      certificateId: certificate.id,
     }));
-    const files = await this.fileMetaService.createBatch(newFiles);
+    await this.fileMetaService.createBatch(newFiles);
 
-    return this.certificatesService.create({
-      ...createCertificateDto,
-      teacher: req.user,
-      files,
-    });
+    return this.certificatesService.findOne(certificate.id);
   }
 
   @UseGuards(AllowRoles('hr', 'departmentHead'))
@@ -96,10 +97,9 @@ export class CertificatesController {
       await this.fileMetaService.removeByCertificate(certificate);
       const newFiles = uploadedFiles.map<CreateFileMetaDto>((f) => ({
         name: f.filename,
-        certificate,
+        certificateId: certificate.id,
       }));
       const files = await this.fileMetaService.createBatch(newFiles);
-      console.log(files);
     }
 
     await this.certificatesService.update(id, req.user, updateCertificateDto);

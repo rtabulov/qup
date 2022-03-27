@@ -5,53 +5,49 @@ import {
   BadRequestException,
   ForbiddenException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { groupBy, sortBy } from 'lodash';
 import * as ExcelJS from 'exceljs';
 import { UpdateCertificateDto } from './dto/update-certificate.dto';
 import { CreateCertificateDto } from './dto/create-certificate.dto';
-import { Certificate } from './entities/certificate.entity';
-import { FileMeta } from '../file-meta/entities/file-meta.entity';
-import { SafeUser } from '../auth/models/user.entity';
 import { ConfigService } from '@nestjs/config';
 import { resolveAuthLevel } from '../utils';
+import { PrismaService } from '../prisma';
+import { FileMeta, User, Role, Prisma } from '@prisma/client';
 
 @Injectable()
 export class CertificatesService {
   constructor(
-    @InjectRepository(Certificate)
-    private readonly certificateRepository: Repository<Certificate>,
+    private readonly prismaService: PrismaService,
     private readonly configService: ConfigService,
   ) {}
 
   create(
     certificate: CreateCertificateDto & {
-      teacher: SafeUser;
-      files: FileMeta[];
+      teacherId: string;
     },
   ) {
-    const cert = this.certificateRepository.create({
-      ...certificate,
+    return this.prismaService.certificate.create({
+      data: { ...certificate },
     });
-    return this.certificateRepository.save(cert);
   }
 
   findAll() {
-    return this.certificateRepository.find({ relations: ['teacher', 'files'] });
+    return this.prismaService.certificate.findMany({
+      include: { teacher: true, files: true },
+    });
   }
 
   findApproved() {
-    return this.certificateRepository.find({
+    return this.prismaService.certificate.findMany({
       where: { approved: true },
-      relations: ['teacher', 'files', 'teacher.department'],
+      include: { teacher: { include: { department: true } }, files: true },
     });
   }
 
   findAwaitingApproval() {
-    return this.certificateRepository.find({
+    return this.prismaService.certificate.findMany({
       where: { approved: false, awaitingApproval: true },
-      relations: ['teacher', 'files'],
+      include: { teacher: true, files: true },
     });
   }
 
@@ -109,13 +105,24 @@ export class CertificatesService {
   }
 
   findOne(id: string, { expand = false } = {}) {
-    const relations = expand ? ['teacher', 'files'] : undefined;
-    return this.certificateRepository.findOne(id, { relations });
+    try {
+      return this.prismaService.certificate.findUnique({
+        where: { id },
+        include: {
+          teacher: expand,
+          files: expand,
+        },
+      });
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientValidationError) {
+        throw new NotFoundException();
+      }
+    }
   }
 
   async update(
     id: string,
-    user: Certificate['teacher'],
+    user: User & { role: Role },
     updateCertificateDto: UpdateCertificateDto,
   ) {
     const found = await this.findOne(id, { expand: true });
@@ -127,24 +134,30 @@ export class CertificatesService {
       throw new BadRequestException();
     }
 
-    if (found.teacher.id !== user.id && !resolveAuthLevel(user.role, 'hr')) {
+    if (
+      found.teacher.id !== user.id &&
+      !resolveAuthLevel(user.role.key, 'hr')
+    ) {
       throw new ForbiddenException();
     }
 
-    return this.certificateRepository.update(id, {
-      ...updateCertificateDto,
-      awaitingApproval: updateCertificateDto.awaitingApproval ?? true,
+    return this.prismaService.certificate.update({
+      where: { id },
+      data: {
+        ...updateCertificateDto,
+        awaitingApproval: updateCertificateDto.awaitingApproval ?? true,
+      },
     });
   }
 
-  async remove(id: string, requestUser: Certificate['teacher']) {
+  async remove(id: string, requestUser: User) {
     const cert = await this.findOne(id, { expand: true });
 
     if (requestUser.id !== cert.teacher.id) {
       throw new UnauthorizedException();
     }
 
-    return this.certificateRepository.remove(cert);
+    return this.prismaService.certificate.delete({ where: { id } });
   }
 }
 

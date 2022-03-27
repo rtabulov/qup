@@ -1,11 +1,11 @@
 import axios from 'axios';
 import {
-  LoginUserDto,
   Department,
-  RegisterUserDto,
   User,
-  UpdateUserDto,
   Certificate,
+  LoginUserDto,
+  RegisterUserDto,
+  UpdateUserDto,
 } from '../types';
 
 const api = axios.create({ baseURL: '/api', timeout: 10_000 });

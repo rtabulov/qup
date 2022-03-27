@@ -1,7 +1,10 @@
-export interface Department {
-  id: string;
-  name: string;
-}
+import type {
+  Department as DepartmentPrisma,
+  Role as RolePrisma,
+  User as UserPrisma,
+  FileMeta as FileMetaPrisma,
+  Certificate as CertificatePrisma,
+} from '@prisma/client';
 
 export const ROLES_ARRAY = [
   'teacher',
@@ -10,34 +13,20 @@ export const ROLES_ARRAY = [
   'admin',
 ] as const;
 
-type Role = typeof ROLES_ARRAY[number];
+export type Role = RolePrisma;
 
-export interface User {
-  id: string;
-  role: Role;
-  firstName: string;
-  lastName: string;
-  middleName: string;
-  position: string | null;
-  email: string;
+export type Department = DepartmentPrisma;
 
-  certificates: Certificate[];
+export type FileMeta = FileMetaPrisma;
+
+export interface Certificate extends CertificatePrisma {
+  files?: FileMeta[];
+  teacher?: User;
 }
 
-export interface Certificate {
-  id: string;
-  name: string;
-  issuedBy: string;
-  issuedDate: Date;
-  createdAt: Date;
-  startDate: Date;
-  endDate: Date;
-  files: FileMeta[];
-  teacher?: User;
-
-  approved: boolean;
-  awaitingApproval: boolean;
-  comment: string;
+export interface User extends UserPrisma {
+  role?: Role;
+  certificates?: Certificate[];
 }
 
 export interface CreateCertificateDto {
@@ -55,12 +44,6 @@ export interface UpdateCertificateDto extends Partial<CreateCertificateDto> {
   comment?: string;
 }
 
-export interface FileMeta {
-  id: string;
-  name: string;
-  createdAt: Date;
-}
-
 export interface RegisterUserDto {
   firstName: string;
   lastName: string;
@@ -73,7 +56,7 @@ export interface RegisterUserDto {
 }
 
 export interface UpdateUserDto {
-  role?: User['role'];
+  roleId?: string;
 }
 
 export interface LoginUserDto {

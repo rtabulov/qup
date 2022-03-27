@@ -9,8 +9,14 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "esModuleInterop": true,
-    "lib": ["esnext", "dom", "dom.iterable"]
+    "lib": ["esnext", "dom", "dom.iterable"],
+    "paths": {
+      "@prisma/client": [
+        "../../node_modules/.pnpm/@prisma+client@3.11.0_prisma@3.11.0/node_modules/.prisma/client"
+      ]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
+
   "references": [{ "path": "./tsconfig.node.json" }]
 }
