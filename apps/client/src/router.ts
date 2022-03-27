@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import routes from '~pages';
-import { useUserStore } from './store';
+import { useStore } from './store';
 import { resolveAuthLevel } from './utils';
 
 const router = createRouter({
@@ -9,7 +9,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async () => {
-  const store = useUserStore();
+  const store = useStore();
 
   if (!store.initialLoadFinished) {
     await store.tryLoggingIn();
@@ -17,7 +17,7 @@ router.beforeEach(async () => {
 });
 
 router.beforeEach((to) => {
-  const store = useUserStore();
+  const store = useStore();
 
   if (
     to.meta.requiresAuth &&
@@ -31,7 +31,7 @@ router.beforeEach((to) => {
 });
 
 router.beforeEach((to, from) => {
-  const store = useUserStore();
+  const store = useStore();
 
   if (to.meta.requiresGuest && store.user) {
     return from.name ? from.fullPath : '/profile';

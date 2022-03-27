@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { useUserStore } from '../store';
+import { useStore } from '../store';
 import TheNavigationLink from './TheNavigationLink.vue';
 import {
   LogoutIcon,
@@ -14,7 +14,7 @@ import {
 import { resolveAuthLevel } from '../utils';
 import { useRouter } from 'vue-router';
 
-const store = useUserStore();
+const store = useStore();
 const router = useRouter();
 
 async function onLogout() {

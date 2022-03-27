@@ -8,14 +8,14 @@ import AppButton from '../../../../components/AppButton.vue';
 import AppInput from '../../../../components/AppInput.vue';
 import FileInput from '../../../../components/FileInput.vue';
 import AppRuler from '../../../../components/AppRuler.vue';
-import { useUserStore } from '../../../../store';
+import { useStore } from '../../../../store';
 
 const props = defineProps<{ id: string }>();
 
 const certificate = ref<Certificate | null>(null);
 getCertificate(props.id).then((c) => (certificate.value = c));
 
-const store = useUserStore();
+const store = useStore();
 const router = useRouter();
 
 const errors = ref<Partial<Record<keyof UpdateCertificateDto, string>>>({});

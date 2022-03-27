@@ -58,14 +58,14 @@ import InlineLink from './InlineLink.vue';
         <h3 class="font-semibold text-lg">Database</h3>
         <AppRuler :size="1" class="w-24 !my-2" />
         <div>
-          <InlineLink class="text-opacity-90" to="https://www.mysql.com/"
-            >MySQL</InlineLink
+          <InlineLink class="text-opacity-90" to="https://www.postgresql.org/"
+            >PostgreSQL</InlineLink
           >
           as primary database
         </div>
         <div>
-          <InlineLink class="text-opacity-90" to="https://typeorm.io/#/"
-            >TypeORM</InlineLink
+          <InlineLink class="text-opacity-90" to="https://www.prisma.io/"
+            >Prisma</InlineLink
           >
           as ORM layer
         </div>

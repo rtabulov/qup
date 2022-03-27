@@ -4,7 +4,7 @@ import AppInput from '../../components/AppInput.vue';
 import AppButton from '../../components/AppButton.vue';
 import { LoginUserDto } from '../../types';
 import { useRoute, useRouter } from 'vue-router';
-import { useUserStore } from '../../store';
+import { useStore } from '../../store';
 import { login } from '../../api';
 import AppRuler from '../../components/AppRuler.vue';
 import InlineLink from '../../components/InlineLink.vue';
@@ -18,7 +18,7 @@ const errors = ref<Partial<Record<keyof LoginUserDto, string>>>({});
 
 const router = useRouter();
 const route = useRoute();
-const userStore = useUserStore();
+const userStore = useStore();
 
 const isLoading = ref(false);
 async function onSubmit() {

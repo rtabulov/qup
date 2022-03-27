@@ -35,6 +35,11 @@ export const logout = async () => {
   return res.data;
 };
 
+export const fetchRoles = async () => {
+  const res = await api.get('/auth/roles');
+  return res.data;
+};
+
 export const createCertificate = async (formData: FormData) => {
   const res = await api.post('/certificates', formData, {
     headers: {

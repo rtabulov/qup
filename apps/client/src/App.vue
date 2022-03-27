@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { watchEffect } from 'vue';
-import { useUserStore } from './store';
+import { useStore } from './store';
 import TheNavigation from './components/TheNavigation.vue';
 import TheFooter from './components/TheFooter.vue';
 import AppNotifications from './components/AppNotifications.vue';
 
-const store = useUserStore();
+const store = useStore();
+store.fetchRoles();
 
 watchEffect(() => console.log(store.user));
 </script>

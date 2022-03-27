@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
 import { TrashIcon, PlusIcon } from '@heroicons/vue/outline';
-import { useUserStore } from '../../store';
+import { useStore } from '../../store';
 import { removeCertificate } from '../../api';
 import AppButton from '../../components/AppButton.vue';
 import { useNotificationsStore } from '../../store/notifications-store';
 import AppRuler from '../../components/AppRuler.vue';
 import { Certificate } from '../../types';
 
-const store = useUserStore();
+const store = useStore();
 const user = computed(() => store.user);
 
 const notifications = useNotificationsStore();

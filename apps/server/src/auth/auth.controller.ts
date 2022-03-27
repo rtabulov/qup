@@ -70,4 +70,9 @@ export class AuthController {
   logoutUser(@Req() req) {
     return req.logout();
   }
+
+  @Get('roles')
+  getRoles() {
+    return this.authService.getRoles();
+  }
 }

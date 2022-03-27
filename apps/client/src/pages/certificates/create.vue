@@ -4,13 +4,13 @@ import { useRouter } from 'vue-router';
 import AppInput from '../../components/AppInput.vue';
 import AppButton from '../../components/AppButton.vue';
 import { createCertificate } from '../../api';
-import { useUserStore } from '../../store';
+import { useStore } from '../../store';
 import { CreateCertificateDto } from '../../types';
 import FileInput from '../../components/FileInput.vue';
 import AppRuler from '../../components/AppRuler.vue';
 
 const router = useRouter();
-const store = useUserStore();
+const store = useStore();
 
 const errors = ref<Partial<Record<keyof CreateCertificateDto, string>>>({});
 const isLoading = ref(false);
