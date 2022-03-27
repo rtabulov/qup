@@ -15,7 +15,8 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "NODE_ENV=production node dist/main",
     "db:seed": "dotenv -e .env.local prisma db seed",
-    "db:migrate": "dotenv -e .env.local prisma migrate dev"
+    "db:migrate": "dotenv -e .env.local prisma migrate dev",
+    "db:migrate-deploy": "dotenv -e .env.local prisma migrate deploy"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
