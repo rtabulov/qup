@@ -32,12 +32,16 @@ async function onLogout() {
       <div class="flex ml-auto">
         <template v-if="resolveAuthLevel(store.user?.role, 'admin')">
           <TheNavigationLink to="/users">
-            Все пользователи
+            Управление пользователями
             <UsersIcon class="inline-block h-5 w-5 -translate-y-px" />
           </TheNavigationLink>
         </template>
 
-        <template v-if="resolveAuthLevel(store.user?.role, 'hr')">
+        <template
+          v-if="
+            store.user && ['hr', 'departmentHead'].includes(store.user.role)
+          "
+        >
           <TheNavigationLink to="/certificates">
             Подтвержденные
             <DocumentReportIcon class="inline-block h-5 w-5 -translate-y-px" />
@@ -49,7 +53,7 @@ async function onLogout() {
           </TheNavigationLink>
         </template>
 
-        <template v-if="store.user">
+        <template v-if="store.user && store.user.role === 'teacher'">
           <TheNavigationLink to="/certificates/create">
             Новый
             <DocumentAddIcon class="inline-block h-5 w-5 -translate-y-px" />
@@ -60,6 +64,9 @@ async function onLogout() {
 
             <UserIcon class="inline-block h-5 w-5 -translate-y-px" />
           </TheNavigationLink>
+        </template>
+
+        <template v-if="store.user">
           <TheNavigationLink as="button" @click="onLogout">
             Выйти
             <LogoutIcon class="inline-block w-5 h-5" />

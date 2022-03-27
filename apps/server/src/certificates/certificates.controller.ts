@@ -19,7 +19,7 @@ import { CreateFileMetaDto } from '../file-meta/dto/create-file-meta.dto';
 import { FileMetaService } from '../file-meta/file-meta.service';
 import { LoggedInGuard } from '../logged-in.guard';
 import { UpdateCertificateDto } from './dto/update-certificate.dto';
-import { HrGuard } from '../hr.guard';
+import { AllowRoles } from '../roles.guard';
 import { FileMeta } from '../file-meta/entities/file-meta.entity';
 
 @Controller('certificates')
@@ -29,7 +29,7 @@ export class CertificatesController {
     private readonly fileMetaService: FileMetaService,
   ) {}
 
-  @UseGuards(LoggedInGuard)
+  @UseGuards(AllowRoles('teacher'))
   @Post()
   @UseInterceptors(FilesInterceptor('files'))
   async create(
@@ -49,19 +49,19 @@ export class CertificatesController {
     });
   }
 
-  @UseGuards(HrGuard)
+  @UseGuards(AllowRoles('hr', 'departmentHead'))
   @Get()
   findApproved() {
     return this.certificatesService.findApproved();
   }
 
-  @UseGuards(HrGuard)
+  @UseGuards(AllowRoles('hr', 'departmentHead'))
   @Get('awaiting-approval')
   findAwaitingApproval() {
     return this.certificatesService.findAwaitingApproval();
   }
 
-  @UseGuards(HrGuard)
+  @UseGuards(AllowRoles('hr', 'departmentHead'))
   @Get('report')
   async exportAll(@Res() res) {
     const workbook = await this.certificatesService.exportAll();
