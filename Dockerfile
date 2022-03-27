@@ -17,7 +17,7 @@ RUN pnpm fetch
 
 COPY . ./
 
-RUN pnpm install -r --offline
+RUN pnpm install -r --offline --unsafe-perm
 
 RUN pnpm build
 
