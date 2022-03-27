@@ -5,6 +5,9 @@ import Pages from 'vite-plugin-pages';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [vue(), Pages({})],
+  resolve: {
+    alias: {},
+  },
   server: {
     port: 4000,
     proxy: {

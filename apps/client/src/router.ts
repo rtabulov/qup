@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import routes from '~pages';
 import { useUserStore } from './store';
 import { resolveAuthLevel } from './utils';
-import { User } from './types';
 
 const router = createRouter({
   routes,
@@ -23,8 +22,8 @@ router.beforeEach((to) => {
   if (
     to.meta.requiresAuth &&
     !resolveAuthLevel(
-      store.user?.role,
-      to.meta.requiresAuth as true | User['role'],
+      store.user?.role?.key,
+      to.meta.requiresAuth as string | true,
     )
   ) {
     return `/login?backurl=${to.path}`;

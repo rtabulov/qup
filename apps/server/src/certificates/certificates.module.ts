@@ -7,7 +7,6 @@ import { nanoid } from 'nanoid';
 
 import { CertificatesService } from './certificates.service';
 import { CertificatesController } from './certificates.controller';
-import { Certificate } from './entities/certificate.entity';
 import { FileMetaModule } from '../file-meta/file-meta.module';
 import { PrismaModule } from '../prisma';
 

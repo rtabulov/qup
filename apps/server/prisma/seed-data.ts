@@ -1,8 +1,4 @@
-import { Connection } from 'typeorm';
-import { Department } from '../departments/entities/department.entity';
-import { User } from '../auth/models/user.entity';
-
-const DEPARTMENTS_SEED: Partial<Department>[] = [
+export const DEPARTMENTS_SEED = [
   { name: 'Бизнес и управление' },
   { name: 'Информационные системы' },
   { name: 'Социально-гуманитарные дисциплины' },
@@ -12,7 +8,14 @@ const DEPARTMENTS_SEED: Partial<Department>[] = [
   { name: 'Химия, химическая технология и экология' },
 ];
 
-const TEACHERS_SEED: Partial<User>[] = [
+export const ROLES_SEED = [
+  { name: 'Администратор', key: 'admin' },
+  { name: 'Зав. кафеды', key: 'departmentHead' },
+  { name: 'HR', key: 'hr' },
+  { name: 'Преподаватель', key: 'teacher' },
+];
+
+export const USERS_SEED = [
   {
     firstName: 'John',
     lastName: 'Doe',
@@ -40,9 +43,6 @@ const TEACHERS_SEED: Partial<User>[] = [
     position: 'Старший преподаватель',
     role: 'teacher',
   },
-];
-
-const SUPERUSER: Partial<User>[] = [
   {
     firstName: 'Админ',
     lastName: 'Админов',
@@ -52,35 +52,3 @@ const SUPERUSER: Partial<User>[] = [
     role: 'admin',
   },
 ];
-
-export default class CreateDepartments {
-  async run(factory, connection: Connection) {
-    await connection.createQueryBuilder().delete().from(User).execute();
-    await connection.createQueryBuilder().delete().from(Department).execute();
-
-    await connection
-      .createQueryBuilder()
-      .insert()
-      .into(Department)
-      .values(DEPARTMENTS_SEED)
-      .orIgnore()
-      .execute();
-
-    const departments = await connection.getRepository(Department).find();
-
-    const seed = TEACHERS_SEED.map((t) => {
-      const rand = Math.floor(Math.random() * departments.length);
-      return { ...t, department: departments[rand].id };
-    });
-
-    await Promise.all(
-      seed.map((user) => {
-        const t = connection.getRepository(User).create(user);
-        return connection.getRepository(User).save(t);
-      }),
-    );
-
-    const t = connection.getRepository(User).create(SUPERUSER);
-    return connection.getRepository(User).save(t);
-  }
-}

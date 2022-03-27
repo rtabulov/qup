@@ -5,7 +5,6 @@ import { AuthService } from './auth.service';
 import { LocalStrategy } from './local.strategy';
 import { AuthSerializer } from './serialization.provider';
 import { AuthController } from './auth.controller';
-import { User } from './models/user.entity';
 import { PrismaModule } from '../prisma';
 
 @Module({

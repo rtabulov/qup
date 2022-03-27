@@ -1,12 +1,10 @@
 <script lang="ts" setup>
 import { computed } from 'vue';
-import { format } from 'date-fns';
 import { TrashIcon, PlusIcon } from '@heroicons/vue/outline';
 import { useUserStore } from '../../store';
 import { removeCertificate } from '../../api';
 import AppButton from '../../components/AppButton.vue';
 import { useNotificationsStore } from '../../store/notifications-store';
-import { limitLength, roleNames } from '../../utils';
 import AppRuler from '../../components/AppRuler.vue';
 import { Certificate } from '../../types';
 
@@ -54,7 +52,7 @@ function getStatus(certificate: Certificate) {
           <th class="px-3 py-4 text-white">Удалить</th>
         </thead>
         <tbody>
-          <tr v-if="!user.certificates.length">
+          <tr v-if="!user.certificates?.length">
             <td colspan="100%" class="text-center py-6">
               <p class="mb-4 text-lg">Вы еще не добавили ни один сертификат</p>
               <AppButton as="RouterLink" to="/certificates/create">
@@ -125,7 +123,7 @@ function getStatus(certificate: Certificate) {
           </tr>
           <tr>
             <th class="min-w-[200px] py-2 text-pink text-left">Роль</th>
-            <td>{{ roleNames[user.role] }}</td>
+            <td>{{ user.role?.key }}</td>
           </tr>
           <tr>
             <th class="min-w-[200px] py-2 text-pink text-left">E-mail</th>

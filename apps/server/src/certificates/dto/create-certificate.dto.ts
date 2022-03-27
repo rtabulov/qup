@@ -1,17 +1,17 @@
-import { Type } from 'class-transformer';
+import { Type, Transform } from 'class-transformer';
 
 export class CreateCertificateDto {
   name: string;
 
   issuedBy: string;
 
-  @Type(() => Date)
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   issuedDate: Date;
 
-  @Type(() => Date)
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   startDate: Date;
 
-  @Type(() => Date)
+  @Transform(({ value }) => new Date(value), { toClassOnly: true })
   endDate: Date;
 
   files: any;

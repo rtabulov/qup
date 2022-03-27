@@ -1,8 +1,9 @@
-import { User } from '../auth/models/user.entity';
+// @ts-ignore
+import * as credential from 'credential';
 
 export function resolveAuthLevel(
-  userRole: User['role'] | null | undefined,
-  target: true | User['role'],
+  userRole: string | null | undefined,
+  target: true | string,
 ) {
   if (!userRole) {
     return false;
@@ -18,4 +19,16 @@ export function resolveAuthLevel(
   }
 
   return userLevel >= targetLevel;
+}
+
+export function hashPassword(password): Promise<string> {
+  return new Promise((resolve, reject) => {
+    credential().hash(password, function (err, hash) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(hash);
+      }
+    });
+  });
 }

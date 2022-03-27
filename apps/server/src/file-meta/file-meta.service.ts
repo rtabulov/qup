@@ -1,22 +1,21 @@
 import { Injectable } from '@nestjs/common';
+import { Certificate } from '@prisma/client';
+
 import { CreateFileMetaDto } from './dto/create-file-meta.dto';
 import { UpdateFileMetaDto } from './dto/update-file-meta.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { FileMeta } from './entities/file-meta.entity';
-import { Certificate } from '../certificates/entities/certificate.entity';
+import { PrismaService } from '../prisma';
 
 @Injectable()
 export class FileMetaService {
-  constructor(
-    @InjectRepository(FileMeta)
-    private readonly fileMetaRepository: Repository<FileMeta>,
-  ) {}
+  constructor(private readonly prismaService: PrismaService) {}
   create(createFileMetaDto: CreateFileMetaDto) {
     return 'This action adds a new fileMeta';
   }
 
   async createBatch(files: CreateFileMetaDto[]) {
-    return Promise.all(files.map((f) => this.fileMetaRepository.save(f)));
+    return Promise.all(
+      files.map((f) => this.prismaService.fileMeta.create({ data: f })),
+    );
   }
 
   findAll() {
@@ -36,7 +35,8 @@ export class FileMetaService {
   }
 
   async removeByCertificate(certificate: Certificate) {
-    const found = await this.fileMetaRepository.find({ certificate });
-    return this.fileMetaRepository.remove(found);
+    return this.prismaService.fileMeta.deleteMany({
+      where: { certificateId: certificate.id },
+    });
   }
 }

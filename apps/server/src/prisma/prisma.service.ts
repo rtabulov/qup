@@ -5,7 +5,8 @@ import {
   OnModuleInit,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient, Prisma } from '@prisma/client';
+import { hashPassword } from '../utils';
 
 /**
  * Extension of the PrismaClient for use with NestJs.
@@ -15,7 +16,7 @@ export class PrismaService
   extends PrismaClient
   implements OnModuleInit, OnModuleDestroy
 {
-  constructor(private configService: ConfigService) {
+  constructor(private readonly configService: ConfigService) {
     /**
      * Get the database url from environmental variables and pass it in.
      */
@@ -33,6 +34,19 @@ export class PrismaService
    */
   async onModuleInit(): Promise<void> {
     await this.$connect();
+
+    this.$use(async (params, next) => {
+      if (
+        params.model == 'User' &&
+        (params.action == 'create' || params.action == 'update')
+      ) {
+        const user = params.args.data;
+        const hash = user.password && (await hashPassword(user.password));
+        user.password = hash;
+        params.args.data = user;
+      }
+      return next(params);
+    });
   }
 
   /**

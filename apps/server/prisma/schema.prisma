@@ -7,6 +7,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Role {
+  id    String @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  key   String @unique @db.VarChar
+  name  String @db.VarChar
+  users User[]
+}
+
 model Certificate {
   id               String     @id(map: "PK_8daddfc65f59e341c2bbc9c9e43") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   name             String     @db.VarChar
@@ -19,15 +26,14 @@ model Certificate {
   awaitingApproval Boolean    @default(true)
   comment          String     @default("") @db.VarChar
   teacherId        String?    @db.Uuid
-  user             user?      @relation(fields: [teacherId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_a25be4645786e29b64aed7df7c9")
-  fileMeta         FileMeta[]
+  teacher          User?      @relation(fields: [teacherId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_a25be4645786e29b64aed7df7c9")
+  files            FileMeta[]
 }
 
 model Department {
-  id      String    @id(map: "PK_9a2213262c1593bffb581e382f5") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  name    String    @unique(map: "UQ_471da4b90e96c1ebe0af221e07b") @db.VarChar
-  teacher Teacher[]
-  user    user[]
+  id       String @id(map: "PK_9a2213262c1593bffb581e382f5") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name     String @unique(map: "UQ_471da4b90e96c1ebe0af221e07b") @db.VarChar
+  teachers User[]
 }
 
 model FileMeta {
@@ -38,22 +44,10 @@ model FileMeta {
   certificate   Certificate? @relation(fields: [certificateId], references: [id], onDelete: Cascade, onUpdate: NoAction, map: "FK_742be97b5dc6cfaad0aec931981")
 }
 
-model Teacher {
-  id           String      @id(map: "PK_2f807294148612a9751dacf1026") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  role         String      @default("user") @db.VarChar
-  firstName    String      @db.VarChar
-  lastName     String      @db.VarChar
-  middleName   String      @db.VarChar
-  position     String      @db.VarChar
-  email        String      @unique(map: "UQ_00634394dce7677d531749ed8e8") @db.VarChar
-  password     String      @db.VarChar
-  departmentId String?     @db.Uuid
-  department   Department? @relation(fields: [departmentId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "FK_2a1ede65e872f94f99b4b442c28")
-}
-
-model user {
+model User {
   id           String        @id(map: "PK_cace4a159ff9f2512dd42373760") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  role         String        @default("teacher") @db.VarChar
+  roleId       String        @db.Uuid
+  role         Role          @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   firstName    String        @db.VarChar
   lastName     String        @db.VarChar
   middleName   String        @db.VarChar
