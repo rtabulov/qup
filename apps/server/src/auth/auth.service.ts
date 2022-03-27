@@ -72,7 +72,10 @@ export class AuthService {
   }
 
   async findUsers() {
-    return this.prismaService.user.findMany({ include: { role: true } });
+    return this.prismaService.user.findMany({
+      include: { role: true },
+      orderBy: { createdAt: 'desc' },
+    });
   }
 
   async removeUser(id: string) {

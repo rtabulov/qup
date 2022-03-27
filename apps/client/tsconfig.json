@@ -12,7 +12,7 @@
     "lib": ["esnext", "dom", "dom.iterable"],
     "paths": {
       "@prisma/client": [
-        "../../node_modules/.pnpm/@prisma+client@3.11.0_prisma@3.11.0/node_modules/.prisma/client"
+        "../../node_modules/.pnpm/@prisma+client@3.11.1_prisma@3.11.1/node_modules/.prisma/client"
       ]
     }
   },
