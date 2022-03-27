@@ -57,7 +57,7 @@ const proxyValue = computed<string>({
             v-slot="{ active, selected }"
             v-for="option in options"
             :key="getValue(option)"
-            :value="getValue(option)"
+            :value="option"
             as="template"
           >
             <li
