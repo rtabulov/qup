@@ -6,7 +6,6 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "postinstall": "prisma generate",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "start": "pnpm run start:prod",
@@ -41,7 +40,6 @@
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "pg": "^8.7.3",
-    "prisma": "^3.11.1",
     "redis": "^3.0.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
@@ -65,6 +63,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.3.2",
+    "prisma": "^3.11.1",
     "source-map-support": "^0.5.20",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.7.0",
