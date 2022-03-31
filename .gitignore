@@ -13,7 +13,10 @@ lerna-debug.log*
 node_modules
 dist
 dist-ssr
+
 !apps/server/dist
+apps/server/public/uploads/certificates/*
+
 *.local
 
 # Editor directories and files
@@ -37,5 +40,3 @@ dist-ssr
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-
-/apps/server/public

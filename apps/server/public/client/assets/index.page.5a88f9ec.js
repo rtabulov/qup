@@ -1,0 +1,1 @@
+import{_ as e}from"./src/pages/_default.page.client.ts.0c65ebf1.js";import{c as r,o}from"./vendor.10008044.js";const c={};function a(n,t){return o(),r("h1",null,"Home page")}var f=e(c,[["render",a]]);export{f as default};

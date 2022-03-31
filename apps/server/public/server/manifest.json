@@ -1,0 +1,39 @@
+{
+  "../../node_modules/.pnpm/vite-plugin-ssr@0.3.60_vite@2.8.6/node_modules/vite-plugin-ssr/dist/esm/node/page-files/pageFiles.js": {
+    "file": "pageFiles.js",
+    "src": "../../node_modules/.pnpm/vite-plugin-ssr@0.3.60_vite@2.8.6/node_modules/vite-plugin-ssr/dist/esm/node/page-files/pageFiles.js",
+    "isEntry": true,
+    "dynamicImports": [
+      "src/pages/index.page.vue",
+      "src/pages/_default.page.client.ts",
+      "src/pages/_default.page.server.ts"
+    ]
+  },
+  "src/pages/index.page.vue": {
+    "file": "assets/index.page.38ce3bff.js",
+    "src": "src/pages/index.page.vue",
+    "isDynamicEntry": true,
+    "imports": [
+      "_plugin-vue_export-helper.db096aab.js"
+    ]
+  },
+  "_plugin-vue_export-helper.db096aab.js": {
+    "file": "assets/plugin-vue_export-helper.db096aab.js"
+  },
+  "src/pages/_default.page.client.ts": {
+    "file": "assets/_default.page.client.1eb26561.js",
+    "src": "src/pages/_default.page.client.ts",
+    "isDynamicEntry": true
+  },
+  "src/pages/_default.page.server.ts": {
+    "file": "assets/_default.page.server.a261c5f1.js",
+    "src": "src/pages/_default.page.server.ts",
+    "isDynamicEntry": true,
+    "imports": [
+      "_plugin-vue_export-helper.db096aab.js"
+    ],
+    "css": [
+      "assets/_default.page.server.7a38bb74.css"
+    ]
+  }
+}
