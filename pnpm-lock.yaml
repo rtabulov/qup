@@ -88,7 +88,7 @@ importers:
       passport-local: ^1.0.0
       pg: ^8.7.3
       prettier: ^2.3.2
-      prisma: 3.11.1
+      prisma: ^3.11.1
       redis: ^3.0.0
       reflect-metadata: ^0.1.13
       rimraf: ^3.0.2
@@ -119,6 +119,7 @@ importers:
       passport: 0.5.2
       passport-local: 1.0.0
       pg: 8.7.3
+      prisma: 3.11.1
       redis: 3.1.2
       reflect-metadata: 0.1.13
       rimraf: 3.0.2
@@ -141,7 +142,6 @@ importers:
       eslint-config-prettier: 8.5.0_eslint@8.10.0
       eslint-plugin-prettier: 4.0.0_f3d13a703a9c1079e3d1af6044603beb
       prettier: 2.5.1
-      prisma: 3.11.1
       source-map-support: 0.5.21
       ts-loader: 9.2.8_typescript@4.6.2+webpack@5.66.0
       ts-node: 10.7.0_045cabcbf8818eda83522fe731c87088
@@ -610,7 +610,7 @@ packages:
   /@prisma/engines/3.11.1-1.1a2506facaf1a4727b7c26850735e88ec779dee9:
     resolution: {integrity: sha512-MILbsGnvmnhCbFGa2/iSnsyGyazU3afzD7ldjCIeLIGKkNBMSZgA2IvpYsAXl+6qFHKGrS3B2otKfV31dwMSQw==}
     requiresBuild: true
-    dev: true
+    dev: false
 
   /@tsconfig/node10/1.0.8:
     resolution: {integrity: sha512-6XFfSQmMgq0CFLY1MslA/CPUfhIL919M1rMsa5lP2P097N2Wd1sSX0tx1u4olM16fLNhtHZpRhedZJphNJqmZg==}
@@ -4115,7 +4115,7 @@ packages:
     requiresBuild: true
     dependencies:
       '@prisma/engines': 3.11.1-1.1a2506facaf1a4727b7c26850735e88ec779dee9
-    dev: true
+    dev: false
 
   /process-nextick-args/2.0.1:
     resolution: {integrity: sha512-3ouUOpQhtgrbOa17J7+uxOTpITYWaGP7/AhoR3+A+/1e9skrzelGi/dXzEYyvbxubEF6Wn2ypscTKiKJFFn1ag==}
