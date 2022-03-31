@@ -18,6 +18,7 @@ importers:
       '@headlessui/vue': ^1.5.0
       '@heroicons/vue': ^1.0.6
       '@vitejs/plugin-vue': ^2.2.0
+      '@vue/compiler-sfc': ^3.2.31
       autoprefixer: ^10.4.2
       axios: ^0.26.1
       date-fns: ^2.28.0
@@ -28,12 +29,13 @@ importers:
       typescript: ^4.5.4
       vite: ^2.8.0
       vite-plugin-pages: ^0.21.4
-      vue: ^3.2.25
+      vue: ^3.2.31
       vue-router: ^4.0.14
       vue-tsc: ^0.29.8
     dependencies:
       '@headlessui/vue': 1.5.0_vue@3.2.31
       '@heroicons/vue': 1.0.6_vue@3.2.31
+      '@vue/compiler-sfc': 3.2.31
       axios: 0.26.1
       date-fns: 2.28.0
       nanoid: 3.3.1
@@ -47,7 +49,7 @@ importers:
       tailwindcss: 3.0.23_autoprefixer@10.4.2
       typescript: 4.6.2
       vite: 2.8.6
-      vite-plugin-pages: 0.21.4_vite@2.8.6
+      vite-plugin-pages: 0.21.4_5dbb0cc878f3ab9caa0bd7b169eded43
       vue-tsc: 0.29.8_typescript@4.6.2
 
   apps/server:
@@ -5119,7 +5121,7 @@ packages:
     engines: {node: '>= 0.8'}
     dev: false
 
-  /vite-plugin-pages/0.21.4_vite@2.8.6:
+  /vite-plugin-pages/0.21.4_5dbb0cc878f3ab9caa0bd7b169eded43:
     resolution: {integrity: sha512-2vtEkOjAXHARNUx0M636XfFtMlg1rFYmSbrsfNckxqG32A6COYD0y4EX3jtIonccc6CdKHubw6sR5xIS9t5Qyw==}
     peerDependencies:
       '@vue/compiler-sfc': '>=3'
@@ -5128,6 +5130,7 @@ packages:
       '@vue/compiler-sfc':
         optional: true
     dependencies:
+      '@vue/compiler-sfc': 3.2.31
       debug: 4.3.3
       deep-equal: 2.0.5
       fast-glob: 3.2.11
