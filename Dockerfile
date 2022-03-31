@@ -16,7 +16,6 @@ COPY pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm fetch --prod
 
 COPY . ./
-COPY ./apps/server/dist ./apps/server/dist
 
 RUN pnpm install -r --offline --prod --unsafe-perm
 
