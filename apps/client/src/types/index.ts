@@ -48,7 +48,7 @@ export interface RegisterUserDto {
   firstName: string;
   lastName: string;
   middleName: string;
-  department: string;
+  departmentId: string;
   position: string;
   email: string;
   password: string;

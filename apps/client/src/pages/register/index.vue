@@ -14,7 +14,7 @@ const form = reactive<RegisterUserDto>({
   firstName: '',
   lastName: '',
   middleName: '',
-  department: '',
+  departmentId: '',
   position: '',
   email: '',
   password: '',
@@ -24,7 +24,7 @@ const form = reactive<RegisterUserDto>({
 const departments = ref<Department[]>([]);
 getDepartments().then((dpts) => {
   departments.value = dpts;
-  form.department = dpts[0].id;
+  form.departmentId = dpts[0].id;
 });
 
 const router = useRouter();
@@ -55,8 +55,8 @@ async function onSubmit() {
       @submit.prevent="onSubmit"
     >
       <AppSelect
-        v-model="form.department"
-        v-model:error="errors.department"
+        v-model="form.departmentId"
+        v-model:error="errors.departmentId"
         type="text"
         :options="departments"
         :get-label="(dpt) => dpt.name"

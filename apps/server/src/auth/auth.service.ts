@@ -5,6 +5,7 @@ import {
 } from '@nestjs/common';
 // @ts-ignore
 import * as credential from 'credential';
+import { omit } from 'lodash';
 
 import { LoginUserDto } from './models/login-user.dto';
 import { RegisterUserDto } from './models/register-user.dto';
@@ -48,7 +49,11 @@ export class AuthService {
       });
     }
     const created = await this.prismaService.user.create({
-      data: { ...user, role: { connect: { key: 'teacher' } } },
+      data: {
+        ...omit(user, ['departmentId', 'confirmationPassword']),
+        role: { connect: { key: 'teacher' } },
+        department: { connect: { id: user.departmentId } },
+      },
     });
     return this.prismaService.user.findUnique({
       where: { id: created.id },
