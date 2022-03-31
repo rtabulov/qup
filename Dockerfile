@@ -5,7 +5,7 @@ ENV SESSION_SECRET=asdffgmklmsdf
 ENV SESSION_SECURE='false'
 ENV SESSION_NAME=notyourbusinessfriend
 ENV CERTIFICATE_UPLOAD_DIR=public/uploads/certificates
-ENV HOST=http://localhost:3333
+ENV HOST=https://diplomka-rtabulov.herokuapp.com
 
 WORKDIR "/app"
 
@@ -13,13 +13,11 @@ RUN npm i -g pnpm
 
 COPY pnpm-lock.yaml pnpm-workspace.yaml ./
 
-RUN pnpm fetch
+RUN pnpm fetch --prod
 
 COPY . ./
 
-RUN pnpm install -r --offline --unsafe-perm
-
-RUN pnpm build
+RUN pnpm install -r --offline --prod --unsafe-perm
 
 EXPOSE 3000
 
