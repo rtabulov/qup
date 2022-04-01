@@ -15,6 +15,7 @@ import {
 import * as path from 'path';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { nanoid } from 'nanoid';
+import * as slug from 'slug';
 
 import { CertificatesService } from './certificates.service';
 import { CreateCertificateDto } from './dto/create-certificate.dto';
@@ -48,7 +49,7 @@ export class CertificatesController {
 
     const withUniqFilenames = uploadedFiles.map((f) => {
       const parsed = path.parse(f.originalname);
-      const uniqFilename = `${parsed.name}.${nanoid(8)}${parsed.ext}`;
+      const uniqFilename = `${slug(parsed.name)}.${nanoid(8)}${parsed.ext}`;
       return {
         ...f,
         uniqFilename,
@@ -122,9 +123,11 @@ export class CertificatesController {
     const certificate = await this.certificatesService.findOne(id);
 
     if (uploadedFiles) {
+      await this.fileMetaService.removeByCertificate(certificate);
+
       const withUniqFilenames = uploadedFiles.map((f) => {
         const parsed = path.parse(f.originalname);
-        const uniqFilename = `${parsed.name}.${nanoid(8)}${parsed.ext}`;
+        const uniqFilename = `${slug(parsed.name)}.${nanoid(8)}${parsed.ext}`;
         return {
           ...f,
           uniqFilename,

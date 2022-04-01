@@ -25,6 +25,14 @@ async function onSubmit(e: Event) {
 
   try {
     const formData = new FormData(e.target as HTMLFormElement);
+
+    const dateFields = ['issuedDate', 'startDate', 'endDate'];
+    dateFields.forEach((d) =>
+      formData.set(d, new Date(formData.get(d) as string).toISOString()),
+    );
+
+    console.log(Object.fromEntries(formData));
+
     await updateCertificate(props.id, formData);
     await store.tryLoggingIn();
     router.push('/profile');

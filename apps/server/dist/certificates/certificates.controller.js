@@ -17,6 +17,7 @@ const common_1 = require("@nestjs/common");
 const path = require("path");
 const platform_express_1 = require("@nestjs/platform-express");
 const nanoid_1 = require("nanoid");
+const slug = require("slug");
 const certificates_service_1 = require("./certificates.service");
 const create_certificate_dto_1 = require("./dto/create-certificate.dto");
 const file_meta_service_1 = require("../file-meta/file-meta.service");
@@ -34,7 +35,7 @@ let CertificatesController = class CertificatesController {
         const certificate = await this.certificatesService.create(Object.assign(Object.assign({}, createCertificateDto), { teacherId: req.user.id }));
         const withUniqFilenames = uploadedFiles.map((f) => {
             const parsed = path.parse(f.originalname);
-            const uniqFilename = `${parsed.name}.${(0, nanoid_1.nanoid)(8)}${parsed.ext}`;
+            const uniqFilename = `${slug(parsed.name)}.${(0, nanoid_1.nanoid)(8)}${parsed.ext}`;
             return Object.assign(Object.assign({}, f), { uniqFilename });
         });
         const supabaseFiles = await Promise.all(withUniqFilenames.map((f) => this.supabaseService.storage
@@ -72,9 +73,10 @@ let CertificatesController = class CertificatesController {
     async update(id, uploadedFiles, updateCertificateDto, req) {
         const certificate = await this.certificatesService.findOne(id);
         if (uploadedFiles) {
+            await this.fileMetaService.removeByCertificate(certificate);
             const withUniqFilenames = uploadedFiles.map((f) => {
                 const parsed = path.parse(f.originalname);
-                const uniqFilename = `${parsed.name}.${(0, nanoid_1.nanoid)(8)}${parsed.ext}`;
+                const uniqFilename = `${slug(parsed.name)}.${(0, nanoid_1.nanoid)(8)}${parsed.ext}`;
                 return Object.assign(Object.assign({}, f), { uniqFilename });
             });
             const supabaseFiles = await Promise.all(withUniqFilenames.map((f) => this.supabaseService.storage
