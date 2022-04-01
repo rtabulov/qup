@@ -79,7 +79,7 @@ importers:
       class-transformer: ^0.5.1
       connect-redis: ^6.1.2
       credential: ^2.0.0
-      dotenv-cli: ^5.0.0
+      dotenv-cli: ^5.1.0
       eslint: ^8.0.1
       eslint-config-prettier: ^8.3.0
       eslint-plugin-prettier: ^4.0.0
@@ -117,6 +117,7 @@ importers:
       class-transformer: 0.5.1
       connect-redis: 6.1.2
       credential: 2.0.0
+      dotenv-cli: 5.1.0
       exceljs: 4.3.0
       express-session: 1.17.2
       lodash: 4.17.21
@@ -145,7 +146,6 @@ importers:
       '@types/slug': 5.0.3
       '@typescript-eslint/eslint-plugin': 5.14.0_f4054b8c3cd621db16ae1b9d571bccc0
       '@typescript-eslint/parser': 5.14.0_eslint@8.10.0+typescript@4.6.2
-      dotenv-cli: 5.0.0
       eslint: 8.10.0
       eslint-config-prettier: 8.5.0_eslint@8.10.0
       eslint-plugin-prettier: 4.0.0_f3d13a703a9c1079e3d1af6044603beb
@@ -1917,7 +1917,6 @@ packages:
       path-key: 3.1.1
       shebang-command: 2.0.0
       which: 2.0.2
-    dev: true
 
   /cssesc/3.0.0:
     resolution: {integrity: sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==}
@@ -2103,23 +2102,25 @@ packages:
       domhandler: 4.3.0
     dev: true
 
-  /dotenv-cli/5.0.0:
-    resolution: {integrity: sha512-0Cb2WMDJ805hTD7m43gXXFLraoE5KwrKmGW2dAzYvSEB96tlKI2hmcJ/9In4s2FfvkAFk3SjNQcLeKLoRSXhKA==}
+  /dotenv-cli/5.1.0:
+    resolution: {integrity: sha512-NoEZAlKo9WVrG0b3i9mBxdD6INdDuGqdgR74t68t8084QcI077/1MnPerRW1odl+9uULhcdnQp2U0pYVppKHOA==}
     hasBin: true
     dependencies:
       cross-spawn: 7.0.3
       dotenv: 16.0.0
       dotenv-expand: 8.0.1
       minimist: 1.2.5
-    dev: true
+    dev: false
 
   /dotenv-expand/8.0.1:
     resolution: {integrity: sha512-j/Ih7bIERDR5PzI89Zu8ayd3tXZ6E3dbY0ljQ9Db0K87qBO8zdLsi2dIvDHMWtjC3Yxb8XixOTHAtia0fDHRpg==}
     engines: {node: '>=12'}
+    dev: false
 
   /dotenv/16.0.0:
     resolution: {integrity: sha512-qD9WU0MPM4SWLPJy/r2Be+2WgQj8plChsyrCNQzW/0WjvcJQiKQJ9mH3ZgB3fxbUUxgc/11ZJ0Fi5KiimWGz2Q==}
     engines: {node: '>=12'}
+    dev: false
 
   /duplexer2/0.1.4:
     resolution: {integrity: sha1-ixLauHjA1p4+eJEFFmKjL8a93ME=}
@@ -3359,7 +3360,6 @@ packages:
 
   /isexe/2.0.0:
     resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
-    dev: true
 
   /iterare/1.2.1:
     resolution: {integrity: sha512-RKYVTCjAnRthyJes037NX/IiqeidgN1xc3j1RjFfECFp28A1GVwK9nA+i0rJPaHqSZwygLzRnFlzUuHFoWWy+Q==}
@@ -3999,7 +3999,6 @@ packages:
   /path-key/3.1.1:
     resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
     engines: {node: '>=8'}
-    dev: true
 
   /path-parse/1.0.7:
     resolution: {integrity: sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==}
@@ -4708,7 +4707,6 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       shebang-regex: 3.0.0
-    dev: true
 
   /shebang-regex/1.0.0:
     resolution: {integrity: sha1-2kL0l0DAtC2yypcoVxyxkMmO/qM=}
@@ -4718,7 +4716,6 @@ packages:
   /shebang-regex/3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
-    dev: true
 
   /shell-quote/1.7.3:
     resolution: {integrity: sha512-Vpfqwm4EnqGdlsBFNmHhxhElJYrdfcxPThu+ryKS5J8L/fhAwLazFZtq+S+TWZ9ANj2piSQLGj6NQg+lKPmxrw==}
@@ -5628,7 +5625,6 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
-    dev: true
 
   /windows-release/4.0.0:
     resolution: {integrity: sha512-OxmV4wzDKB1x7AZaZgXMVsdJ1qER1ed83ZrTYd5Bwq2HfJVg3DJS8nqlAG4sMoJ7mu8cuRmLEYyU13BKwctRAg==}
