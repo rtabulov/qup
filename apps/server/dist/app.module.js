@@ -28,6 +28,7 @@ const redis_constants_1 = require("./redis/redis.constants");
 const redis_module_1 = require("./redis/redis.module");
 const certificates_module_1 = require("./certificates/certificates.module");
 const file_meta_module_1 = require("./file-meta/file-meta.module");
+const uploads_1 = require("./uploads");
 let AppModule = class AppModule {
     constructor(redis, configService) {
         this.redis = redis;
@@ -65,6 +66,7 @@ AppModule = __decorate([
                 isGlobal: true,
                 envFilePath: ['.env', '.env.local'],
             }),
+            uploads_1.UploadsModule,
             departments_module_1.DepartmentsModule,
             auth_module_1.AuthModule,
             redis_module_1.RedisModule,

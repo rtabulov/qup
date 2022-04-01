@@ -13,7 +13,6 @@ services:
   #     SESSION_SECRET: asdffgmklmsdf
   #     SESSION_SECURE: 'false'
   #     SESSION_NAME: notyourbusinessfriend
-  #     CERTIFICATE_UPLOAD_DIR: public/uploads/certificates
   #     HOST: http://localhost:3333
   #     REDIS_HOST: redis
   #     DB_HOST: db

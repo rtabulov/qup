@@ -15,7 +15,6 @@ dist
 dist-ssr
 
 !apps/server/dist
-apps/server/public/uploads/certificates/*
 
 *.local
 

@@ -4,7 +4,6 @@ FROM node:16.14-alpine
 ENV SESSION_SECRET=asdffgmklmsdf
 ENV SESSION_SECURE='false'
 ENV SESSION_NAME=notyourbusinessfriend
-ENV CERTIFICATE_UPLOAD_DIR=public/uploads/certificates
 ENV HOST=https://diplomka-rtabulov.herokuapp.com
 
 WORKDIR "/app"

@@ -25,8 +25,8 @@ let FileMetaService = class FileMetaService {
     findAll() {
         return `This action returns all fileMeta`;
     }
-    findOne(id) {
-        return `This action returns a #${id} fileMeta`;
+    findOne(name) {
+        return this.prismaService.fileMeta.findUnique({ where: { name } });
     }
     update(id, updateFileMetaDto) {
         return `This action updates a #${id} fileMeta`;

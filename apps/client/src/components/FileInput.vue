@@ -68,7 +68,7 @@ export default {
     >
       <img
         v-if="isPicture(file.name)"
-        :src="`/uploads/certificates/${file.name}`"
+        :src="`/api/uploads/certificates/${file.name}`"
         :alt="file.name"
         class="w-full h-full object-contain bg-gray"
       />

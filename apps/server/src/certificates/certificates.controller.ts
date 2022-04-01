@@ -12,18 +12,23 @@ import {
   UploadedFiles,
   UseGuards,
 } from '@nestjs/common';
+import * as path from 'path';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { nanoid } from 'nanoid';
+
 import { CertificatesService } from './certificates.service';
 import { CreateCertificateDto } from './dto/create-certificate.dto';
-import { FilesInterceptor } from '@nestjs/platform-express';
 import { CreateFileMetaDto } from '../file-meta/dto/create-file-meta.dto';
 import { FileMetaService } from '../file-meta/file-meta.service';
 import { LoggedInGuard } from '../logged-in.guard';
 import { UpdateCertificateDto } from './dto/update-certificate.dto';
 import { AllowRoles } from '../roles.guard';
+import { SupabaseService } from '../supabase';
 
 @Controller('certificates')
 export class CertificatesController {
   constructor(
+    private readonly supabaseService: SupabaseService,
     private readonly certificatesService: CertificatesService,
     private readonly fileMetaService: FileMetaService,
   ) {}
@@ -41,10 +46,33 @@ export class CertificatesController {
       teacherId: req.user.id,
     });
 
-    const newFiles = uploadedFiles.map<CreateFileMetaDto>((f) => ({
-      name: f.filename,
+    const withUniqFilenames = uploadedFiles.map((f) => {
+      const parsed = path.parse(f.originalname);
+      const uniqFilename = `${parsed.name}.${nanoid(8)}${parsed.ext}`;
+      return {
+        ...f,
+        uniqFilename,
+      };
+    });
+
+    const supabaseFiles = await Promise.all(
+      withUniqFilenames.map((f) =>
+        this.supabaseService.storage
+          .from('certificates')
+          .upload(f.uniqFilename, f.buffer),
+      ),
+    );
+
+    if (supabaseFiles.some((f) => f.error)) {
+      throw supabaseFiles.find((f) => f.error);
+    }
+
+    const newFiles = withUniqFilenames.map<CreateFileMetaDto>((f) => ({
+      name: f.uniqFilename,
+      mimetype: f.mimetype,
       certificateId: certificate.id,
     }));
+
     await this.fileMetaService.createBatch(newFiles);
 
     return this.certificatesService.findOne(certificate.id);
@@ -94,12 +122,34 @@ export class CertificatesController {
     const certificate = await this.certificatesService.findOne(id);
 
     if (uploadedFiles) {
-      await this.fileMetaService.removeByCertificate(certificate);
-      const newFiles = uploadedFiles.map<CreateFileMetaDto>((f) => ({
-        name: f.filename,
+      const withUniqFilenames = uploadedFiles.map((f) => {
+        const parsed = path.parse(f.originalname);
+        const uniqFilename = `${parsed.name}.${nanoid(8)}${parsed.ext}`;
+        return {
+          ...f,
+          uniqFilename,
+        };
+      });
+
+      const supabaseFiles = await Promise.all(
+        withUniqFilenames.map((f) =>
+          this.supabaseService.storage
+            .from('certificates')
+            .upload(f.uniqFilename, f.buffer),
+        ),
+      );
+
+      if (supabaseFiles.some((f) => f.error)) {
+        throw supabaseFiles.find((f) => f.error);
+      }
+
+      const newFiles = withUniqFilenames.map<CreateFileMetaDto>((f) => ({
+        name: f.uniqFilename,
+        mimetype: f.mimetype,
         certificateId: certificate.id,
       }));
-      const files = await this.fileMetaService.createBatch(newFiles);
+
+      await this.fileMetaService.createBatch(newFiles);
     }
 
     await this.certificatesService.update(id, req.user, updateCertificateDto);

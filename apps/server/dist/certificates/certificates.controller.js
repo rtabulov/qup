@@ -14,22 +14,38 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CertificatesController = void 0;
 const common_1 = require("@nestjs/common");
+const path = require("path");
+const platform_express_1 = require("@nestjs/platform-express");
+const nanoid_1 = require("nanoid");
 const certificates_service_1 = require("./certificates.service");
 const create_certificate_dto_1 = require("./dto/create-certificate.dto");
-const platform_express_1 = require("@nestjs/platform-express");
 const file_meta_service_1 = require("../file-meta/file-meta.service");
 const logged_in_guard_1 = require("../logged-in.guard");
 const update_certificate_dto_1 = require("./dto/update-certificate.dto");
 const roles_guard_1 = require("../roles.guard");
+const supabase_1 = require("../supabase");
 let CertificatesController = class CertificatesController {
-    constructor(certificatesService, fileMetaService) {
+    constructor(supabaseService, certificatesService, fileMetaService) {
+        this.supabaseService = supabaseService;
         this.certificatesService = certificatesService;
         this.fileMetaService = fileMetaService;
     }
     async create(createCertificateDto, uploadedFiles, req) {
         const certificate = await this.certificatesService.create(Object.assign(Object.assign({}, createCertificateDto), { teacherId: req.user.id }));
-        const newFiles = uploadedFiles.map((f) => ({
-            name: f.filename,
+        const withUniqFilenames = uploadedFiles.map((f) => {
+            const parsed = path.parse(f.originalname);
+            const uniqFilename = `${parsed.name}.${(0, nanoid_1.nanoid)(8)}${parsed.ext}`;
+            return Object.assign(Object.assign({}, f), { uniqFilename });
+        });
+        const supabaseFiles = await Promise.all(withUniqFilenames.map((f) => this.supabaseService.storage
+            .from('certificates')
+            .upload(f.uniqFilename, f.buffer)));
+        if (supabaseFiles.some((f) => f.error)) {
+            throw supabaseFiles.find((f) => f.error);
+        }
+        const newFiles = withUniqFilenames.map((f) => ({
+            name: f.uniqFilename,
+            mimetype: f.mimetype,
             certificateId: certificate.id,
         }));
         await this.fileMetaService.createBatch(newFiles);
@@ -56,12 +72,23 @@ let CertificatesController = class CertificatesController {
     async update(id, uploadedFiles, updateCertificateDto, req) {
         const certificate = await this.certificatesService.findOne(id);
         if (uploadedFiles) {
-            await this.fileMetaService.removeByCertificate(certificate);
-            const newFiles = uploadedFiles.map((f) => ({
-                name: f.filename,
+            const withUniqFilenames = uploadedFiles.map((f) => {
+                const parsed = path.parse(f.originalname);
+                const uniqFilename = `${parsed.name}.${(0, nanoid_1.nanoid)(8)}${parsed.ext}`;
+                return Object.assign(Object.assign({}, f), { uniqFilename });
+            });
+            const supabaseFiles = await Promise.all(withUniqFilenames.map((f) => this.supabaseService.storage
+                .from('certificates')
+                .upload(f.uniqFilename, f.buffer)));
+            if (supabaseFiles.some((f) => f.error)) {
+                throw supabaseFiles.find((f) => f.error);
+            }
+            const newFiles = withUniqFilenames.map((f) => ({
+                name: f.uniqFilename,
+                mimetype: f.mimetype,
                 certificateId: certificate.id,
             }));
-            const files = await this.fileMetaService.createBatch(newFiles);
+            await this.fileMetaService.createBatch(newFiles);
         }
         await this.certificatesService.update(id, req.user, updateCertificateDto);
         return certificate;
@@ -135,7 +162,8 @@ __decorate([
 ], CertificatesController.prototype, "remove", null);
 CertificatesController = __decorate([
     (0, common_1.Controller)('certificates'),
-    __metadata("design:paramtypes", [certificates_service_1.CertificatesService,
+    __metadata("design:paramtypes", [supabase_1.SupabaseService,
+        certificates_service_1.CertificatesService,
         file_meta_service_1.FileMetaService])
 ], CertificatesController);
 exports.CertificatesController = CertificatesController;

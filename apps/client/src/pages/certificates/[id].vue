@@ -90,7 +90,7 @@ async function onDisapprove() {
             v-for="file in certificate.files"
             :key="file.id"
             class="text-red hover:text-pink my-1 block transition-colors whitespace-nowrap"
-            :href="`/uploads/certificates/${file.name}`"
+            :href="`/api/uploads/certificates/${file.name}`"
             target="_blank"
           >
             <span>

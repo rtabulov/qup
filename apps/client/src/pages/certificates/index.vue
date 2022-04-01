@@ -49,7 +49,7 @@ getAllCertificates().then((v) => (certificates.value = v));
               v-for="file in cert.files"
               :key="file.id"
               class="text-red hover:text-pink block my-1 transition-colors whitespace-nowrap"
-              :href="`/uploads/certificates/${file.name}`"
+              :href="`/api/uploads/certificates/${file.name}`"
               target="_blank"
               >{{ limitLength(file.name) }}</a
             >

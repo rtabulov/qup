@@ -22,8 +22,8 @@ export class FileMetaService {
     return `This action returns all fileMeta`;
   }
 
-  findOne(id: string) {
-    return `This action returns a #${id} fileMeta`;
+  findOne(name: string) {
+    return this.prismaService.fileMeta.findUnique({ where: { name } });
   }
 
   update(id: string, updateFileMetaDto: UpdateFileMetaDto) {

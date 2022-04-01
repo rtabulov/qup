@@ -68,7 +68,7 @@ let CertificatesService = class CertificatesService {
                 startDate: new Date(cert.startDate),
                 endDate: new Date(cert.endDate),
                 files: cert.files
-                    .map((f) => `${host}/uploads/certificates/${f.name}`)
+                    .map((f) => `${host}/api/uploads/certificates/${f.name}`)
                     .join('\n'),
             })));
             autoWidth(ws);
