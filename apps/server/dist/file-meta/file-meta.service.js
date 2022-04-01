@@ -34,6 +34,11 @@ let FileMetaService = class FileMetaService {
     remove(id) {
         return `This action removes a #${id} fileMeta`;
     }
+    async findByCertificate(certificate) {
+        return this.prismaService.fileMeta.findMany({
+            where: { certificateId: certificate.id },
+        });
+    }
     async removeByCertificate(certificate) {
         return this.prismaService.fileMeta.deleteMany({
             where: { certificateId: certificate.id },

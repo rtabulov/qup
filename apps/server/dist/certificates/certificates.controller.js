@@ -73,7 +73,11 @@ let CertificatesController = class CertificatesController {
     async update(id, uploadedFiles, updateCertificateDto, req) {
         const certificate = await this.certificatesService.findOne(id);
         if (uploadedFiles) {
+            const toBeRemoved = await this.fileMetaService.findByCertificate(certificate);
             await this.fileMetaService.removeByCertificate(certificate);
+            await this.supabaseService.storage
+                .from('certificates')
+                .remove(toBeRemoved.map((f) => f.name));
             const withUniqFilenames = uploadedFiles.map((f) => {
                 const parsed = path.parse(f.originalname);
                 const uniqFilename = `${slug(parsed.name)}.${(0, nanoid_1.nanoid)(8)}${parsed.ext}`;
