@@ -42,14 +42,14 @@ function getStatus(certificate: Certificate) {
     <div class="overflow-x-auto">
       <table class="w-full" v-if="user">
         <thead class="text-lg whitespace-nowrap bg-black">
-          <th class="px-3 py-4 text-white">Название</th>
-          <th class="px-3 py-4 text-white">Место прохождения</th>
-          <!-- <th class="px-3 py-4 text-white ">Начало обучения</th> -->
-          <!-- <th class="px-3 py-4 text-white ">Конец обучения</th> -->
-          <!-- <th class="px-3 py-4 text-white">Дата выдачи</th> -->
-          <!-- <th class="px-3 py-4 text-white">Файлы</th> -->
-          <th class="px-3 py-4 text-white">Статус</th>
-          <th class="px-3 py-4 text-white">Удалить</th>
+          <th class="px-3 py-4 text-black">Название</th>
+          <th class="px-3 py-4 text-black">Место прохождения</th>
+          <!-- <th class="px-3 py-4 text-black ">Начало обучения</th> -->
+          <!-- <th class="px-3 py-4 text-black ">Конец обучения</th> -->
+          <!-- <th class="px-3 py-4 text-black">Дата выдачи</th> -->
+          <!-- <th class="px-3 py-4 text-black">Файлы</th> -->
+          <th class="px-3 py-4 text-black">Статус</th>
+          <th class="px-3 py-4 text-black">Удалить</th>
         </thead>
         <tbody>
           <tr v-if="!user.certificates?.length">
@@ -63,7 +63,7 @@ function getStatus(certificate: Certificate) {
           </tr>
           <tr
             v-for="cert in user.certificates"
-            class="odd:bg-gray odd:bg-opacity-40 text-opacity-75 text-white hover:text-opacity-100 transition-colors"
+            class="odd:bg-gray odd:bg-opacity-40 text-opacity-75 text-black hover:text-opacity-100 transition-colors"
           >
             <td class="px-3 py-4">
               <RouterLink :to="`/profile/certificates/${cert.id}/edit`">{{
@@ -80,7 +80,7 @@ function getStatus(certificate: Certificate) {
               <a
                 v-for="file in cert.files"
                 :key="file.id"
-                class="text-red hover:text-pink block my-1 transition-colors whitespace-nowrap"
+                class="text-blue hover:text-lightblue block my-1 transition-colors whitespace-nowrap"
                 :href="`/api/uploads/certificates/${file.name}`"
                 target="_blank"
                 >{{ limitLength(file.name) }}</a
@@ -90,7 +90,7 @@ function getStatus(certificate: Certificate) {
             <td class="text-center">
               <button @click="onCertificateRemove(cert.id)">
                 <TrashIcon
-                  class="h-6 w-6 inline-block hover:text-red cursor-pointer transition-colors"
+                  class="h-6 w-6 inline-block hover:text-blue cursor-pointer transition-colors"
                 />
               </button>
             </td>
@@ -106,27 +106,31 @@ function getStatus(certificate: Certificate) {
       <table class="w-full">
         <tbody>
           <tr>
-            <th class="min-w-[200px] py-2 text-pink text-left">Фамилия</th>
+            <th class="min-w-[200px] py-2 text-lightblue text-left">Фамилия</th>
             <td>{{ user.lastName }}</td>
           </tr>
           <tr>
-            <th class="min-w-[200px] py-2 text-pink text-left">Имя</th>
+            <th class="min-w-[200px] py-2 text-lightblue text-left">Имя</th>
             <td>{{ user.firstName }}</td>
           </tr>
           <tr>
-            <th class="min-w-[200px] py-2 text-pink text-left">Отчество</th>
+            <th class="min-w-[200px] py-2 text-lightblue text-left">
+              Отчество
+            </th>
             <td>{{ user.middleName }}</td>
           </tr>
           <tr>
-            <th class="min-w-[200px] py-2 text-pink text-left">Должность</th>
+            <th class="min-w-[200px] py-2 text-lightblue text-left">
+              Должность
+            </th>
             <td>{{ user.position }}</td>
           </tr>
           <tr>
-            <th class="min-w-[200px] py-2 text-pink text-left">Роль</th>
+            <th class="min-w-[200px] py-2 text-lightblue text-left">Роль</th>
             <td>{{ user.role?.key }}</td>
           </tr>
           <tr>
-            <th class="min-w-[200px] py-2 text-pink text-left">E-mail</th>
+            <th class="min-w-[200px] py-2 text-lightblue text-left">E-mail</th>
             <td>{{ user.email }}</td>
           </tr>
         </tbody>

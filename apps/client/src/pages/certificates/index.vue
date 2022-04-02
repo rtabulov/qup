@@ -25,17 +25,17 @@ getAllCertificates().then((v) => (certificates.value = v));
   <div class="overflow-x-auto">
     <table class="w-full">
       <thead class="text-lg whitespace-nowrap bg-black">
-        <th class="px-3 py-4 text-white">Название</th>
-        <th class="px-3 py-4 text-white">Место прохождения</th>
-        <!-- <th class="px-3 py-4 text-white ">Начало обучения</th> -->
-        <!-- <th class="px-3 py-4 text-white ">Конец обучения</th> -->
-        <th class="px-3 py-4 text-white">Дата выдачи</th>
-        <th class="px-3 py-4 text-white">Файлы</th>
+        <th class="px-3 py-4 text-black">Название</th>
+        <th class="px-3 py-4 text-black">Место прохождения</th>
+        <!-- <th class="px-3 py-4 text-black ">Начало обучения</th> -->
+        <!-- <th class="px-3 py-4 text-black ">Конец обучения</th> -->
+        <th class="px-3 py-4 text-black">Дата выдачи</th>
+        <th class="px-3 py-4 text-black">Файлы</th>
       </thead>
       <tbody>
         <tr
           v-for="cert in certificates"
-          class="odd:bg-gray odd:bg-opacity-40 text-opacity-75 text-white hover:text-opacity-100 transition-colors"
+          class="odd:bg-gray odd:bg-opacity-40 text-opacity-75 text-black hover:text-opacity-100 transition-colors"
         >
           <td class="px-3 py-4">{{ cert.name }}</td>
           <td class="px-3 py-4">{{ cert.issuedBy }}</td>
@@ -48,7 +48,7 @@ getAllCertificates().then((v) => (certificates.value = v));
             <a
               v-for="file in cert.files"
               :key="file.id"
-              class="text-red hover:text-pink block my-1 transition-colors whitespace-nowrap"
+              class="text-blue hover:text-lightblue block my-1 transition-colors whitespace-nowrap"
               :href="`/api/uploads/certificates/${file.name}`"
               target="_blank"
               >{{ limitLength(file.name) }}</a

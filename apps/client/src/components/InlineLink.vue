@@ -14,7 +14,7 @@ const toProp = computed(() => (isExternal.value ? 'href' : 'to'));
     :is="isExternal ? 'a' : 'RouterLink'"
     :[toProp]="to"
     :target="isExternal ? '_blank' : undefined"
-    class="text-red hover:text-opacity-75 transition-opacity"
+    class="text-blue font-medium hover:text-opacity-75 transition-opacity"
   >
     <slot />
   </component>

@@ -42,7 +42,7 @@ async function onDisapprove() {
   <table v-if="certificate">
     <tbody>
       <tr>
-        <th class="min-w-[200px] pr-12 py-2 text-pink text-left">
+        <th class="min-w-[200px] pr-12 py-2 text-lightblue text-left">
           Преподаватель
         </th>
         <td>
@@ -52,44 +52,44 @@ async function onDisapprove() {
         </td>
       </tr>
       <tr>
-        <th class="min-w-[200px] pr-12 py-2 text-pink text-left">
+        <th class="min-w-[200px] pr-12 py-2 text-lightblue text-left">
           Название курса
         </th>
         <td>{{ certificate.name }}</td>
       </tr>
       <tr>
-        <th class="min-w-[200px] pr-12 py-2 text-pink text-left">
+        <th class="min-w-[200px] pr-12 py-2 text-lightblue text-left">
           Место прохождения обучения
         </th>
         <td>{{ certificate.issuedBy }}</td>
       </tr>
       <tr>
-        <th class="min-w-[200px] pr-12 py-2 text-pink text-left">
+        <th class="min-w-[200px] pr-12 py-2 text-lightblue text-left">
           Дата выдачи сертификата
         </th>
         <td>{{ format(new Date(certificate.issuedDate), 'dd.MM.yyyy') }}</td>
       </tr>
       <tr>
-        <th class="min-w-[200px] pr-12 py-2 text-pink text-left">
+        <th class="min-w-[200px] pr-12 py-2 text-lightblue text-left">
           Дата начала обучения
         </th>
         <td>{{ format(new Date(certificate.startDate), 'dd.MM.yyyy') }}</td>
       </tr>
       <tr>
-        <th class="min-w-[200px] pr-12 py-2 text-pink text-left">
+        <th class="min-w-[200px] pr-12 py-2 text-lightblue text-left">
           Дата окончания обучения
         </th>
         <td>{{ format(new Date(certificate.endDate), 'dd.MM.yyyy') }}</td>
       </tr>
       <tr>
-        <th class="min-w-[200px] pr-12 py-2 text-pink text-left">
+        <th class="min-w-[200px] pr-12 py-2 text-lightblue text-left">
           Прикрепленные файлы
         </th>
         <td>
           <a
             v-for="file in certificate.files"
             :key="file.id"
-            class="text-red hover:text-pink my-1 block transition-colors whitespace-nowrap"
+            class="text-blue hover:text-lightblue my-1 block transition-colors whitespace-nowrap"
             :href="`/api/uploads/certificates/${file.name}`"
             target="_blank"
           >
@@ -100,7 +100,7 @@ async function onDisapprove() {
         </td>
       </tr>
       <tr>
-        <th class="min-w-[200px] pr-12 py-2 text-pink text-left">
+        <th class="min-w-[200px] pr-12 py-2 text-lightblue text-left">
           Комментарий
         </th>
         <td>{{ certificate.comment }}</td>
@@ -111,7 +111,7 @@ async function onDisapprove() {
   <textarea
     v-model="comment"
     placeholder="Ваши примечания"
-    class="mt-6 resize-none block relative min-w-[700px] h-24 py-2 px-3 text-left bg-gray text-white shadow-md focus:outline-none focus-visible:ring focus-visible:ring-muted sm:text-sm placeholder:text-white placeholder:text-opacity-75"
+    class="mt-6 resize-none block relative min-w-[700px] h-24 py-2 px-3 text-left bg-gray text-black shadow-md focus:outline-none focus-visible:ring focus-visible:ring-muted sm:text-sm placeholder:text-black placeholder:text-opacity-75"
   ></textarea>
 
   <div class="flex gap-3 mt-6">

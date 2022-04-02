@@ -21,7 +21,7 @@ export default defineComponent({
   <RouterLink custom :to="to" v-slot="{ navigate, href }">
     <component
       :is="as"
-      class="py-2 px-4 text-pink hover:text-white inline-block hover:bg-muted transition-colors"
+      class="py-2 px-4 text-blue hover:text-black inline-block hover:bg-lightblue hover:bg-opacity-20 transition-colors"
       :href="href"
       v-bind="$attrs"
       @click="navigate"

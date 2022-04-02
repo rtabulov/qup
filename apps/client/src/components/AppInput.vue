@@ -58,13 +58,13 @@ export default {
     <input
       v-bind="$attrs"
       v-model="proxyValue"
-      class="relative w-full py-2 px-3 text-left bg-gray text-white shadow-md focus:outline-none focus-visible:ring focus-visible:ring-muted sm:text-sm placeholder:text-white placeholder:text-opacity-75"
+      class="relative w-full py-2 px-3 text-left bg-gray bg-opacity-10 ring-1 ring-muted text-black shadow-md focus:outline-none focus-visible:ring focus-visible:ring-muted sm:text-sm placeholder:text-black placeholder:text-opacity-75 transition-shadow"
       :id="id"
-      :class="{ 'text-red': error }"
+      :class="{ 'text-blue': error }"
       :required="required"
       @input="() => error && emit('update:error', null)"
     />
-    <small v-if="error" class="text-red w-full block text-left mt-1">{{
+    <small v-if="error" class="text-blue w-full block text-left mt-1">{{
       error
     }}</small>
   </div>

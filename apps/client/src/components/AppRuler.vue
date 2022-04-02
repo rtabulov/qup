@@ -9,7 +9,7 @@ withDefaults(defineProps<Props>(), { center: false, size: 3 });
 
 <template>
   <hr
-    class="max-w-xs my-6 border-red"
+    class="max-w-xs my-6 border-blue bg-transparent border-0"
     :style="{ borderBottomWidth: `${size}px` }"
     :class="{ 'mx-auto': center }"
   />

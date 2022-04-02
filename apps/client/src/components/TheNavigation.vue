@@ -24,7 +24,7 @@ async function onLogout() {
 </script>
 
 <template>
-  <nav class="bg-dark font-display">
+  <nav class="bg-light font-display">
     <div class="container px-0 flex">
       <div class="flex">
         <!-- <TheNavigationLink to="/">Home</TheNavigationLink> -->

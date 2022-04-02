@@ -59,7 +59,7 @@ async function onUpdateUserRole(userId: string, roleId: string) {
         </td>
         <td class="px-4 text-center">
           <button
-            class="hover:text-red transition-colors"
+            class="hover:text-blue transition-colors"
             @click="onRemove(user.id)"
           >
             <TrashIcon class="w-6 h-6" />

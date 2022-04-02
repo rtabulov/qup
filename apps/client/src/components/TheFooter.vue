@@ -5,9 +5,7 @@ import InlineLink from './InlineLink.vue';
 </script>
 
 <template>
-  <footer
-    class="bg-black text-white text-opacity-75 py-4 space-y-4 font-display"
-  >
+  <footer class="bg-dark text-white py-4 space-y-4 font-display">
     <h2 class="container text-xl">
       Made possible by people behind these projects
     </h2>
@@ -15,16 +13,16 @@ import InlineLink from './InlineLink.vue';
     <nav class="grid grid-cols-4 gap-6 container">
       <div class="flex flex-col">
         <h3 class="font-semibold text-lg">Common</h3>
-        <AppRuler :size="1" class="w-24 !my-2" />
+        <AppRuler :size="1" class="w-24 !my-2 border-lightblue" />
         <div>
           <InlineLink
-            class="text-opacity-90"
+            class="text-lightblue"
             to="https://www.typescriptlang.org/"
             >TypeScript</InlineLink
           >
         </div>
         <div>
-          <InlineLink class="text-opacity-90" to="https://pnpm.io/"
+          <InlineLink class="text-lightblue" to="https://pnpm.io/"
             >pnpm</InlineLink
           >
           as monorepo & dependency manager
@@ -32,22 +30,22 @@ import InlineLink from './InlineLink.vue';
       </div>
       <div class="flex flex-col">
         <h3 class="font-semibold text-lg">Backend</h3>
-        <AppRuler :size="1" class="w-24 !my-2" />
+        <AppRuler :size="1" class="w-24 !my-2 border-lightblue" />
         <div>
-          <InlineLink class="text-opacity-90" to="https://nestjs.com/"
+          <InlineLink class="text-lightblue" to="https://nestjs.com/"
             >NestJS</InlineLink
           >
           framework
         </div>
         <div>
-          <InlineLink class="text-opacity-90" to="https://www.passportjs.org/"
+          <InlineLink class="text-lightblue" to="https://www.passportjs.org/"
             >passport + passport-local</InlineLink
           >
           for authentication
         </div>
         <div>
           <InlineLink
-            class="text-opacity-90"
+            class="text-lightblue"
             to="https://github.com/exceljs/exceljs"
             >exceljs</InlineLink
           >
@@ -56,21 +54,21 @@ import InlineLink from './InlineLink.vue';
       </div>
       <div class="flex flex-col">
         <h3 class="font-semibold text-lg">Database</h3>
-        <AppRuler :size="1" class="w-24 !my-2" />
+        <AppRuler :size="1" class="w-24 !my-2 border-lightblue" />
         <div>
-          <InlineLink class="text-opacity-90" to="https://www.postgresql.org/"
+          <InlineLink class="text-lightblue" to="https://www.postgresql.org/"
             >PostgreSQL</InlineLink
           >
           as primary database
         </div>
         <div>
-          <InlineLink class="text-opacity-90" to="https://www.prisma.io/"
+          <InlineLink class="text-lightblue" to="https://www.prisma.io/"
             >Prisma</InlineLink
           >
           as ORM layer
         </div>
         <div>
-          <InlineLink class="text-opacity-90" to="https://redis.io/"
+          <InlineLink class="text-lightblue" to="https://redis.io/"
             >Redis</InlineLink
           >
           as session store
@@ -78,21 +76,21 @@ import InlineLink from './InlineLink.vue';
       </div>
       <div class="flex flex-col">
         <h3 class="font-semibold text-lg">Frontend</h3>
-        <AppRuler :size="1" class="w-24 !my-2" />
+        <AppRuler :size="1" class="w-24 !my-2 border-lightblue" />
         <div>
-          <InlineLink class="text-opacity-90" to="https://vuejs.org/"
+          <InlineLink class="text-lightblue" to="https://vuejs.org/"
             >Vue</InlineLink
           >
           framework
         </div>
         <div>
-          <InlineLink class="text-opacity-90" to="https://tailwindcss.com/"
+          <InlineLink class="text-lightblue" to="https://tailwindcss.com/"
             >Tailwind</InlineLink
           >
           for styling
         </div>
         <div>
-          <InlineLink class="text-opacity-90" to="https://vitejs.dev/"
+          <InlineLink class="text-lightblue" to="https://vitejs.dev/"
             >Vite</InlineLink
           >
           frontend tooling
@@ -108,7 +106,7 @@ import InlineLink from './InlineLink.vue';
       <br />
       <span>
         by
-        <InlineLink class="text-opacity-90" to="https://github.com/rtabulov"
+        <InlineLink class="text-lightblue" to="https://github.com/rtabulov"
           >rtabulov</InlineLink
         >
       </span>

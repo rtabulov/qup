@@ -28,7 +28,7 @@ export default {
     class="flex w-full items-center justify-center bg-grey-lighter text-black"
   >
     <label
-      class="flex gap-3 items-center px-6 py-3 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase cursor-pointer hover:bg-red hover:text-white transition-colors"
+      class="flex gap-3 items-center px-6 py-3 bg-black text-blue rounded-lg shadow-lg tracking-wide uppercase cursor-pointer hover:bg-blue hover:text-black transition-colors"
     >
       <PaperClipIcon class="h-5 w-5" />
       <span class="text-base leading-normal">Прикрепить файлы</span>
