@@ -7,6 +7,10 @@ import { getAllCertificates } from '../../api';
 import { limitLength } from '../../utils';
 import AppButton from '../../components/AppButton.vue';
 import AppRuler from '../../components/AppRuler.vue';
+import InlineLink from '../../components/InlineLink.vue';
+import AppTableRow from '../../components/AppTableRow.vue';
+import AppTable from '../../components/AppTable.vue';
+import AppTableHeader from '../../components/AppTableHeader.vue';
 
 const certificates = ref<Certificate[]>([]);
 getAllCertificates().then((v) => (certificates.value = v));
@@ -23,40 +27,31 @@ getAllCertificates().then((v) => (certificates.value = v));
     </AppButton>
   </div>
   <div class="overflow-x-auto">
-    <table class="w-full">
-      <thead class="text-lg whitespace-nowrap bg-black">
-        <th class="px-3 py-4 text-black">Название</th>
-        <th class="px-3 py-4 text-black">Место прохождения</th>
-        <!-- <th class="px-3 py-4 text-black ">Начало обучения</th> -->
-        <!-- <th class="px-3 py-4 text-black ">Конец обучения</th> -->
-        <th class="px-3 py-4 text-black">Дата выдачи</th>
-        <th class="px-3 py-4 text-black">Файлы</th>
-      </thead>
-      <tbody>
-        <tr
-          v-for="cert in certificates"
-          class="odd:bg-gray odd:bg-opacity-40 text-opacity-75 text-black hover:text-opacity-100 transition-colors"
-        >
-          <td class="px-3 py-4">{{ cert.name }}</td>
-          <td class="px-3 py-4">{{ cert.issuedBy }}</td>
-          <!-- <td class="px-3 py-4 whitespace-nowrap">{{ cert.startDate }}</td> -->
-          <!-- <td class="px-3 py-4 whitespace-nowrap">{{ cert.endDate }}</td> -->
-          <td class="px-3 py-4 whitespace-nowrap">
-            {{ format(new Date(cert.issuedDate), 'dd.MM.yyyy') }}
-          </td>
-          <td class="px-3 py-4">
-            <a
-              v-for="file in cert.files"
-              :key="file.id"
-              class="text-blue hover:text-lightblue block my-1 transition-colors whitespace-nowrap"
-              :href="`/api/uploads/certificates/${file.name}`"
-              target="_blank"
-              >{{ limitLength(file.name) }}</a
-            >
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <AppTable>
+      <template #head>
+        <AppTableHeader>Название</AppTableHeader>
+        <AppTableHeader>Место прохождения</AppTableHeader>
+        <AppTableHeader>Дата выдачи</AppTableHeader>
+        <AppTableHeader>Файлы</AppTableHeader>
+      </template>
+      <AppTableRow v-for="cert in certificates">
+        <td class="px-3 py-4">{{ cert.name }}</td>
+        <td class="px-3 py-4">{{ cert.issuedBy }}</td>
+        <td class="px-3 py-4 whitespace-nowrap">
+          {{ format(new Date(cert.issuedDate), 'dd.MM.yyyy') }}
+        </td>
+        <td class="px-3 py-4">
+          <InlineLink
+            v-for="file in cert.files"
+            :key="file.id"
+            :to="`/api/uploads/certificates/${file.name}`"
+            class="block"
+            external
+            >{{ limitLength(file.name, 30) }}</InlineLink
+          >
+        </td>
+      </AppTableRow>
+    </AppTable>
   </div>
 </template>
 

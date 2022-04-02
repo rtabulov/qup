@@ -24,11 +24,9 @@ export default {
 </script>
 
 <template>
-  <div
-    class="flex w-full items-center justify-center bg-grey-lighter text-black"
-  >
+  <div class="flex w-full items-center justify-center bg-grey-lighter">
     <label
-      class="flex gap-3 items-center px-6 py-3 bg-black text-blue rounded-lg shadow-lg tracking-wide uppercase cursor-pointer hover:bg-blue hover:text-black transition-colors"
+      class="flex gap-3 items-center px-6 py-3 bg-blue text-white rounded-lg shadow-lg tracking-wide uppercase cursor-pointer hover:bg-blue hover:text-black transition-colors"
     >
       <PaperClipIcon class="h-5 w-5" />
       <span class="text-base leading-normal">Прикрепить файлы</span>
@@ -51,11 +49,11 @@ export default {
         v-if="isPicture(file.name)"
         :src="getPreviewSrc(file)"
         :alt="file.name"
-        class="w-full h-full object-contain bg-gray"
+        class="w-full h-full object-contain bg-lightblue bg-opacity-30"
       />
       <span
         v-else
-        class="w-full h-full flex items-center justify-center bg-gray text-center p-3"
+        class="w-full h-full flex items-center justify-center bg-lightblue bg-opacity-30 text-center p-3"
         >{{ file.name }}</span
       >
     </div>

@@ -15,7 +15,7 @@ import InlineLink from '../components/InlineLink.vue';
 
   <p>
     Автор
-    <InlineLink to="https://github.com/rtabulov"> Расул Табулов </InlineLink>
+    <InlineLink to="https://github.com/rtabulov">Расул Табулов</InlineLink>
   </p>
 
   <p>

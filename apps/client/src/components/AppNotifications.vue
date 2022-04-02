@@ -11,9 +11,9 @@ const notifications = useNotificationsStore();
       <div
         v-for="ntfcn in notifications.notifications"
         :key="ntfcn.id"
-        class="w-full px-6 py-3 flex justify-between bg-opacity-75"
+        class="w-full px-6 py-3 flex justify-between bg-opacity-90"
         :class="{
-          'bg-black text-black': ntfcn.type === 'default',
+          'bg-black text-white': ntfcn.type === 'default',
         }"
       >
         <span class="block">{{ ntfcn.text }}</span>

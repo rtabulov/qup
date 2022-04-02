@@ -157,6 +157,10 @@ export class CertificatesService {
       throw new UnauthorizedException();
     }
 
+    if (cert.approved) {
+      throw new UnauthorizedException();
+    }
+
     return this.prismaService.certificate.delete({ where: { id } });
   }
 }

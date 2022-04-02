@@ -26,7 +26,20 @@ async function onSubmit() {
   try {
     await login({ ...form });
     await userStore.tryLoggingIn();
-    router.push((route.query.backurl as string) || '/profile');
+
+    console.log(userStore.user?.role?.key);
+    if (route.query.backurl) {
+      router.push(route.query.backurl as string);
+    } else if (
+      userStore.user?.role?.key === 'hr' ||
+      userStore.user?.role?.key === 'departmentHead'
+    ) {
+      router.push('/certificates/awaiting-approval');
+    } else if (userStore.user?.role?.key === 'admin') {
+      router.push('/users');
+    } else {
+      router.push('/profile');
+    }
   } catch (e: any) {
     isLoading.value = false;
     if (e.response) {

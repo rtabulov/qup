@@ -7,6 +7,9 @@ import AppButton from '../../components/AppButton.vue';
 import { useNotificationsStore } from '../../store/notifications-store';
 import AppRuler from '../../components/AppRuler.vue';
 import { Certificate } from '../../types';
+import AppTable from '../../components/AppTable.vue';
+import AppTableHeader from '../../components/AppTableHeader.vue';
+import AppTableRow from '../../components/AppTableRow.vue';
 
 const store = useStore();
 const user = computed(() => store.user);
@@ -37,67 +40,49 @@ function getStatus(certificate: Certificate) {
 <template>
   <h1 class="text-3xl">Профиль пользователя</h1>
   <AppRuler />
-  <div class="my-6">
+  <div class="my-6" v-if="user">
     <h2 class="text-2xl mb-4">Ваши сертификаты</h2>
-    <div class="overflow-x-auto">
-      <table class="w-full" v-if="user">
-        <thead class="text-lg whitespace-nowrap bg-black">
-          <th class="px-3 py-4 text-black">Название</th>
-          <th class="px-3 py-4 text-black">Место прохождения</th>
-          <!-- <th class="px-3 py-4 text-black ">Начало обучения</th> -->
-          <!-- <th class="px-3 py-4 text-black ">Конец обучения</th> -->
-          <!-- <th class="px-3 py-4 text-black">Дата выдачи</th> -->
-          <!-- <th class="px-3 py-4 text-black">Файлы</th> -->
-          <th class="px-3 py-4 text-black">Статус</th>
-          <th class="px-3 py-4 text-black">Удалить</th>
-        </thead>
-        <tbody>
-          <tr v-if="!user.certificates?.length">
-            <td colspan="100%" class="text-center py-6">
-              <p class="mb-4 text-lg">Вы еще не добавили ни один сертификат</p>
-              <AppButton as="RouterLink" to="/certificates/create">
-                Добавить сертификат
-                <PlusIcon class="inline-block h-5 w-5 translate-y-[2px] ml-2" />
-              </AppButton>
-            </td>
-          </tr>
-          <tr
-            v-for="cert in user.certificates"
-            class="odd:bg-gray odd:bg-opacity-40 text-opacity-75 text-black hover:text-opacity-100 transition-colors"
+    <AppTable>
+      <template #head>
+        <AppTableHeader>Название</AppTableHeader>
+        <AppTableHeader>Место прохождения</AppTableHeader>
+        <!-- <AppTableHeader>Начало обучения</AppTableHeader> -->
+        <!-- <AppTableHeader>Конец обучения</AppTableHeader> -->
+        <!-- <AppTableHeader>Дата выдачи</AppTableHeader> -->
+        <!-- <AppTableHeader>Файлы</AppTableHeader> -->
+        <AppTableHeader>Статус</AppTableHeader>
+        <AppTableHeader>Удалить</AppTableHeader>
+      </template>
+
+      <AppTableRow v-if="!user.certificates?.length">
+        <td colspan="100%" class="text-center py-6">
+          <p class="mb-4 text-lg">Вы еще не добавили ни один сертификат</p>
+          <AppButton as="RouterLink" to="/certificates/create">
+            Добавить сертификат
+            <PlusIcon class="inline-block h-5 w-5 translate-y-[2px] ml-2" />
+          </AppButton>
+        </td>
+      </AppTableRow>
+
+      <AppTableRow v-for="cert in user.certificates">
+        <td class="px-3 py-4">
+          <RouterLink :to="`/profile/certificates/${cert.id}/edit`">{{
+            cert.name
+          }}</RouterLink>
+        </td>
+        <td class="px-3 py-4">{{ cert.issuedBy }}</td>
+        <td class="text-center">{{ getStatus(cert) }}</td>
+        <td class="text-center">
+          <button
+            v-if="!cert.approved"
+            class="hover:text-blue transition-colors"
+            @click="onCertificateRemove(cert.id)"
           >
-            <td class="px-3 py-4">
-              <RouterLink :to="`/profile/certificates/${cert.id}/edit`">{{
-                cert.name
-              }}</RouterLink>
-            </td>
-            <td class="px-3 py-4">{{ cert.issuedBy }}</td>
-            <!-- <td class="px-3 py-4 whitespace-nowrap">{{ cert.startDate }}</td> -->
-            <!-- <td class="px-3 py-4 whitespace-nowrap">{{ cert.endDate }}</td> -->
-            <!-- <td class="px-3 py-4 whitespace-nowrap">
-              {{ format(new Date(cert.issuedDate), 'dd.MM.yyyy') }}
-            </td> -->
-            <!-- <td class="px-3 py-4">
-              <a
-                v-for="file in cert.files"
-                :key="file.id"
-                class="text-blue hover:text-lightblue block my-1 transition-colors whitespace-nowrap"
-                :href="`/api/uploads/certificates/${file.name}`"
-                target="_blank"
-                >{{ limitLength(file.name) }}</a
-              >
-            </td> -->
-            <td class="text-center">{{ getStatus(cert) }}</td>
-            <td class="text-center">
-              <button @click="onCertificateRemove(cert.id)">
-                <TrashIcon
-                  class="h-6 w-6 inline-block hover:text-blue cursor-pointer transition-colors"
-                />
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+            <TrashIcon class="h-6 w-6 inline-block" />
+          </button>
+        </td>
+      </AppTableRow>
+    </AppTable>
   </div>
 
   <div class="grid grid-cols-2" v-if="user">

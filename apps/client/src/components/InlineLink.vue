@@ -2,9 +2,17 @@
 import { computed } from 'vue';
 import { RouterLinkProps } from 'vue-router';
 
-const props = defineProps<{ to: RouterLinkProps['to'] }>();
+interface Props {
+  to: RouterLinkProps['to'];
+  external?: boolean;
+}
+const props = withDefaults(defineProps<Props>(), {
+  external: false,
+});
 const isExternal = computed(
-  () => typeof props.to === 'string' && props.to.startsWith('http'),
+  () =>
+    props.external ||
+    (typeof props.to === 'string' && props.to.startsWith('http')),
 );
 const toProp = computed(() => (isExternal.value ? 'href' : 'to'));
 </script>

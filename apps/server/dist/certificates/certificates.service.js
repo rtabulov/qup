@@ -114,6 +114,9 @@ let CertificatesService = class CertificatesService {
         if (requestUser.id !== cert.teacher.id) {
             throw new common_1.UnauthorizedException();
         }
+        if (cert.approved) {
+            throw new common_1.UnauthorizedException();
+        }
         return this.prismaService.certificate.delete({ where: { id } });
     }
 };
