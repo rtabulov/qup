@@ -33,7 +33,7 @@ module.exports = {
       // primary: colors.stone,
       // secondary: colors.cyan,
       // neutral: colors.slate,
-      // danger: colors.rose,
+      danger: colors.rose[600],
       warning: colors.amber,
     },
   },

@@ -1,7 +1,12 @@
 <script lang="ts" setup>
 import { ref, watchEffect } from 'vue';
-import { TrashIcon } from '@heroicons/vue/outline';
-import { getAllUsers, removeUser, updateUser } from '../../api';
+import { BanIcon, CheckCircleIcon } from '@heroicons/vue/outline';
+import {
+  getInactiveUsers,
+  getAllUsers,
+  removeUser,
+  updateUser,
+} from '../../api';
 import type { User, Role } from '../../types';
 import { useNotificationsStore } from '../../store/notifications-store';
 import AppSelect from '../../components/AppSelect.vue';
@@ -11,18 +16,26 @@ import AppTableRow from '../../components/AppTableRow.vue';
 import AppTableHeader from '../../components/AppTableHeader.vue';
 
 const users = ref<User[]>([]);
+const inactiveUsers = ref<User[]>([]);
 const notifications = useNotificationsStore();
 
-const refetchUsers = () => getAllUsers().then((u) => (users.value = u));
+const refetchUsers = async () => {
+  await Promise.all([
+    getAllUsers().then((u) => (users.value = u)),
+    getInactiveUsers().then((u) => (inactiveUsers.value = u)),
+  ]);
+};
 
 refetchUsers();
 
 const store = useStore();
 
-async function onRemove(id: string) {
-  await removeUser(id);
+async function onChangeActive(id: string, active: boolean) {
+  await updateUser(id, { active });
   await refetchUsers();
-  notifications.create({ text: `Пользователь удалён` });
+  notifications.create({
+    text: active ? `Пользователь активирован` : `Пользователь деактивирован`,
+  });
 }
 
 async function onUpdateUserRole(userId: string, roleId: string) {
@@ -45,7 +58,7 @@ async function onUpdateUserRole(userId: string, roleId: string) {
       <AppTableHeader>Удалить</AppTableHeader>
     </template>
 
-    <AppTableRow v-for="user in users">
+    <AppTableRow v-for="user in [...inactiveUsers, ...users]">
       <td class="px-4">
         {{ user.lastName }} {{ user.firstName }} {{ user.middleName }}
       </td>
@@ -61,13 +74,22 @@ async function onUpdateUserRole(userId: string, roleId: string) {
           @update:model-value="(newRole) => onUpdateUserRole(user.id, newRole)"
         />
       </td>
-      <td class="px-4 text-center">
+      <td class="px-4 text-right">
         <button
+          v-if="store.user?.id !== user.id"
           class="hover:text-blue transition-colors"
-          @click="onRemove(user.id)"
+          @click="onChangeActive(user.id, !user.active)"
         >
-          <TrashIcon class="w-6 h-6" />
+          <template v-if="user.active">
+            Деактивировать
+            <BanIcon class="inline align-middle w-6 h-6" />
+          </template>
+          <template v-else>
+            Активировать
+            <CheckCircleIcon class="inline align-middle w-6 h-6" />
+          </template>
         </button>
+        <span v-else>Ваш аккаунт</span>
       </td>
     </AppTableRow>
   </AppTable>

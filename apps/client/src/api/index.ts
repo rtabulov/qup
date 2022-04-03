@@ -68,6 +68,11 @@ export const getAllUsers = async () => {
   return res.data;
 };
 
+export const getInactiveUsers = async () => {
+  const res = await api.get<User[]>('/auth/users/inactive');
+  return res.data;
+};
+
 export const removeUser = async (id: string) => {
   const res = await api.delete(`/auth/users/${id}`);
   return res.data;

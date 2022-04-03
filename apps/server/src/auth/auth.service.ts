@@ -24,10 +24,17 @@ export class AuthService {
 
     if (!foundUser || !(await verify(foundUser.password, user.password))) {
       throw new UnauthorizedException({
-        password: 'Неверный пароль',
+        password: 'Неверный email или пароль',
       });
     }
-    const { password: _password, ...restUser } = foundUser;
+
+    if (!foundUser.active) {
+      throw new UnauthorizedException({
+        email: 'Ваш аккаунт еще не подтверждён, обратитесь к администратору',
+      });
+    }
+
+    const { password: _password, active: _active, ...restUser } = foundUser;
     return restUser;
   }
 
@@ -48,13 +55,16 @@ export class AuthService {
         confirmationPassword: 'Password and Confirmation Password must match',
       });
     }
+
     const created = await this.prismaService.user.create({
       data: {
         ...omit(user, ['departmentId', 'confirmationPassword']),
+        active: false,
         role: { connect: { key: 'teacher' } },
         department: { connect: { id: user.departmentId } },
       },
     });
+
     return this.prismaService.user.findUnique({
       where: { id: created.id },
       include: { certificates: true, department: true, role: true },
@@ -78,6 +88,15 @@ export class AuthService {
 
   async findUsers() {
     return this.prismaService.user.findMany({
+      where: { active: true },
+      include: { role: true },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
+
+  async findInactiveUsers() {
+    return this.prismaService.user.findMany({
+      where: { active: false },
       include: { role: true },
       orderBy: { createdAt: 'desc' },
     });

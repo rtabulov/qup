@@ -57,6 +57,7 @@ export interface RegisterUserDto {
 
 export interface UpdateUserDto {
   roleId?: string;
+  active?: boolean;
 }
 
 export interface LoginUserDto {

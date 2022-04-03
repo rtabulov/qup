@@ -32,6 +32,12 @@ export class AuthController {
   }
 
   @UseGuards(AllowRoles('admin'))
+  @Get('users/inactive')
+  findInactiveUsers() {
+    return this.authService.findInactiveUsers();
+  }
+
+  @UseGuards(AllowRoles('admin'))
   @Delete('users/:id')
   removeUser(@Param('id') id: string) {
     return this.authService.removeUser(id);

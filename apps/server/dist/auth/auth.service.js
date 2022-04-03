@@ -36,10 +36,15 @@ let AuthService = class AuthService {
         });
         if (!foundUser || !(await verify(foundUser.password, user.password))) {
             throw new common_1.UnauthorizedException({
-                password: 'Неверный пароль',
+                password: 'Неверный email или пароль',
             });
         }
-        const { password: _password } = foundUser, restUser = __rest(foundUser, ["password"]);
+        if (!foundUser.active) {
+            throw new common_1.UnauthorizedException({
+                email: 'Ваш аккаунт еще не подтверждён, обратитесь к администратору',
+            });
+        }
+        const { password: _password, active: _active } = foundUser, restUser = __rest(foundUser, ["password", "active"]);
         return restUser;
     }
     async registerUser(user) {
@@ -58,7 +63,7 @@ let AuthService = class AuthService {
             });
         }
         const created = await this.prismaService.user.create({
-            data: Object.assign(Object.assign({}, (0, lodash_1.omit)(user, ['departmentId', 'confirmationPassword'])), { role: { connect: { key: 'teacher' } }, department: { connect: { id: user.departmentId } } }),
+            data: Object.assign(Object.assign({}, (0, lodash_1.omit)(user, ['departmentId', 'confirmationPassword'])), { active: false, role: { connect: { key: 'teacher' } }, department: { connect: { id: user.departmentId } } }),
         });
         return this.prismaService.user.findUnique({
             where: { id: created.id },
@@ -80,6 +85,14 @@ let AuthService = class AuthService {
     }
     async findUsers() {
         return this.prismaService.user.findMany({
+            where: { active: true },
+            include: { role: true },
+            orderBy: { createdAt: 'desc' },
+        });
+    }
+    async findInactiveUsers() {
+        return this.prismaService.user.findMany({
+            where: { active: false },
             include: { role: true },
             orderBy: { createdAt: 'desc' },
         });
