@@ -108,7 +108,7 @@ async function onSubmit(e: Event) {
 <route lang="json">
 {
   "meta": {
-    "requiresAuth": true
+    "requiresAuth": "teacher"
   }
 }
 </route>

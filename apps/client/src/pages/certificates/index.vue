@@ -58,7 +58,7 @@ getAllCertificates().then((v) => (certificates.value = v));
 <route lang="json">
 {
   "meta": {
-    "requiresAuth": "hr"
+    "requiresAuth": ["hr", "departmentHead"]
   }
 }
 </route>

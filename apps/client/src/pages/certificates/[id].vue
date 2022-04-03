@@ -125,7 +125,7 @@ async function onDisapprove() {
 <route lang="json">
 {
   "meta": {
-    "requiresAuth": "hr"
+    "requiresAuth": ["hr", "departmentHead"]
   }
 }
 </route>

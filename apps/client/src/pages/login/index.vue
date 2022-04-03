@@ -8,6 +8,7 @@ import { useStore } from '../../store';
 import { login } from '../../api';
 import AppRuler from '../../components/AppRuler.vue';
 import InlineLink from '../../components/InlineLink.vue';
+import { getHomePage } from '../../utils';
 
 const form = reactive<LoginUserDto>({
   email: '',
@@ -29,15 +30,8 @@ async function onSubmit() {
 
     if (route.query.backurl) {
       router.push(route.query.backurl as string);
-    } else if (
-      userStore.user?.role?.key === 'hr' ||
-      userStore.user?.role?.key === 'departmentHead'
-    ) {
-      router.push('/certificates/awaiting-approval');
-    } else if (userStore.user?.role?.key === 'admin') {
-      router.push('/users');
     } else {
-      router.push('/profile');
+      router.push(getHomePage(userStore.user?.role?.key));
     }
   } catch (e: any) {
     isLoading.value = false;

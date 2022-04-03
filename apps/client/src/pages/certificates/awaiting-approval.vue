@@ -53,7 +53,7 @@ getCertificatesAwaitingApproval().then((c) => (certificates.value = c));
 <route lang="json">
 {
   "meta": {
-    "requiresAuth": "hr"
+    "requiresAuth": ["hr", "departmentHead"]
   }
 }
 </route>

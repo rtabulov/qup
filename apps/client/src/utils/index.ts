@@ -25,23 +25,38 @@ export const roleNames: Record<string, string> = {
 
 export function resolveAuthLevel(
   userRole: string | null | undefined,
-  target: true | string,
+  target: true | string | string[],
 ) {
   if (!userRole) {
     return false;
   }
 
-  const targetLevel = ROLES_ARRAY.findIndex((s) => s === target);
-  const userLevel = ROLES_ARRAY.findIndex((s) => s === userRole);
-
   if (target === true) {
-    return userLevel >= 0;
+    return ROLES_ARRAY.includes(userRole as any);
   }
 
-  return userLevel >= targetLevel;
+  const targetArray = typeof target === 'string' ? [target] : target;
+
+  return targetArray.includes(userRole);
 }
 
 export function isPicture(filename: string) {
   const ext = filename.split('.').at(-1);
   return ['jpg', 'jpeg', 'png', 'webp'].includes(ext as string);
+}
+
+export function getHomePage(roleKey: string | null | undefined): string {
+  if (roleKey === 'hr' || roleKey === 'departmentHead') {
+    return '/certificates/awaiting-approval';
+  }
+
+  if (roleKey === 'admin') {
+    return '/users';
+  }
+
+  if (roleKey === 'teacher') {
+    return '/users';
+  }
+
+  return '/';
 }

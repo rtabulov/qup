@@ -127,7 +127,7 @@ function getStatus(certificate: Certificate) {
 <route lang="json">
 {
   "meta": {
-    "requiresAuth": true
+    "requiresAuth": "teacher"
   }
 }
 </route>
