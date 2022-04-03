@@ -26,8 +26,6 @@ async function onSubmit(e: Event) {
       formData.set(d, new Date(formData.get(d) as string).toISOString()),
     );
 
-    console.log(Object.fromEntries(formData));
-
     await createCertificate(formData);
     await store.tryLoggingIn();
     router.push('/profile');

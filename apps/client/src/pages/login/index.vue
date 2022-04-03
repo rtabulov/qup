@@ -27,7 +27,6 @@ async function onSubmit() {
     await login({ ...form });
     await userStore.tryLoggingIn();
 
-    console.log(userStore.user?.role?.key);
     if (route.query.backurl) {
       router.push(route.query.backurl as string);
     } else if (
