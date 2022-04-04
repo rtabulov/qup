@@ -42,6 +42,9 @@ let AuthController = class AuthController {
         return this.authService.findTeachers();
     }
     getProfile(req) {
+        if (!req.user) {
+            return JSON.stringify(null);
+        }
         return this.authService.findById(req.user.id, { expand: true });
     }
     registerUser(user) {
@@ -95,7 +98,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "findTeachers", null);
 __decorate([
-    (0, common_1.UseGuards)(logged_in_guard_1.LoggedInGuard),
     (0, common_1.Get)('self'),
     __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
