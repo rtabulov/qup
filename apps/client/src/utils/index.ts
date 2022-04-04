@@ -55,7 +55,7 @@ export function getHomePage(roleKey: string | null | undefined): string {
   }
 
   if (roleKey === 'teacher') {
-    return '/users';
+    return '/profile';
   }
 
   return '/';
