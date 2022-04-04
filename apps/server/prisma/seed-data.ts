@@ -17,6 +17,7 @@ export const ROLES_SEED = [
 
 export const USERS_SEED = [
   {
+    active: true,
     firstName: 'John',
     lastName: 'Doe',
     middleName: 'M',
@@ -26,6 +27,7 @@ export const USERS_SEED = [
     role: 'departmentHead',
   },
   {
+    active: true,
     firstName: 'Пётр',
     lastName: 'Петров',
     middleName: 'Петрович',
@@ -35,6 +37,7 @@ export const USERS_SEED = [
     role: 'hr',
   },
   {
+    active: true,
     firstName: 'Иван',
     lastName: 'Иванов',
     middleName: 'Иванович',
@@ -44,6 +47,7 @@ export const USERS_SEED = [
     role: 'teacher',
   },
   {
+    active: true,
     firstName: 'Админ',
     lastName: 'Админов',
     middleName: 'Админович',
