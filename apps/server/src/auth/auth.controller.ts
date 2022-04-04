@@ -54,9 +54,12 @@ export class AuthController {
     return this.authService.findTeachers();
   }
 
-  @UseGuards(LoggedInGuard)
   @Get('self')
   getProfile(@Req() req) {
+    if (!req.user) {
+      return JSON.stringify(null);
+    }
+
     return this.authService.findById(req.user.id, { expand: true });
   }
 
