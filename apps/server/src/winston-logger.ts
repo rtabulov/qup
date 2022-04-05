@@ -14,7 +14,7 @@ const rotate = new DailyRotateFile({
 export default WinstonModule.createLogger({
   format: winston.format.combine(
     winston.format.timestamp({
-      format: 'hh:MM:ss',
+      format: 'hh:mm:ss',
     }),
     winston.format.printf(
       (info) => `${info.timestamp} [${info.level}] ${info.message}`,
