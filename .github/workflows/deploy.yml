@@ -31,5 +31,6 @@ jobs:
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
             cd /root/diplomka-rtabulov
+            pnpm install --unsafe-perm
             pnpm build
             pm2 restart diplomka
