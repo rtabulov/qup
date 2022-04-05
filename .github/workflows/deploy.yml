@@ -27,4 +27,9 @@ jobs:
           USERNAME: ${{ secrets.USERNAME }}
           PORT: ${{ secrets.PORT }}
           KEY: ${{ secrets.SSHKEY }}
-          script: cd /root/diplomka-rtabulov && pnpm build && pm2 restart diplomka
+          script: |
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+            cd /root/diplomka-rtabulov
+            pnpm build
+            pm2 restart diplomka
