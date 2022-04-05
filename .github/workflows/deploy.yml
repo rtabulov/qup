@@ -1,6 +1,9 @@
 name: Deploy
 
-on: [push]
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -20,7 +23,7 @@ jobs:
           source: '.'
           target: '/root/diplomka-rtabulov'
 
-      - name: Executing remote command
+      - name: Build & deploy
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -33,4 +36,5 @@ jobs:
             cd /root/diplomka-rtabulov
             pnpm install --unsafe-perm
             pnpm build
+            pnpm run --filter ./apps/server db:migrate-deploy
             pm2 restart diplomka
