@@ -14,8 +14,6 @@ node_modules
 dist
 dist-ssr
 
-!apps/server/dist
-
 *.local
 
 # Editor directories and files

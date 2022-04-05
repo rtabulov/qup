@@ -1,20 +1,35 @@
-import { Logger } from '@nestjs/common';
+import { Logger, NestApplicationOptions } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import * as fs from 'fs';
 
 import { PrismaService } from './prisma/prisma.service';
 import { AppModule } from './app.module';
 
 const bootstrap = async () => {
-  const app = await NestFactory.create(AppModule);
+  const configService = new ConfigService();
+
+  let httpsOptions: NestApplicationOptions['httpsOptions'] | undefined;
+
+  const cert = configService.get('SSL_CERTIFICATE_PATH');
+  const key = configService.get('SSL_KEY_PATH');
+
+  if (key && cert) {
+    httpsOptions = {
+      key: fs.readFileSync(key),
+      cert: fs.readFileSync(cert),
+    };
+  }
+
+  const app = await NestFactory.create(AppModule, { httpsOptions });
   app.setGlobalPrefix('api');
   const logger = app.get(Logger);
-  const configService = app.get(ConfigService);
   const PORT = configService.get('PORT') || 3000;
-  await app.listen(PORT);
 
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
+
+  await app.listen(PORT);
 
   logger.log(`Application listening at ${await app.getUrl()}`);
 };
