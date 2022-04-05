@@ -5,6 +5,7 @@ import * as fs from 'fs';
 
 import { PrismaService } from './prisma/prisma.service';
 import { AppModule } from './app.module';
+import winstonLogger from './winston-logger';
 
 const bootstrap = async () => {
   const configService = new ConfigService();
@@ -21,7 +22,10 @@ const bootstrap = async () => {
     };
   }
 
-  const app = await NestFactory.create(AppModule, { httpsOptions });
+  const app = await NestFactory.create(AppModule, {
+    httpsOptions,
+    logger: winstonLogger,
+  });
   app.setGlobalPrefix('api');
   const logger = app.get(Logger);
   const PORT = configService.get('PORT') || 3000;
