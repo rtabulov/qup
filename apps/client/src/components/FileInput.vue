@@ -24,9 +24,9 @@ export default {
 </script>
 
 <template>
-  <div class="flex w-full items-center justify-center bg-grey-lighter">
+  <div class="bg-grey-lighter flex w-full items-center justify-center">
     <label
-      class="flex gap-3 items-center px-6 py-3 bg-blue text-white rounded-lg shadow-lg tracking-wide uppercase cursor-pointer hover:bg-blue hover:text-black transition-colors"
+      class="flex cursor-pointer items-center gap-3 rounded-lg bg-blue px-6 py-3 uppercase tracking-wide text-white shadow-lg transition-colors hover:bg-blue hover:text-black"
     >
       <PaperClipIcon class="h-5 w-5" />
       <span class="text-base leading-normal">Прикрепить файлы</span>
@@ -43,17 +43,17 @@ export default {
     <div
       v-for="file in filesPreview"
       :key="file.name"
-      class="aspect-square rounded-md overflow-hidden"
+      class="aspect-square overflow-hidden rounded-md"
     >
       <img
         v-if="isPicture(file.name)"
         :src="getPreviewSrc(file)"
         :alt="file.name"
-        class="w-full h-full object-contain bg-lightblue bg-opacity-30"
+        class="h-full w-full bg-lightblue bg-opacity-30 object-contain"
       />
       <span
         v-else
-        class="w-full h-full flex items-center justify-center bg-lightblue bg-opacity-30 text-center p-3"
+        class="flex h-full w-full items-center justify-center bg-lightblue bg-opacity-30 p-3 text-center"
         >{{ file.name }}</span
       >
     </div>
@@ -62,17 +62,17 @@ export default {
     <div
       v-for="file in initialValue"
       :key="file.name"
-      class="aspect-square rounded-md overflow-hidden"
+      class="aspect-square overflow-hidden rounded-md"
     >
       <img
         v-if="isPicture(file.name)"
         :src="`/api/uploads/certificates/${file.name}`"
         :alt="file.name"
-        class="w-full h-full object-contain bg-gray"
+        class="h-full w-full bg-gray object-contain"
       />
       <span
         v-else
-        class="w-full h-full flex items-center justify-center bg-gray text-center p-3"
+        class="flex h-full w-full items-center justify-center bg-gray p-3 text-center"
         >{{ file.name }}</span
       >
     </div>

@@ -77,16 +77,16 @@ async function onUpdateUserRole(userId: string, roleId: string) {
       <td class="px-4 text-right">
         <button
           v-if="store.user?.id !== user.id"
-          class="hover:text-blue transition-colors"
+          class="transition-colors hover:text-blue"
           @click="onChangeActive(user.id, !user.active)"
         >
           <template v-if="user.active">
             Деактивировать
-            <BanIcon class="inline align-middle w-6 h-6" />
+            <BanIcon class="inline h-6 w-6 align-middle" />
           </template>
           <template v-else>
             Активировать
-            <CheckCircleIcon class="inline align-middle w-6 h-6" />
+            <CheckCircleIcon class="inline h-6 w-6 align-middle" />
           </template>
         </button>
         <span v-else>Ваш аккаунт</span>

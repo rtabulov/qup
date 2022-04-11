@@ -25,11 +25,11 @@ async function onLogout() {
 
 <template>
   <nav class="bg-light font-display">
-    <div class="container px-0 flex">
+    <div class="container flex px-0">
       <div class="flex">
         <!-- <TheNavigationLink to="/">Home</TheNavigationLink> -->
       </div>
-      <div class="flex ml-auto">
+      <div class="ml-auto flex">
         <template v-if="resolveAuthLevel(store.user?.role?.key, 'admin')">
           <TheNavigationLink to="/users">
             Управление пользователями
@@ -70,17 +70,17 @@ async function onLogout() {
         <template v-if="store.user">
           <TheNavigationLink as="button" @click="onLogout">
             Выйти
-            <LogoutIcon class="inline-block w-5 h-5" />
+            <LogoutIcon class="inline-block h-5 w-5" />
           </TheNavigationLink>
         </template>
         <template v-else>
           <TheNavigationLink to="/register">
             Регистрация
-            <UserAddIcon class="inline-block w-5 h-5" />
+            <UserAddIcon class="inline-block h-5 w-5" />
           </TheNavigationLink>
           <TheNavigationLink to="/login">
             Вход
-            <LoginIcon class="inline-block w-5 h-5" />
+            <LoginIcon class="inline-block h-5 w-5" />
           </TheNavigationLink>
         </template>
       </div>

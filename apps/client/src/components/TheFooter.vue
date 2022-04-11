@@ -5,15 +5,15 @@ import InlineLink from './InlineLink.vue';
 </script>
 
 <template>
-  <footer class="bg-dark text-white py-4 space-y-4 font-display">
+  <footer class="space-y-4 bg-dark py-4 font-display text-white">
     <h2 class="container text-xl">
       Made possible by people behind these projects
     </h2>
 
-    <nav class="grid grid-cols-4 gap-6 container">
+    <nav class="container grid grid-cols-4 gap-6">
       <div class="flex flex-col">
-        <h3 class="font-semibold text-lg">Common</h3>
-        <AppRuler :size="1" class="w-24 !my-2 border-lightblue" />
+        <h3 class="text-lg font-semibold">Common</h3>
+        <AppRuler :size="1" class="!my-2 w-24 border-lightblue" />
         <div>
           <InlineLink
             class="text-lightblue"
@@ -29,8 +29,8 @@ import InlineLink from './InlineLink.vue';
         </div>
       </div>
       <div class="flex flex-col">
-        <h3 class="font-semibold text-lg">Backend</h3>
-        <AppRuler :size="1" class="w-24 !my-2 border-lightblue" />
+        <h3 class="text-lg font-semibold">Backend</h3>
+        <AppRuler :size="1" class="!my-2 w-24 border-lightblue" />
         <div>
           <InlineLink class="text-lightblue" to="https://nestjs.com/"
             >NestJS</InlineLink
@@ -53,8 +53,8 @@ import InlineLink from './InlineLink.vue';
         </div>
       </div>
       <div class="flex flex-col">
-        <h3 class="font-semibold text-lg">Database</h3>
-        <AppRuler :size="1" class="w-24 !my-2 border-lightblue" />
+        <h3 class="text-lg font-semibold">Database</h3>
+        <AppRuler :size="1" class="!my-2 w-24 border-lightblue" />
         <div>
           <InlineLink class="text-lightblue" to="https://www.postgresql.org/"
             >PostgreSQL</InlineLink
@@ -75,8 +75,8 @@ import InlineLink from './InlineLink.vue';
         </div>
       </div>
       <div class="flex flex-col">
-        <h3 class="font-semibold text-lg">Frontend</h3>
-        <AppRuler :size="1" class="w-24 !my-2 border-lightblue" />
+        <h3 class="text-lg font-semibold">Frontend</h3>
+        <AppRuler :size="1" class="!my-2 w-24 border-lightblue" />
         <div>
           <InlineLink class="text-lightblue" to="https://vuejs.org/"
             >Vue</InlineLink

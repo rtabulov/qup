@@ -15,7 +15,7 @@ getCertificatesAwaitingApproval().then((c) => (certificates.value = c));
 </script>
 
 <template>
-  <h1 class="text-2xl mb-4">Сертификаты ожидающие подтверждения</h1>
+  <h1 class="mb-4 text-2xl">Сертификаты ожидающие подтверждения</h1>
   <AppRuler />
 
   <AppTable>
@@ -33,7 +33,7 @@ getCertificatesAwaitingApproval().then((c) => (certificates.value = c));
         }}</RouterLink>
       </td>
       <td class="px-3 py-4">{{ cert.issuedBy }}</td>
-      <td class="px-3 py-4 whitespace-nowrap">
+      <td class="whitespace-nowrap px-3 py-4">
         {{ format(new Date(cert.issuedDate), 'dd.MM.yyyy') }}
       </td>
       <td class="px-3 py-4">

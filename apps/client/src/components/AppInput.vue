@@ -52,19 +52,19 @@ export default {
 
 <template>
   <div>
-    <label v-if="label" :for="id" class="text-left block mb-1">
+    <label v-if="label" :for="id" class="mb-1 block text-left">
       {{ label }}
     </label>
     <input
       v-bind="$attrs"
       v-model="proxyValue"
-      class="relative w-full py-2 px-3 text-left bg-gray bg-opacity-10 ring-1 ring-muted text-black shadow-md focus:outline-none focus-visible:ring focus-visible:ring-muted sm:text-sm placeholder:text-black placeholder:text-opacity-75 transition-shadow"
+      class="relative w-full bg-gray bg-opacity-10 py-2 px-3 text-left text-black shadow-md ring-1 ring-muted transition-shadow placeholder:text-black placeholder:text-opacity-75 focus:outline-none focus-visible:ring focus-visible:ring-muted sm:text-sm"
       :id="id"
       :class="{ 'text-danger': error }"
       :required="required"
       @input="() => error && emit('update:error', null)"
     />
-    <small v-if="error" class="text-danger w-full block text-left mt-1">{{
+    <small v-if="error" class="mt-1 block w-full text-left text-danger">{{
       error
     }}</small>
   </div>

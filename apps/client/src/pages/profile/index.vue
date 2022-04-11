@@ -41,7 +41,7 @@ function getStatus(certificate: Certificate) {
   <h1 class="text-3xl">Профиль пользователя</h1>
   <AppRuler />
   <div class="my-6" v-if="user">
-    <h2 class="text-2xl mb-4">Ваши сертификаты</h2>
+    <h2 class="mb-4 text-2xl">Ваши сертификаты</h2>
     <AppTable>
       <template #head>
         <AppTableHeader>Название</AppTableHeader>
@@ -55,11 +55,11 @@ function getStatus(certificate: Certificate) {
       </template>
 
       <AppTableRow v-if="!user.certificates?.length">
-        <td colspan="100%" class="text-center py-6">
+        <td colspan="100%" class="py-6 text-center">
           <p class="mb-4 text-lg">Вы еще не добавили ни один сертификат</p>
           <AppButton as="RouterLink" to="/certificates/create">
             Добавить сертификат
-            <PlusIcon class="inline-block h-5 w-5 translate-y-[2px] ml-2" />
+            <PlusIcon class="ml-2 inline-block h-5 w-5 translate-y-[2px]" />
           </AppButton>
         </td>
       </AppTableRow>
@@ -75,10 +75,10 @@ function getStatus(certificate: Certificate) {
         <td class="text-center">
           <button
             v-if="!cert.approved"
-            class="hover:text-blue transition-colors"
+            class="transition-colors hover:text-blue"
             @click="onCertificateRemove(cert.id)"
           >
-            <TrashIcon class="h-6 w-6 inline-block" />
+            <TrashIcon class="inline-block h-6 w-6" />
           </button>
         </td>
       </AppTableRow>
@@ -87,35 +87,35 @@ function getStatus(certificate: Certificate) {
 
   <div class="grid grid-cols-2" v-if="user">
     <div>
-      <h2 class="text-2xl mb-4">Ваши данные</h2>
+      <h2 class="mb-4 text-2xl">Ваши данные</h2>
       <table class="w-full">
         <tbody>
           <tr>
-            <th class="min-w-[200px] py-2 text-lightblue text-left">Фамилия</th>
+            <th class="min-w-[200px] py-2 text-left text-lightblue">Фамилия</th>
             <td>{{ user.lastName }}</td>
           </tr>
           <tr>
-            <th class="min-w-[200px] py-2 text-lightblue text-left">Имя</th>
+            <th class="min-w-[200px] py-2 text-left text-lightblue">Имя</th>
             <td>{{ user.firstName }}</td>
           </tr>
           <tr>
-            <th class="min-w-[200px] py-2 text-lightblue text-left">
+            <th class="min-w-[200px] py-2 text-left text-lightblue">
               Отчество
             </th>
             <td>{{ user.middleName }}</td>
           </tr>
           <tr>
-            <th class="min-w-[200px] py-2 text-lightblue text-left">
+            <th class="min-w-[200px] py-2 text-left text-lightblue">
               Должность
             </th>
             <td>{{ user.position }}</td>
           </tr>
           <tr>
-            <th class="min-w-[200px] py-2 text-lightblue text-left">Роль</th>
+            <th class="min-w-[200px] py-2 text-left text-lightblue">Роль</th>
             <td>{{ user.role?.key }}</td>
           </tr>
           <tr>
-            <th class="min-w-[200px] py-2 text-lightblue text-left">E-mail</th>
+            <th class="min-w-[200px] py-2 text-left text-lightblue">E-mail</th>
             <td>{{ user.email }}</td>
           </tr>
         </tbody>

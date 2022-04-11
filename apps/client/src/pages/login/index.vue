@@ -46,7 +46,7 @@ async function onSubmit() {
   <div class="text-center">
     <h1 class="text-3xl">Вход</h1>
     <AppRuler center />
-    <form class="max-w-xl mx-auto space-y-4" @submit.prevent="onSubmit">
+    <form class="mx-auto max-w-xl space-y-4" @submit.prevent="onSubmit">
       <AppInput
         v-model="form.email"
         v-model:error="errors.email"

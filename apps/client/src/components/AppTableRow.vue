@@ -1,6 +1,6 @@
 <template>
   <tr
-    class="odd:bg-gray odd:bg-opacity-30 text-opacity-75 text-black hover:text-opacity-100 transition-colors"
+    class="text-black text-opacity-75 transition-colors odd:bg-gray odd:bg-opacity-30 hover:text-opacity-100"
   >
     <slot />
   </tr>

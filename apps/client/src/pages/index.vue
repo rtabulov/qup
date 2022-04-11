@@ -11,7 +11,7 @@ import InlineLink from '../components/InlineLink.vue';
 
   <AppRuler />
 
-  <h2 class="text-2xl mb-6">Дипломная работа</h2>
+  <h2 class="mb-6 text-2xl">Дипломная работа</h2>
 
   <p>
     Автор

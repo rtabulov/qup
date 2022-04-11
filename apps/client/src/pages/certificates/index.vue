@@ -17,13 +17,13 @@ getAllCertificates().then((v) => (certificates.value = v));
 </script>
 
 <template>
-  <div class="flex items-center justify-between mb-4">
+  <div class="mb-4 flex items-center justify-between">
     <h1 class="text-2xl">Подтвержденные сертификаты</h1>
     <AppRuler />
 
     <AppButton as="a" target="_blank" href="/api/certificates/report">
       Скачать в Excel
-      <DocumentReportIcon class="w-6 h-6 inline ml-2" />
+      <DocumentReportIcon class="ml-2 inline h-6 w-6" />
     </AppButton>
   </div>
   <div class="overflow-x-auto">
@@ -37,7 +37,7 @@ getAllCertificates().then((v) => (certificates.value = v));
       <AppTableRow v-for="cert in certificates">
         <td class="px-3 py-4">{{ cert.name }}</td>
         <td class="px-3 py-4">{{ cert.issuedBy }}</td>
-        <td class="px-3 py-4 whitespace-nowrap">
+        <td class="whitespace-nowrap px-3 py-4">
           {{ format(new Date(cert.issuedDate), 'dd.MM.yyyy') }}
         </td>
         <td class="px-3 py-4">

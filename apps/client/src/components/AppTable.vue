@@ -3,7 +3,7 @@
     <table class="w-full">
       <thead
         v-if="$slots.head"
-        class="text-lg whitespace-nowrap bg-black text-white"
+        class="whitespace-nowrap bg-black text-lg text-white"
       >
         <slot name="head" />
       </thead>
