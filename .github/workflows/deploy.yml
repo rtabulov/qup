@@ -33,7 +33,7 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            cd /root/qup
+            cd ~/qup
             pnpm install --unsafe-perm
             pnpm build
             pnpm run --filter ./apps/server db:migrate-deploy
