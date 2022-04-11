@@ -5,17 +5,25 @@ import { hashPassword } from '../src/utils';
 const prisma = new PrismaClient();
 
 async function main() {
-  await prisma.user.deleteMany();
-  await prisma.department.deleteMany();
-  await prisma.role.deleteMany();
+  await Promise.all(
+    DEPARTMENTS_SEED.map((dpt) =>
+      prisma.department.upsert({
+        where: { name: dpt.name },
+        update: dpt,
+        create: dpt,
+      }),
+    ),
+  );
 
-  await prisma.department.createMany({
-    data: DEPARTMENTS_SEED,
-  });
-
-  await prisma.role.createMany({
-    data: ROLES_SEED,
-  });
+  await Promise.all(
+    ROLES_SEED.map((role) =>
+      prisma.role.upsert({
+        where: { key: role.key },
+        update: role,
+        create: role,
+      }),
+    ),
+  );
 
   const departments = await prisma.department.findMany();
 
@@ -23,13 +31,18 @@ async function main() {
     USERS_SEED.map(async (teacher) => {
       const randomDepartment =
         departments[Math.floor(Math.random() * departments.length)];
-      return prisma.user.create({
-        data: {
-          ...teacher,
-          password: await hashPassword(teacher.password),
-          department: { connect: { id: randomDepartment.id } },
-          role: { connect: { key: teacher.role } },
-        },
+
+      const completeTeacher = {
+        ...teacher,
+        password: await hashPassword(teacher.password),
+        department: { connect: { id: randomDepartment.id } },
+        role: { connect: { key: teacher.role } },
+      };
+
+      return prisma.user.upsert({
+        where: { email: teacher.email },
+        update: completeTeacher,
+        create: completeTeacher,
       });
     }),
   );
