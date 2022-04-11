@@ -111,7 +111,7 @@ async function onDisapprove() {
   <textarea
     v-model="comment"
     placeholder="Ваши примечания"
-    class="relative mt-6 block h-24 min-w-[700px] resize-none bg-gray py-2 px-3 text-left text-black shadow-md placeholder:text-black placeholder:text-opacity-75 focus:outline-none focus-visible:ring focus-visible:ring-muted sm:text-sm"
+    class="relative w-full bg-gray bg-opacity-10 py-2 px-3 text-left text-black shadow-md ring-1 ring-muted transition-shadow placeholder:text-black placeholder:text-opacity-75 focus:outline-none focus-visible:ring focus-visible:ring-muted sm:text-sm"
   ></textarea>
 
   <div class="mt-6 flex gap-3">
