@@ -115,10 +115,8 @@ async function onDisapprove() {
   ></textarea>
 
   <div class="mt-6 flex gap-3">
-    <AppButton @click="onApprove">Всё ок</AppButton>
-    <AppButton variant="secondary" @click="onDisapprove"
-      >Что-то не ок</AppButton
-    >
+    <AppButton @click="onApprove">Подтвердить</AppButton>
+    <AppButton variant="secondary" @click="onDisapprove">Отклонить</AppButton>
   </div>
 </template>
 
