@@ -20,8 +20,6 @@ export class ValidationPipe implements PipeTransform<any> {
 
     const errors = await validate(object, { messages: RU_I18N_MESSAGES });
 
-    console.log(errors);
-
     if (errors.length > 0) {
       const errorsResponseObject = Object.fromEntries(
         errors.map((e) => [
