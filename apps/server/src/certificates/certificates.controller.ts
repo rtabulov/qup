@@ -11,11 +11,13 @@ import {
   Res,
   UploadedFiles,
   UseGuards,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import * as path from 'path';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { nanoid } from 'nanoid';
 import * as slug from 'slug';
+import { plainToClass } from 'class-transformer';
 
 import { CertificatesService } from './certificates.service';
 import { CreateCertificateDto } from './dto/create-certificate.dto';
@@ -68,11 +70,13 @@ export class CertificatesController {
       throw supabaseFiles.find((f) => f.error);
     }
 
-    const newFiles = withUniqFilenames.map<CreateFileMetaDto>((f) => ({
-      name: f.uniqFilename,
-      mimetype: f.mimetype,
-      certificateId: certificate.id,
-    }));
+    const newFiles = withUniqFilenames.map((f) =>
+      plainToClass(CreateFileMetaDto, {
+        name: f.uniqFilename,
+        mimetype: f.mimetype,
+        certificateId: certificate.id,
+      }),
+    );
 
     await this.fileMetaService.createBatch(newFiles);
 
@@ -149,14 +153,18 @@ export class CertificatesController {
       );
 
       if (supabaseFiles.some((f) => f.error)) {
-        throw supabaseFiles.find((f) => f.error);
+        throw new InternalServerErrorException(
+          supabaseFiles.find((f) => f.error),
+        );
       }
 
-      const newFiles = withUniqFilenames.map<CreateFileMetaDto>((f) => ({
-        name: f.uniqFilename,
-        mimetype: f.mimetype,
-        certificateId: certificate.id,
-      }));
+      const newFiles = withUniqFilenames.map((f) =>
+        plainToClass(CreateFileMetaDto, {
+          name: f.uniqFilename,
+          mimetype: f.mimetype,
+          certificateId: certificate.id,
+        }),
+      );
 
       await this.fileMetaService.createBatch(newFiles);
     }
