@@ -6,6 +6,7 @@ import * as fs from 'fs';
 import { PrismaService } from './prisma/prisma.service';
 import { AppModule } from './app.module';
 import winstonLogger from './winston-logger';
+import { ValidationPipe } from './validation.pipe';
 
 const bootstrap = async () => {
   const configService = new ConfigService();
@@ -33,6 +34,7 @@ const bootstrap = async () => {
   const prismaService = app.get(PrismaService);
   await prismaService.enableShutdownHooks(app);
 
+  app.useGlobalPipes(new ValidationPipe());
   await app.listen(PORT);
 
   logger.log(`Application listening at ${await app.getUrl()}`);
