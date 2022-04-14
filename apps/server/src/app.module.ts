@@ -20,7 +20,6 @@ import { REDIS } from './redis/redis.constants';
 import { RedisModule } from './redis/redis.module';
 import { CertificatesModule } from './certificates/certificates.module';
 import { FileMetaModule } from './file-meta/file-meta.module';
-import { UploadsModule } from './uploads';
 
 @Module({
   imports: [
@@ -31,7 +30,6 @@ import { UploadsModule } from './uploads';
       isGlobal: true,
       envFilePath: ['.env', '.env.local'],
     }),
-    UploadsModule,
     DepartmentsModule,
     AuthModule,
     RedisModule,

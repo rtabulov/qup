@@ -1,45 +1,37 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { NotFoundException, Controller, Get, Param, Res } from '@nestjs/common';
+import { SupabaseService } from '../supabase';
 import { FileMetaService } from './file-meta.service';
-import { CreateFileMetaDto } from './dto/create-file-meta.dto';
-import { UpdateFileMetaDto } from './dto/update-file-meta.dto';
+import { Response } from 'express';
 
-@Controller('file-meta')
+@Controller('uploads')
 export class FileMetaController {
-  constructor(private readonly fileMetaService: FileMetaService) {}
+  constructor(
+    private readonly supabaseService: SupabaseService,
+    private readonly fileMetaService: FileMetaService,
+  ) {}
 
-  @Post()
-  create(@Body() createFileMetaDto: CreateFileMetaDto) {
-    return this.fileMetaService.create(createFileMetaDto);
-  }
+  @Get('certificates/:id')
+  async findCertificateFile(@Param('id') id: string, @Res() res: Response) {
+    let file: Awaited<ReturnType<typeof this.fileMetaService.findOne>>;
+    try {
+      file = await this.fileMetaService.findOne(id);
+    } catch {
+      throw new NotFoundException();
+    }
 
-  @Get()
-  findAll() {
-    return this.fileMetaService.findAll();
-  }
+    const { data, error } = await this.supabaseService.storage
+      .from('certificates')
+      .download(file.name);
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.fileMetaService.findOne(id);
-  }
+    if (error) {
+      throw new NotFoundException();
+    }
 
-  @Patch(':id')
-  update(
-    @Param('id') id: string,
-    @Body() updateFileMetaDto: UpdateFileMetaDto,
-  ) {
-    return this.fileMetaService.update(id, updateFileMetaDto);
-  }
+    const buf = await data.arrayBuffer();
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.fileMetaService.remove(id);
+    res.set('Content-Disposition', `inline; filename="${file.name}"`);
+    res.type(file.mimetype);
+
+    res.send(Buffer.from(buf));
   }
 }
