@@ -1,5 +1,14 @@
 import { ROLES_ARRAY } from '../types';
 
+export function mapSuperTokenFormFields<T extends object>(data: T) {
+  return {
+    formFields: Object.entries(data).map(([key, value]) => ({
+      id: key,
+      value,
+    })),
+  };
+}
+
 export function limitLength(str: string, len = 20) {
   const END_PART_SIZE = 4;
   if (str.length < len) return str;

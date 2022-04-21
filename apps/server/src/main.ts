@@ -1,6 +1,8 @@
 import { Logger, NestApplicationOptions } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ConfigService } from '@nestjs/config';
+import supertokens from 'supertokens-node';
+import { SupertokensExceptionFilter } from './auth/auth.filter';
 import * as fs from 'fs';
 
 import { PrismaService } from './prisma/prisma.service';
@@ -35,6 +37,12 @@ const bootstrap = async () => {
   await prismaService.enableShutdownHooks(app);
 
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors({
+    origin: ['http://localhost:4000'],
+    allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
+    credentials: true,
+  });
+  app.useGlobalFilters(new SupertokensExceptionFilter());
   await app.listen(PORT);
 
   logger.log(`Application listening at ${await app.getUrl()}`);

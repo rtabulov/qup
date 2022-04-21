@@ -24,11 +24,14 @@ services:
     environment:
       POSTGRES_PASSWORD: example
       POSTGRES_DB: test
-  redis:
-    image: redis:6.2-alpine
+  supertokens:
+    image: registry.supertokens.io/supertokens/supertokens-postgresql
     restart: always
     ports:
-      - '6379:6379'
+      - 3567:3567
+    environment:
+      POSTGRESQL_CONNECTION_URI: postgresql://postgres:example@db:5432/supertokens
+      PASSWORD_HASHING_ALG: ARGON2
   rcli:
     image: redis:6.2-alpine
     links:

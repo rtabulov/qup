@@ -10,15 +10,15 @@ import { register } from '../../api';
 import AppRuler from '../../components/AppRuler.vue';
 import InlineLink from '../../components/InlineLink.vue';
 
-const form = reactive<RegisterUserDto>({
-  firstName: '',
-  lastName: '',
-  middleName: '',
-  departmentId: '',
-  position: '',
+const form = reactive<Partial<RegisterUserDto>>({
+  // firstName: '',
+  // lastName: '',
+  // middleName: '',
+  // departmentId: '',
+  // position: '',
   email: '',
   password: '',
-  confirmationPassword: '',
+  // confirmationPassword: '',
 });
 
 const departments = ref<Department[]>([]);
@@ -54,7 +54,7 @@ async function onSubmit() {
       class="mx-auto max-w-xl space-y-4"
       @submit.prevent="onSubmit"
     >
-      <AppSelect
+      <!-- <AppSelect
         v-model="form.departmentId"
         v-model:error="errors.departmentId"
         type="text"
@@ -90,7 +90,7 @@ async function onSubmit() {
         type="text"
         required
         label="Должность"
-      />
+      /> -->
       <AppInput
         v-model="form.email"
         v-model:error="errors.email"
@@ -105,13 +105,13 @@ async function onSubmit() {
         required
         label="Пароль"
       />
-      <AppInput
+      <!-- <AppInput
         v-model="form.confirmationPassword"
         v-model:error="errors.confirmationPassword"
         type="password"
         required
         label="Подтвердите пароль"
-      />
+      /> -->
 
       <AppButton :disabled="isLoading" type="submit" class="w-full"
         >Зарегистрироваться</AppButton

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import SuperTokens from 'supertokens-website';
 import {
   Department,
   User,
@@ -7,26 +8,36 @@ import {
   RegisterUserDto,
   UpdateUserDto,
 } from '../types';
+import { mapSuperTokenFormFields } from '../utils';
 
-const api = axios.create({ baseURL: '/api', timeout: 10_000 });
+SuperTokens.init({
+  apiDomain: import.meta.env.VITE_SUPERTOKENS_API_DOMAIN as string,
+  apiBasePath: import.meta.env.VITE_SUPERTOKENS_API_BASE_PATH as string,
+});
+
+const api = axios.create({ baseURL: '/api', timeout: 5_000 });
+
+SuperTokens.addAxiosInterceptors(api);
 
 export const login = async (form: LoginUserDto) => {
-  const res = await api.post('/auth/login', form);
+  const res = await api.post('/auth/signin', mapSuperTokenFormFields(form));
   return res.data;
 };
 
-export const register = async (form: RegisterUserDto) => {
-  const res = await api.post('/auth/register', form);
-  return res.data;
-};
+export const register = async (form: Partial<RegisterUserDto>) => {
+  const res = await api.post('/auth/signup', mapSuperTokenFormFields(form));
 
-export const getDepartments = async () => {
-  const res = await api.get<Department[]>('/departments');
   return res.data;
 };
 
 export const getSelf = async () => {
   const res = await api.get<User>('/auth/self');
+
+  return res.data;
+};
+
+export const getDepartments = async () => {
+  const res = await api.get<Department[]>('/departments');
   return res.data;
 };
 
