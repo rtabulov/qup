@@ -4,14 +4,16 @@ import {
   NestModule,
   DynamicModule,
 } from '@nestjs/common';
-import { AuthController } from './auth.controller';
 
-import { AuthMiddleware } from './auth.middleware';
 import { ConfigInjectionToken, AuthModuleConfig } from './config.interface';
+import { PrismaService } from '../prisma';
+import { AuthController } from './auth.controller';
+import { AuthMiddleware } from './auth.middleware';
+import { ProfileService } from './profile.service';
 import { SupertokensService } from './supertokens/supertokens.service';
 
 @Module({
-  providers: [SupertokensService],
+  providers: [SupertokensService, ProfileService, PrismaService],
   exports: [],
   controllers: [AuthController],
 })

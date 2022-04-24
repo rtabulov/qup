@@ -8,7 +8,7 @@ import AppNotifications from './components/AppNotifications.vue';
 const store = useStore();
 store.fetchRoles();
 
-watchEffect(() => console.log(store.user));
+watchEffect(() => console.log(store.user && { ...store.user }));
 </script>
 
 <template>

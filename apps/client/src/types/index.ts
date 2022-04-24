@@ -1,7 +1,7 @@
 import type {
   Department as DepartmentPrisma,
   Role as RolePrisma,
-  User as UserPrisma,
+  Profile as UserPrisma,
   FileMeta as FileMetaPrisma,
   Certificate as CertificatePrisma,
 } from '@prisma/client';
@@ -52,7 +52,6 @@ export interface RegisterUserDto {
   position: string;
   email: string;
   password: string;
-  confirmationPassword: string;
 }
 
 export interface UpdateUserDto {

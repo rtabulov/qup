@@ -8,7 +8,7 @@ import {
 import { groupBy, sortBy } from 'lodash';
 import * as ExcelJS from 'exceljs';
 import { ConfigService } from '@nestjs/config';
-import { User, Role, Prisma } from '@prisma/client';
+import { Profile, Role, Prisma } from '@prisma/client';
 
 import { UpdateCertificateDto } from './dto/update-certificate.dto';
 import { CreateCertificateDto } from './dto/create-certificate.dto';
@@ -123,7 +123,7 @@ export class CertificatesService {
 
   async update(
     id: string,
-    user: User & { role: Role },
+    user: Profile & { role: Role },
     updateCertificateDto: UpdateCertificateDto,
   ) {
     const found = await this.findOne(id, { expand: true });
@@ -151,10 +151,10 @@ export class CertificatesService {
     });
   }
 
-  async remove(id: string, requestUser: User) {
+  async remove(id: string, requestProfile: Profile) {
     const cert = await this.findOne(id, { expand: true });
 
-    if (requestUser.id !== cert.teacher.id) {
+    if (requestProfile.id !== cert.teacher.id) {
       throw new UnauthorizedException();
     }
 

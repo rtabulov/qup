@@ -27,29 +27,28 @@ async function main() {
 
   const departments = await prisma.department.findMany();
 
-  await Promise.all(
-    USERS_SEED.map(async (teacher) => {
-      const randomDepartment =
-        departments[Math.floor(Math.random() * departments.length)];
+  // await Promise.all(
+  //   USERS_SEED.map(async (teacher) => {
+  //     const randomDepartment =
+  //       departments[Math.floor(Math.random() * departments.length)];
 
-      const completeTeacher = {
-        ...teacher,
-        password: await hashPassword(teacher.password),
-        department: { connect: { id: randomDepartment.id } },
-        role: { connect: { key: teacher.role } },
-      };
+  //     const completeTeacher = {
+  //       ...teacher,
+  //       department: { connect: { id: randomDepartment.id } },
+  //       role: { connect: { key: teacher.role } },
+  //     };
 
-      return prisma.user.upsert({
-        where: { email: teacher.email },
-        update: completeTeacher,
-        create: completeTeacher,
-      });
-    }),
-  );
+  //     return prisma.profile.upsert({
+  //       where: {},
+  //       update: completeTeacher,
+  //       create: completeTeacher,
+  //     });
+  //   }),
+  // );
 
-  const teachers = await prisma.user.findMany({ include: { role: true } });
+  // const teachers = await prisma.profile.findMany({ include: { role: true } });
 
-  console.log(teachers);
+  // console.log(teachers);
 }
 
 main()

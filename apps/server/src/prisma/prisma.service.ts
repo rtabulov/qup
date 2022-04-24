@@ -34,19 +34,6 @@ export class PrismaService
    */
   async onModuleInit(): Promise<void> {
     await this.$connect();
-
-    this.$use(async (params, next) => {
-      if (
-        params.model == 'User' &&
-        (params.action == 'create' || params.action == 'update')
-      ) {
-        const user = params.args.data;
-        const hash = user.password && (await hashPassword(user.password));
-        user.password = hash;
-        params.args.data = user;
-      }
-      return next(params);
-    });
   }
 
   /**

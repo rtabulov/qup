@@ -10,15 +10,17 @@ import { register } from '../../api';
 import AppRuler from '../../components/AppRuler.vue';
 import InlineLink from '../../components/InlineLink.vue';
 
-const form = reactive<Partial<RegisterUserDto>>({
-  // firstName: '',
-  // lastName: '',
-  // middleName: '',
-  // departmentId: '',
-  // position: '',
+type Form = RegisterUserDto & { confirmationPassword: string };
+
+const form = reactive<Form>({
+  firstName: '',
+  lastName: '',
+  middleName: '',
+  departmentId: '',
+  position: '',
   email: '',
   password: '',
-  // confirmationPassword: '',
+  confirmationPassword: '',
 });
 
 const departments = ref<Department[]>([]);
@@ -28,11 +30,16 @@ getDepartments().then((dpts) => {
 });
 
 const router = useRouter();
-const errors = ref<Partial<Record<keyof RegisterUserDto, string>>>({});
+const errors = ref<Partial<Record<keyof Form, string>>>({});
 
 const isLoading = ref(false);
 async function onSubmit() {
   isLoading.value = true;
+  if (form.confirmationPassword !== form.password) {
+    errors.value = { confirmationPassword: 'Пароли должны совпадать' };
+    return;
+  }
+
   try {
     await register({ ...form });
     router.push('/login');
@@ -54,7 +61,7 @@ async function onSubmit() {
       class="mx-auto max-w-xl space-y-4"
       @submit.prevent="onSubmit"
     >
-      <!-- <AppSelect
+      <AppSelect
         v-model="form.departmentId"
         v-model:error="errors.departmentId"
         type="text"
@@ -90,7 +97,7 @@ async function onSubmit() {
         type="text"
         required
         label="Должность"
-      /> -->
+      />
       <AppInput
         v-model="form.email"
         v-model:error="errors.email"
@@ -105,13 +112,13 @@ async function onSubmit() {
         required
         label="Пароль"
       />
-      <!-- <AppInput
+      <AppInput
         v-model="form.confirmationPassword"
         v-model:error="errors.confirmationPassword"
         type="password"
         required
         label="Подтвердите пароль"
-      /> -->
+      />
 
       <AppButton :disabled="isLoading" type="submit" class="w-full"
         >Зарегистрироваться</AppButton

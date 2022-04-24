@@ -4,10 +4,21 @@ import {
   ArgumentMetadata,
   BadRequestException,
 } from '@nestjs/common';
-import { validate } from 'class-validator-multi-lang';
+import { validate as classValidate } from 'class-validator-multi-lang';
 import { plainToClass } from 'class-transformer';
+import { partial } from 'lodash';
 
 import * as RU_I18N_MESSAGES from 'class-validator-multi-lang/i18n/ru.json';
+import { ValidatorOptions } from 'class-validator';
+
+export const validate = <T extends object>(
+  someObject: T,
+  options?: ValidatorOptions,
+) =>
+  classValidate(someObject, {
+    messages: RU_I18N_MESSAGES,
+    ...options,
+  });
 
 @Injectable()
 export class ValidationPipe implements PipeTransform<any> {
@@ -18,7 +29,7 @@ export class ValidationPipe implements PipeTransform<any> {
     const object = plainToClass(metatype, value);
     // const errors = await validate(object);
 
-    const errors = await validate(object, { messages: RU_I18N_MESSAGES });
+    const errors = await validate(object);
 
     if (errors.length > 0) {
       const errorsResponseObject = Object.fromEntries(

@@ -1,5 +1,7 @@
 // @ts-ignore
 import * as credential from 'credential';
+import { validate } from '../validation.pipe';
+import { plainToInstance } from 'class-transformer';
 
 export function resolveAuthLevel(
   userRole: string | null | undefined,
@@ -31,4 +33,31 @@ export function hashPassword(password): Promise<string> {
       }
     });
   });
+}
+
+export type ClassConstructor<T> = {
+  new (...args: any[]): T;
+};
+
+export function makeValidateFieldFn<T extends object>(
+  field: string,
+  cls: ClassConstructor<T>,
+) {
+  return async (value: unknown) => {
+    const createProfileDto = plainToInstance(cls, {
+      [field]: value,
+    });
+
+    const errors = await validate(createProfileDto, {
+      skipMissingProperties: true,
+    });
+
+    if (errors.length) {
+      return errors
+        .map((e) => Object.values(e.constraints).join(', '))
+        .join('. ');
+    }
+
+    return undefined;
+  };
 }

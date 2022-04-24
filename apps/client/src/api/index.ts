@@ -17,6 +17,16 @@ SuperTokens.init({
 
 const api = axios.create({ baseURL: '/api', timeout: 5_000 });
 
+setTimeout(async () => {
+  if (await SuperTokens.doesSessionExist()) {
+    const payload = await SuperTokens.getAccessTokenPayloadSecurely();
+    const user = await getSelf();
+    console.log({ payload, user });
+  } else {
+    console.log('no session');
+  }
+});
+
 SuperTokens.addAxiosInterceptors(api);
 
 export const login = async (form: LoginUserDto) => {
@@ -42,8 +52,7 @@ export const getDepartments = async () => {
 };
 
 export const logout = async () => {
-  const res = await api.post('/auth/logout');
-  return res.data;
+  await SuperTokens.signOut();
 };
 
 export const fetchRoles = async () => {

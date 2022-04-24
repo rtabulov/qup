@@ -32,8 +32,8 @@ services:
     environment:
       POSTGRESQL_CONNECTION_URI: postgresql://postgres:example@db:5432/supertokens
       PASSWORD_HASHING_ALG: ARGON2
-  rcli:
-    image: redis:6.2-alpine
-    links:
-      - redis
-    command: redis-cli -h redis
+  # rcli:
+  #   image: redis:6.2-alpine
+  #   links:
+  #     - redis
+  #   command: redis-cli -h redis
