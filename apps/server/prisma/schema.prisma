@@ -52,7 +52,7 @@ model Profile {
   roleId       String        @db.Uuid
   role         Role          @relation(fields: [roleId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   firstName    String        @db.VarChar
-  email        String        @db.VarChar
+  email        String        @unique @db.VarChar
   lastName     String        @db.VarChar
   middleName   String        @db.VarChar
   position     String?       @db.VarChar
