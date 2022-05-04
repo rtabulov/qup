@@ -63,19 +63,26 @@ export class SupertokensService {
                   if (response.status === 'OK') {
                     // These are the input form fields values that the user used while signing up
 
-                    const dtoObj = omit(
-                      Object.fromEntries(
-                        input.formFields.map(({ id, value }) => [id, value]),
-                      ),
-                      ['password'],
-                    );
+                    try {
+                      const dtoObj = omit(
+                        Object.fromEntries(
+                          input.formFields.map(({ id, value }) => [id, value]),
+                        ),
+                        ['password'],
+                      );
 
-                    const createProfileDto = plainToInstance(CreateProfileDto, {
-                      ...dtoObj,
-                      userId: response.user.id,
-                    });
+                      const createProfileDto = plainToInstance(
+                        CreateProfileDto,
+                        {
+                          ...dtoObj,
+                          userId: response.user.id,
+                        },
+                      );
 
-                    await profileService.createProfile(createProfileDto);
+                      await profileService.createProfile(createProfileDto);
+                    } catch {
+                      supertokens.deleteUser(response.user.id);
+                    }
                   }
 
                   return response;
@@ -92,11 +99,14 @@ export class SupertokensService {
                 createNewSession: async function (input) {
                   let userId = input.userId;
 
+                  const { role } = await profileService.getProfile(userId);
+
                   // This goes in the access token, and is availble to read on the frontend.
                   input.accessTokenPayload = {
                     ...input.accessTokenPayload,
-                    someKey: 'someValue',
+                    roleKey: role.key,
                   };
+
                   // This is stored in the db against the sessionHandle for this session
                   // input.sessionData = {
                   //   ...input.sessionData,

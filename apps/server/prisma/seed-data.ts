@@ -15,22 +15,24 @@ export const ROLES_SEED = [
   { name: 'Преподаватель', key: 'teacher' },
 ];
 
-export const USERS_SEED = [
+export const PROFILES_SEED = [
   {
     active: true,
     firstName: 'John',
     lastName: 'Doe',
     middleName: 'M',
-    position: 'Старший преподаватель',
+    position: 'departmentHead',
     role: 'departmentHead',
+    user: { email: 'john@gmail.com', password: 'wordpass' },
   },
   {
     active: true,
     firstName: 'Пётр',
     lastName: 'Петров',
     middleName: 'Петрович',
-    position: 'Старший преподаватель',
+    position: 'hr',
     role: 'hr',
+    user: { email: 'petr@gmail.com', password: 'wordpass' },
   },
   {
     active: true,
@@ -39,12 +41,15 @@ export const USERS_SEED = [
     middleName: 'Иванович',
     position: 'Старший преподаватель',
     role: 'teacher',
+    user: { email: 'ivan@gmail.com', password: 'wordpass' },
   },
   {
     active: true,
     firstName: 'Админ',
     lastName: 'Админов',
     middleName: 'Админович',
+    position: 'admin',
     role: 'admin',
+    user: { email: 'admin@gmail.com', password: 'wordpass' },
   },
 ];

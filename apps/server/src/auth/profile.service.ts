@@ -26,16 +26,26 @@ export class ProfileService {
   }
 
   async getProfile(userId: string) {
-    try {
-      const res = await this.prismaService.profile.findUnique({
-        where: { userId },
-        include: { role: true },
-      });
+    const res = await this.prismaService.profile.findUnique({
+      where: { userId },
+      include: { role: true },
+    });
 
-      return res;
-    } catch {
-      return null;
-    }
+    return res;
+  }
+
+  async getUsers() {
+    return this.prismaService.profile.findMany({
+      where: { active: true },
+      include: { role: true },
+    });
+  }
+
+  async getInactiveUsers() {
+    return this.prismaService.profile.findMany({
+      where: { active: false },
+      include: { role: true },
+    });
   }
 
   async getRoles() {

@@ -10,39 +10,44 @@ import {
 } from '../types';
 import { mapSuperTokenFormFields } from '../utils';
 
+const api = axios.create({
+  baseURL: 'http://localhost:3000/api',
+  timeout: 5_000,
+});
+SuperTokens.addAxiosInterceptors(api);
+
 SuperTokens.init({
   apiDomain: import.meta.env.VITE_SUPERTOKENS_API_DOMAIN as string,
   apiBasePath: import.meta.env.VITE_SUPERTOKENS_API_BASE_PATH as string,
 });
 
-const api = axios.create({ baseURL: '/api', timeout: 5_000 });
-
-setTimeout(async () => {
-  if (await SuperTokens.doesSessionExist()) {
-    const payload = await SuperTokens.getAccessTokenPayloadSecurely();
-    const user = await getSelf();
-    console.log({ payload, user });
-  } else {
-    console.log('no session');
-  }
-});
-
-SuperTokens.addAxiosInterceptors(api);
-
 export const login = async (form: LoginUserDto) => {
-  const res = await api.post('/auth/signin', mapSuperTokenFormFields(form));
-  return res.data;
+  const { data } = await api.post(
+    '/auth/signin',
+    mapSuperTokenFormFields(form),
+  );
+
+  if (data.status !== 'OK') {
+    throw new Error(`error: status ${data.status}`);
+  }
+
+  return data;
 };
 
 export const register = async (form: Partial<RegisterUserDto>) => {
   const res = await api.post('/auth/signup', mapSuperTokenFormFields(form));
-
+  if (res.data.status !== 'OK') {
+    throw new Error(`error: status ${res.data.status}`);
+  }
   return res.data;
 };
 
 export const getSelf = async () => {
-  const res = await api.get<User>('/auth/self');
+  if (!(await SuperTokens.doesSessionExist())) {
+    throw new Error('not logged in');
+  }
 
+  const res = await api.get<User>('/auth/self');
   return res.data;
 };
 

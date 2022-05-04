@@ -1,14 +1,15 @@
-import { Controller, Get, Inject, Res, UseGuards } from '@nestjs/common';
-import { AuthGuard } from './auth.guard';
+import { Controller, Get, Inject, Res, UseGuards, Req } from '@nestjs/common';
+import { LoggedInGuard, AllowRoles } from './auth.guard';
 import { Session } from './session.decorator';
 import { SessionContainer } from 'supertokens-node/recipe/session';
 import { ProfileService } from './profile.service';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly profileService: ProfileService) {}
 
+  @UseGuards(LoggedInGuard)
   @Get('self')
   async getSelf(@Session() session: SessionContainer, @Res() res: Response) {
     if (!session) {
@@ -16,7 +17,20 @@ export class AuthController {
     }
 
     const userId = session.getUserId();
-    return this.profileService.getProfile(userId);
+    const profile = await this.profileService.getProfile(userId);
+    return res.send(profile);
+  }
+
+  @UseGuards(LoggedInGuard)
+  @Get('users')
+  async getUsers() {
+    return this.profileService.getUsers();
+  }
+
+  @UseGuards(LoggedInGuard)
+  @Get('users/inactive')
+  async getInactiveUsers() {
+    return this.profileService.getInactiveUsers();
   }
 
   @Get('roles')
