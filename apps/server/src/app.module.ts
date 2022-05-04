@@ -13,7 +13,6 @@ import { RedisClient } from 'redis';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
-import { AppController } from './app.controller';
 import { DepartmentsModule } from './departments/departments.module';
 import { AuthModule } from './auth/auth.module';
 import { REDIS } from './redis/redis.constants';
@@ -36,7 +35,6 @@ import { FileMetaModule } from './file-meta/file-meta.module';
     CertificatesModule,
     FileMetaModule,
   ],
-  controllers: [AppController],
   providers: [Logger],
 })
 export class AppModule implements NestModule {
