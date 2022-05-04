@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
+import omit from 'lodash/omit';
+
 import AppInput from '../../components/AppInput.vue';
 import AppSelect from '../../components/AppSelect.vue';
 import AppButton from '../../components/AppButton.vue';
@@ -34,17 +36,19 @@ const errors = ref<Partial<Record<keyof Form, string>>>({});
 
 const isLoading = ref(false);
 async function onSubmit() {
-  isLoading.value = true;
   if (form.confirmationPassword !== form.password) {
     errors.value = { confirmationPassword: 'Пароли должны совпадать' };
     return;
   }
 
+  isLoading.value = true;
+
   try {
-    await register({ ...form });
+    await register(omit(form, 'confirmationPassword'));
     router.push('/login');
   } catch (e: any) {
     isLoading.value = false;
+
     if (e.response) {
       errors.value = e.response.data;
     }
