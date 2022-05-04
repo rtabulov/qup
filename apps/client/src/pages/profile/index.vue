@@ -112,7 +112,7 @@ function getStatus(certificate: Certificate) {
           </tr>
           <tr>
             <th class="min-w-[200px] py-2 text-left text-lightblue">Роль</th>
-            <td>{{ user.role?.key }}</td>
+            <td>{{ user.role?.name }}</td>
           </tr>
           <tr>
             <th class="min-w-[200px] py-2 text-left text-lightblue">E-mail</th>
