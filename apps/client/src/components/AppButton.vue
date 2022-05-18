@@ -1,6 +1,8 @@
 <script lang="ts" setup>
+import { Component } from 'vue';
+
 interface Props {
-  as?: string;
+  as?: string | Component;
   variant?: string;
 }
 withDefaults(defineProps<Props>(), {
