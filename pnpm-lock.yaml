@@ -85,6 +85,7 @@ importers:
       class-validator-multi-lang: ^0.130.201
       connect-redis: ^6.1.2
       credential: ^2.0.0
+      cross-env: ^7.0.3
       dotenv-cli: ^5.1.0
       eslint: ^8.0.1
       eslint-config-prettier: ^8.3.0
@@ -129,6 +130,7 @@ importers:
       class-validator-multi-lang: 0.130.201
       connect-redis: 6.1.2
       credential: 2.0.0
+      cross-env: 7.0.3
       dotenv-cli: 5.1.0
       exceljs: 4.3.0
       express: 4.17.3
@@ -1966,6 +1968,14 @@ packages:
       pluck-keys: 0.0.4
     dev: false
 
+  /cross-env/7.0.3:
+    resolution: {integrity: sha512-+/HKd6EgcQCJGh2PSjZuUitQBQynKor4wrFbRg4DtAgS1aWO+gU52xpH7M9ScGgXSYmAVS9bIJ8EzuaGw0oNAw==}
+    engines: {node: '>=10.14', npm: '>=6', yarn: '>=1'}
+    hasBin: true
+    dependencies:
+      cross-spawn: 7.0.3
+    dev: false
+
   /cross-fetch/3.1.5:
     resolution: {integrity: sha512-lvb1SBsI0Z7GDwmuid+mU3kWVBwTVUbe7S0H52yaaAdQOXq2YktTCZdlAcNKFzE6QtRz0snpw9bNiPeOIkkQvw==}
     dependencies:
@@ -3470,7 +3480,7 @@ packages:
     dev: true
 
   /isexe/2.0.0:
-    resolution: {integrity: sha1-6PvzdNxVb/iUehDcsFctYz8s+hA=}
+    resolution: {integrity: sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==}
 
   /iterare/1.2.1:
     resolution: {integrity: sha512-RKYVTCjAnRthyJes037NX/IiqeidgN1xc3j1RjFfECFp28A1GVwK9nA+i0rJPaHqSZwygLzRnFlzUuHFoWWy+Q==}
