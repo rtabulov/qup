@@ -18,6 +18,7 @@ export class SupabaseService extends SupabaseClient implements OnModuleInit {
     });
 
     if (error) {
+      console.log(error);
       throw new Error('could not sign in to supabase');
     }
   }
