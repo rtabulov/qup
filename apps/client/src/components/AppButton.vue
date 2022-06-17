@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { Component } from 'vue';
+import type { Component } from 'vue';
 
 interface Props {
   as?: string | Component;
