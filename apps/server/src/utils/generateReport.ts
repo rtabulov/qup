@@ -27,11 +27,11 @@ export function genereateReport(
       department: Department;
     };
   })[],
+  host: string,
 ) {
   const groupedByDepartments = groupBy(certificates, 'teacher.department.name');
 
   const workbook = new ExcelJS.Workbook();
-  const host = this.configService.get('HOST');
 
   Object.entries(groupedByDepartments).forEach(([department, certificates]) => {
     const ws = workbook.addWorksheet(department);

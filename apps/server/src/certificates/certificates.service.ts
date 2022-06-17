@@ -11,9 +11,13 @@ import { CreateCertificateDto } from './dto/create-certificate.dto';
 import { resolveAuthLevel } from '../utils';
 import { PrismaService } from '../prisma';
 import { genereateReport } from '../utils/generateReport';
+import { ConfigService } from '@nestjs/config';
 @Injectable()
 export class CertificatesService {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(
+    private readonly prismaService: PrismaService,
+    private readonly configService: ConfigService,
+  ) {}
   create(certificate: CreateCertificateDto & { teacherId: string }) {
     return this.prismaService.certificate.create({ data: { ...certificate } });
   }
@@ -36,7 +40,10 @@ export class CertificatesService {
   }
   async exportAll() {
     const certificates = await this.findApproved();
-    return genereateReport(certificates);
+    const host =
+      this.configService.get('HOST') ||
+      `http://localhost:${this.configService.get('PORT')}`;
+    return genereateReport(certificates, host);
   }
   findOne(id: string, { expand = false } = {}) {
     try {
